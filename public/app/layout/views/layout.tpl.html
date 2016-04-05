@@ -1,7 +1,72 @@
-<div id="main" role="main">
-  
-  <div data-wrap-for="#content">
-    <div data-ui-view="content" data-autoscroll="false"></div>
+<div id="layout-horizontal-navigation" layout="column" flex ng-cloak>
+
+  <md-toolbar layout="row" class="md-menu-toolbar master-toolbar">
+
+    <div class="md-toolbar-tools">
+      
+      <div class="logo" layout="row" layout-align="start center">
+        <img src="styles/img/CITUS_ATS-02_02.png">
+      </div>
+
+      <div class="nav" layout="row" layout-align="start center">
+        <div class="md-toolbar-tools">
+          <md-button class="nav-button">Dashboard</md-button>
+          <md-button class="nav-button">Projects</md-button>
+        </div>
+      </div>
+
+      <div class="space" layout="row" layout-align="start center">
+        <span>Space: Public</span>
+      </div>
+
+      <span flex></span>
+
+      <div layout="row" layout-align="start center">
+        <md-menu-bar class="user-menu-bar">
+          <md-menu md-position-mode="left bottom">
+            
+            <md-button class="user-button" ng-click="$mdOpenMenu()">
+              <div layout="row" layout-align="space-between center">
+                <img ng-src="styles/img/avatars/male.png" class="avatar">
+                <span>Hai Nguyen</span>
+                <md-icon md-svg-icon="chevron-down"></md-icon>
+              </div>
+            </md-button>
+
+            <md-menu-content width="4">
+              <md-menu-item class="md-indent">
+                <md-icon md-svg-icon="account-card-details" class="md-primary"></md-icon>
+                <md-button>My Profile</md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon md-svg-icon="settings" class="md-warn md-hue-2"></md-icon>
+                <md-button>Settings</md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon md-svg-icon="account-multiple-outline" style="color: green;"></md-icon>
+                <md-menu>
+                  <md-button ng-click="$mdOpenMenu()">Spaces</md-button>
+                  <md-menu-content width="3">
+                    <md-menu-item><md-button>Public</md-button></md-menu-item>
+                    <md-menu-item><md-button>FSU1.BU11</md-button></md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item class="md-indent">
+                <md-icon md-svg-icon="logout-variant" class="md-warn"></md-icon>
+                <md-button>Logout</md-button>
+              </md-menu-item>
+            </md-menu-content>
+
+          </md-menu>
+        </md-menu-bar>                
+      </div>
+    </div>
+  </md-toolbar>
+
+  <div id="content-container" flex layout="column" flex>
+    <md-content id="content" data-ui-view="content" class="md-hue-1" perfect-scrollbar></md-content>
   </div>
 
 </div>

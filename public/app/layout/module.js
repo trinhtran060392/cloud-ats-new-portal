@@ -32,5 +32,5 @@ define([
     module.lazy = $couchPotato;
   }]);
 
-  
+  return module;
 })

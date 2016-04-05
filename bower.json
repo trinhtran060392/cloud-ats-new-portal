@@ -14,8 +14,9 @@
 		"angular-ui-router": "0.2.15",
 		"angular-loading-bar": "0.6.0",
 		"angular-material": "1.0.6",
-		"angular-material-icons": "0.7.0",
 		"angular-couch-potato": "0.2.3",
+		"mdi": "1.5.54",
+		"perfect-scrollbar": "0.6.10",
 		"jquery": "~2.1.1",
 		"requirejs": "~2.1.15"
 	},

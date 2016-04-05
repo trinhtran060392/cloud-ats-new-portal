@@ -5,10 +5,14 @@
 		<title>CloudATS - Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='plugin/angular-material/angular-material.css'>
+    <link rel='stylesheet' type="text/css" href="plugin/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/index.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/main.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/default.css">
 	</head>
-	<body>
-		<div data-ui-view="root"></div>
-    <script type="text/javascript" src="app/rconfig.js"></script>
-    <script type="text/javascript" src="plugin/requirejs/require.js" data-main="app/main.js"></script>
+	<body md-theme="default">
+		<div id="root" layout="column" data-ui-view="root"></div>
+        <script type="text/javascript" src="app/rconfig.js"></script>
+        <script type="text/javascript" src="plugin/requirejs/require.js" data-main="app/main.js"></script>
 	</body>
 </html>

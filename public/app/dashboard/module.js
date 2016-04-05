@@ -13,7 +13,13 @@ define([
       url: '/dashboard',
       views: {
         'content@app': {
-          templateUrl: 'app/dashboard/views/dashboard.tpl.html'
+          controller: 'DashboardCtrl',
+          templateUrl: 'app/dashboard/views/dashboard.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'dashboard/controllers/dashboard-ctrl'
+            ])
+          }
         }
       },
       data: {
