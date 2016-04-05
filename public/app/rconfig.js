@@ -17,6 +17,8 @@ var require = {
     'perfect-scrollbar': '../plugin/perfect-scrollbar/js/perfect-scrollbar',
     'perfect-scrollbar-jquery': '../plugin/perfect-scrollbar/js/perfect-scrollbar.jquery',
     'domReady': '../plugin/requirejs-domready/domReady',
+    'c3':'../plugin/c3/c3.min',
+    'd3':'../plugin/d3/d3.min',
 
     'modules-includes': 'includes'
   }, 
@@ -29,6 +31,7 @@ var require = {
     'angular-messages': { deps: ['angular'] },
     'angular-aria': { deps: ['angular']},
 
+    'c3': { deps: ['d3']},
     'angular-ui-router': { deps: ['angular'] },
     'angular-loading-bar': {deps: ['angular']},
     'angular-couch-potato': { deps: ['angular'] },

@@ -114,3 +114,7 @@
   background: #E3F2FD;
   cursor: pointer;
 }
+
+.c3 .c3-axis text {
+  fill: rgba(0, 0, 0, 0.66);
+}
