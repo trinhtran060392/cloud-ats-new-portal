@@ -1,7 +1,7 @@
 define(['layout/module', 'highcharts'], function (module, highcharts) {
   'use strict';
 
-  module.registerController('DashboardCtrl', ['$scope', function($scope) {
+  module.registerController('DashboardCtrl', ['$scope', '$window', function($scope, $window) {
 
     var names_10 = ['1.FHU', '2.FPT Site Test', '3.JIEM', '4.DMO', '5.CLOUDATS', '6.FSU1.BU11', '7.MockProject', '8.MockProject', '9.MockProject', '10.MockProject', '11.JIEM', '12.DMO', '13.CLOUDATS', '14.FSU1.BU11', '15.Fsu1', 'FHU', 'FPT Site Test d d ddddddddddddddddddd ddddddd', 'JIEM', 'DMO', 'CLOUDATS', 'FSU1.BU11', 'MockProject', 'MockProject', 'MockProject', 'MockProject'];
     var names_15 = ['1.FHU', '2.FPT Site Test', '3.JIEM', '4.DMO', '5.CLOUDATS', '6.FSU1.BU11', '7.MockProject', '8.MockProject', '9.MockProject', '10.MockProject', '11.JIEM', '12.DMO', '13.CLOUDATS', '14.FSU1.BU11', '15.Fsu1', 'FHU', 'FPT Site Test d d ddddddddddddddddddd ddddddd', 'JIEM', 'DMO', 'CLOUDATS', 'FSU1.BU11', 'MockProject', 'MockProject', 'MockProject', 'MockProject', 'JIEM', 'DMO', 'CLOUDATS', 'FSU1.BU11', 'Fsu1'];
@@ -12,11 +12,13 @@ define(['layout/module', 'highcharts'], function (module, highcharts) {
     var failed_data_10 = [2, 2, 3, 2, 1, 5, 3, 4, 7, 2];
     var failed_data_15 = [2, 2, 3, 2, 1, 5, 3, 4, 7, 2, 5, 3, 9, 4, 1];
 
+    $scope.width = $window.innerWidth;
+    
     var draw = function (names, passes, fails, ids) {
       $('#chart').highcharts({
         chart: {
           type: 'column',
-          width: 1200
+          width: $scope.width - 80
         },
         colors: ['#039BE5', '#F44336'],
         title: {
