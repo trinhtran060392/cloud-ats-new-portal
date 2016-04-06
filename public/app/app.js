@@ -15,7 +15,8 @@ define([
     'ngMessages',
     'ui.router',
     'app.layout',
-    'app.dashboard'
+    'app.dashboard',
+    'app.projects'
   ]);
 
   couchPotato.configureApp(app);
@@ -75,7 +76,6 @@ define([
       $rootScope.$stateParams = $stateParams;
       window.Ps = require('perfect-scrollbar');
       require('perfect-scrollbar-jquery');
-      console.log(Ps);
     }]);
 
   return app;

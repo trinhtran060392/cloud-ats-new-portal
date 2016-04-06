@@ -25,12 +25,6 @@
   left: 0;
 }
 
-.page-layout {
-  position: relative;
-  overflow: hidden;
-  min-height: 100%;
-}
-
 .master-toolbar {
   background-color: #2E62B1 !important;
   box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
@@ -53,6 +47,10 @@
 .master-toolbar .nav .nav-button {
   height: 64px;
   background: transparent; 
+}
+
+.master-toolbar .nav .nav-button a {
+  text-decoration: none !important;
 }
 
 .master-toolbar .nav span {
@@ -118,3 +116,38 @@
 .c3 .c3-axis text {
   fill: rgba(0, 0, 0, 0.66);
 }
+
+#projects {
+  min-height: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;}
+
+  #projects .projects-search-container {
+    padding: 28px;
+    height: 112px;
+    min-height: 112px;
+    max-height: 112px;}
+
+    #projects .projects-search-container .projects-search {
+      height: 56px;
+      line-height: 56px;
+      padding: 18px;
+      background: #FFFFFF;}
+    
+    #projects .projects-search .icon {
+      margin: 0;}
+
+    #projects .projects-search input {
+      padding-left: 16px !important;
+      height: 56px;
+      color: rgba(0, 0, 0, 0.54);}
+
+  #projects .projects-action {
+    border-left: 1px solid;
+  }
+
+  #projects .projects-container {
+    margin-right: 28px; 
+    margin-left: 28px;
+  }

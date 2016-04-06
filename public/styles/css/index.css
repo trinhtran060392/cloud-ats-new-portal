@@ -11503,7 +11503,7 @@ body.boxed {
         min-height: 200px;
         max-height: 200px;
         padding: 24px;
-        background-image: url("/assets/images/backgrounds/header-bg.png");
+        /* background-image: url("/assets/images/backgrounds/header-bg.png"); */
         background-size: cover; }
       .page-layout.simple.right-sidenav > .center .content {
         padding: 24px;

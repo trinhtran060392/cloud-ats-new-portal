@@ -1,0 +1,28 @@
+<div id="projects" layout="row">
+
+<div layout="column" flex>
+  <div layout="row" class="projects-search-container">
+    <div class="projects-search white-bg md-whiteframe-4dp" layout="row" layout-align="start center" flex>
+      <md-icon md-font-icon="icon-magnify" class="icon s24" aria-hidden="true"></md-icon>
+      <input type="text" placeholder="Search for project name" aria-invalid="false" flex>
+      <div class="projects-action grey-300-border-left pl-16" layout="row" layout-align="start center">
+        <md-button class="md-icon-button" aria-label="Create New Project">
+          <md-tooltip>
+            Create New Project
+          </md-tooltip>
+          <md-icon md-font-icon="icon-plus" aria-hidden="true"></md-icon>
+        </md-button>  
+      </div>
+    </div>
+  </div>
+
+  <div layout="column" flex>
+  <md-content class="md-hue-1" perfect-scrollbar>
+    <div class="projects-container" layout="row" flex="100" layout-wrap>
+      <div ng-repeat="i in ['1','2','3','4','5','6','7','8','9','10', '1','2','3','4','5','6','7','8','9','10', '1','2','3','4','5','6','7','8','9','10'] track by $index" layout="row" style="min-height: 100px; border: 1px solid" flex="20">Project {{i}}</div>
+    </div>
+  </md-content>
+  </div>
+</div>
+
+</div>

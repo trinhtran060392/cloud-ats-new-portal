@@ -10,8 +10,12 @@
 
       <div class="nav" layout="row" layout-align="start center">
         <div class="md-toolbar-tools">
-          <md-button class="nav-button">Dashboard</md-button>
-          <md-button class="nav-button">Projects</md-button>
+          <a data-ui-sref="app.dashboard">
+            <md-button class="nav-button"><span>Dashboard</span></md-button>
+          </a>
+          <a data-ui-sref="app.projects">
+            <md-button class="nav-button"><span>Projects</span></md-button>
+          </a>
         </div>
       </div>
 
@@ -66,7 +70,7 @@
   </md-toolbar>
 
   <div id="content-container" flex layout="column" flex>
-    <md-content id="content" data-ui-view="content" class="md-hue-1" perfect-scrollbar></md-content>
+    <md-content id="content" data-ui-view="content" class="animate-slide-up md-hue-1" perfect-scrollbar></md-content>
   </div>
 
 </div>
