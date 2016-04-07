@@ -3,7 +3,8 @@ define([
   'layout/directives/perfect-scrollbar',
 
   'dashboard/module',
-  'projects/module'
+  'projects/module',
+  'auth/module'
 ], function() {
   'use strict';
 })

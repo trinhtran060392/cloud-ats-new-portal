@@ -34839,15 +34839,15 @@ md-dialog.event-calendar-dialog {
 #login-v2 {
   height: 100%;
   overflow: hidden;
-  background: url("/assets/images/backgrounds/march.jpg") no-repeat;
+  background: no-repeat;
   background-size: cover; }
   #login-v2 #login-v2-intro {
     padding: 128px; }
     #login-v2 #login-v2-intro .logo {
       width: 128px;
-      height: 128px;
+     /* height: 128px;
       line-height: 128px;
-      font-size: 86px;
+      font-size: 86px;*/
       font-weight: 500;
       margin-bottom: 32px;
       color: #FFFFFF;

@@ -1,0 +1,86 @@
+<div id="layout-content-only">
+  <md-content id="content" flex layout="column" style="overflow-y: hidden;">
+    <div id="login-v2" layout="row" flex="100" layout-align="start" perfect-scrollbar>
+      <div id="login-v2-intro" flex="" hide="" show-gt-sm="">
+        <div class="logo">
+          <span><img src="styles/img/CITUS_ATS_CL_Ngang.png" alt="CloudATS Admin"></span>
+        </div>
+        <div class="title ng-scope" translate="LOGIN_V2.INTRO_TITLE">CloudATS!</div>
+        <div class="description ng-scope" translate="LOGIN_V2.INTRO_DESCRIPTION">
+          It's Okay to be Smart. 
+          Experience the simplicity of CloudATS, 
+          everywhere you go!
+        </div>
+      </div>
+
+      <div id="login-v2-form-wrapper" ms-scroll>
+        <div id="login-v2-form">
+          <div class="logo" hide-gt-sm>
+            <span>F</span>
+          </div>
+          <div class="title">
+            Log in to your account
+          </div>
+          <div class="description">
+            
+          </div>
+          <form name="loginForm">
+            <md-input-container md-no-float class="md-block">
+              <input type="email" name="email" ng-model="form.email" placeholder="Email" ng-pattern="/^.+@.+\..+$/" required>
+              <div ng-messages="loginForm.email.$error">
+                <div ng-message="required">
+                  <span>Email field is required</span>
+                </div>
+                <div>
+                  
+                </div>
+              </div>
+              <div class="md-errors-spacer"></div>
+            </md-input-container>
+            <md-input-container md-no-float class="md-block"><input type="password" name="password" ng-model="form.password" placeholder="Password" required="" aria-label="Password" id="input_46" aria-invalid="true">
+              <div ng-messages="loginForm.password.$error" role="alert" aria-live="assertive">
+                <div ng-message="required">
+                  <span>Password field is required</span>
+                </div>
+              </div>
+              <div class="md-errors-spacer">
+              </div>
+            </md-input-container>
+            <div class="remember-forgot-password" layout="row" layout-sm="column" layout-align="space-between center">
+              <md-checkbox class="remember-me" ng-model="data.cb1" aria-label="Remember Me"> Remember me
+              </md-checkbox>
+              <a href="" class="forgot-password md-accent-color" translate="LOGIN_V2.FORGOT_PASSWORD">Forgot Password?</a>
+            </div>
+            <md-button class="md-raised md-accent-bg submit-button" type="submit" aria-label="LOG IN" ng-disabled="loginForm.$invalid || loginForm.$pristine" translate="LOGIN_V2.LOG_IN" translate-attr-aria-label="LOGIN_V2.LOG_IN" disabled="disabled">LOG IN
+            </md-button>
+          </form>
+          <div class="separator"><span class="text" translate="LOGIN_V2.OR">OR</span></div>
+            <div layout="column" layout-align="start center">
+              <md-button class="md-raised google" type="button" aria-label="Log in with Google">
+                <div layout="row" layout-align="center center">
+                  <span>
+                    <md-icon md-font-icon="icon-google-plus" aria-hidden="true">
+                    </md-icon>
+                    <span translate="LOGIN_V2.WITH_GOOGLE">Log in with Google</span>
+                  </span>
+                </div>
+              </md-button>
+              <md-button class="md-raised facebook" type="button" aria-label="Log in with Facebook">
+                <div layout="row" layout-align="center center">
+                  <span>
+                    <md-icon md-font-icon="icon-facebook" class="s16" aria-hidden="true">
+                    </md-icon><span translate="LOGIN_V2.WITH_FACEBOOK" class="ng-scope">Log in with Facebook</span>
+                  </span>
+              </div>
+              </md-button>
+            </div>
+            <div class="register" layout="row" layout-sm="column" layout-align="center center">
+              <span class="text" translate="LOGIN_V2.DONT_HAVE_ACCOUNT">Don't have an account?
+              </span>
+              <a class="link" href="" translate="LOGIN_V2.CREATE_ACCOUNT">Create an account</a></div>
+        </div>
+      </div>
+      
+    </div>
+  </md-content>
+</div>

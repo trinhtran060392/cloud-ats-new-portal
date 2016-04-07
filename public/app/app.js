@@ -16,7 +16,8 @@ define([
     'ui.router',
     'app.layout',
     'app.dashboard',
-    'app.projects'
+    'app.projects',
+    'app.auth'
   ]);
 
   couchPotato.configureApp(app);
