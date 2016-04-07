@@ -20,7 +20,8 @@ var require = {
     'c3':'../plugin/c3/c3.min',
     'd3':'../plugin/d3/d3.min',
     'highcharts':'../plugin/highcharts/highcharts',
-    'modules-includes': 'includes'
+    'modules-includes': 'includes',
+    'appConfig': 'app.config'
   }, 
   shim: {
     'angular': {'exports': 'angular', deps: ['jquery']},

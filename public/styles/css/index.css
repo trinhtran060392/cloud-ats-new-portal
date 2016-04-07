@@ -34842,7 +34842,9 @@ md-dialog.event-calendar-dialog {
   background: no-repeat;
   background-size: cover; }
   #login-v2 #login-v2-intro {
-    padding: 128px; }
+    padding-left: 128px;
+    padding-top: 128px;
+    padding-right: 128px; }
     #login-v2 #login-v2-intro .logo {
       width: 128px;
      /* height: 128px;
