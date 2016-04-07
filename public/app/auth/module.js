@@ -26,6 +26,16 @@ define([
       data: {
         title: 'Login'
       }
+    }).state('register',{
+      url: '/register',
+      views:{
+        root: {
+          templateUrl: 'app/auth/views/register.tpl.html'
+        }
+      },
+      data:{
+        title:'Register'
+      }
     });
   }]);
 
