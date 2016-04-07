@@ -125,9 +125,9 @@
 
   #projects .projects-search-container {
     padding: 28px;
-    height: 112px;
-    min-height: 112px;
-    max-height: 112px;}
+    height: 104px;
+    min-height: 104px;
+    max-height: 104px;}
 
     #projects .projects-search-container .projects-search {
       height: 56px;
@@ -148,6 +148,19 @@
   }
 
   #projects .projects-container {
-    margin-right: 28px; 
-    margin-left: 28px;
-  }
+    margin-right: 21px; 
+    margin-left: 21px;}
+
+    #projects .projects-container .project {
+      /* min-height: 174px; 
+      max-height: 174px; 
+      height: 174px */
+    }
+
+    #projects .projects-container .project .text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: inherit;
+    }
+

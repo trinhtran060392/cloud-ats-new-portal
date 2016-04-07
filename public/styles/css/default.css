@@ -19,7 +19,7 @@
 
 /* Primary */
 [md-theme="default"] .md-primary-bg {
-    background-color: rgb(45,50,62);
+    background-color: rgb(39,84,152);
     color: rgba(255,255,255,1);
 }
 
@@ -40,7 +40,7 @@
 
 /* Primary, Hue-1 */
 [md-theme="default"] .md-primary-bg.md-hue-1 {
-    background-color: rgb(60,66,82);
+    background-color: rgb(52,112,202);
     color: rgba(255,255,255,1);
 }
 
@@ -61,7 +61,7 @@
 
 /* Primary, Hue-2 */
 [md-theme="default"] .md-primary-bg.md-hue-2 {
-    background-color: rgb(53,58,72);
+    background-color: rgb(46,98,177);
     color: rgba(255,255,255,1);
 }
 
@@ -82,7 +82,7 @@
 
 /* Primary, Hue-3 */
 [md-theme="default"] .md-primary-bg.md-hue-3 {
-    background-color: rgb(92,97,111);
+    background-color: rgb(86,136,211);
     color: rgba(255,255,255,1);
 }
 
@@ -103,22 +103,22 @@
 
 /* Primary foreground */
 [md-theme="default"] .md-primary-fg {
-    color: rgb(45,50,62) !important;
+    color: rgb(39,84,152) !important;
 }
 
 /* Primary foreground, Hue-1 */
 [md-theme="default"] .md-primary-fg.md-hue-1 {
-    color: rgb(60,66,82) !important;
+    color: rgb(52,112,202) !important;
 }
 
 /* Primary foreground, Hue-2 */
 [md-theme="default"] .md-primary-fg.md-hue-2 {
-    color: rgb(53,58,72) !important;
+    color: rgb(46,98,177) !important;
 }
 
 /* Primary foreground, Hue-3 */
 [md-theme="default"] .md-primary-fg.md-hue-3 {
-    color: rgb(92,97,111) !important;
+    color: rgb(86,136,211) !important;
 }
 
 

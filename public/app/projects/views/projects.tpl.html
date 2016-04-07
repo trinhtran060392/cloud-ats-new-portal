@@ -19,7 +19,46 @@
   <div layout="column" flex>
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
-      <div ng-repeat="i in ['1','2','3','4','5','6','7','8','9','10', '1','2','3','4','5','6','7','8','9','10', '1','2','3','4','5','6','7','8','9','10'] track by $index" layout="row" style="min-height: 100px; border: 1px solid" flex="20">Project {{i}}</div>
+      <div ng-repeat="i in ['1','2','3','4','5','6', '1','2','3','4','5','6', '1','2','3','4','5','6'] track by $index" layout="row" flex="20" class="project ms-card"> 
+        <div class="ms-card-content-wrapper">
+
+          <div class="text h2 p-16">
+            <a href="javascript:void(0)" ng-click="clickProject($event)" class="md-primary-fg">
+              <md-tooltip>CloudATS Project FHU FPT site{{i}}</md-tooltip>
+              CloudATS Project FHU FPT site{{i}}
+            </a>
+          </div>
+
+          <div class="creator ph-16 pb-16" layout="row" layout-align="start center">
+            <img class="avatar mr-16" ng-src="styles/img/avatars/male.png">
+            <div layout="column" flex>
+              <div class="title" layout="row" layout-align="start center">
+                <a href="javascript:void(0)" class="text" flex>
+                  <md-tooltip>Hai Nguyen Hand some boy</md-tooltip>
+                  Hai Nguyen Hand some boy
+                </a>
+                <span flex>created on</span>
+              </div>
+              <div class="subtitle secondary-text">April 5, 2016</div>
+            </div>
+          </div>
+
+          <md-divider></md-divider>
+
+          <div layout="row" layout-align="start center">
+            <md-button class="md-icon-button" aria-label="Clone this project">
+              <md-tooltip>Clone this project</md-tooltip>
+              <md-icon class="s16" md-font-icon="icon-content-duplicate" aria-hidden="true"></md-icon>
+            </md-button>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Star this project">
+              <md-tooltip>Star this project</md-tooltip>
+              <md-icon class="s16" md-font-icon="icon-star-outline" aria-hidden="true"></md-icon>
+            </md-button>
+          </div>
+          
+        </div>
+      </div>
     </div>
   </md-content>
   </div>
