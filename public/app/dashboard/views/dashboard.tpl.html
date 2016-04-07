@@ -64,30 +64,10 @@
           <span flex></span>
           <span class="grey-fg text-bold pr-8">Percent(%)</span>            
         </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">Hoai-FHU</span>
+        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top" ng-repeat="project in top_keyword_projects_pass" ng-click="goProject(project)">
+          <span class="pl-8">{{project.name}}</span>
           <span flex></span>
-          <span class="text-bold green-fg pr-8">100</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">Test Body Shop Site</span>
-          <span flex></span>
-          <span class="text-bold green-fg pr-8">75</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">[Demo] Test JBoss Site</span>
-          <span flex></span>
-          <span class="text-bold green-fg pr-8">25</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">FHU</span>
-          <span flex></span>
-          <span class="text-bold green-fg pr-8">16.67</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">FHU</span>
-          <span flex></span>
-          <span class="text-bold green-fg pr-8">0</span>            
+          <span class="text-bold green-fg pr-8">{{project.percentPass}}</span>            
         </div>
         <!--End Body-->
 
@@ -122,30 +102,10 @@
           <span flex></span>
           <span class="grey-fg text-bold pr-8">Percent(%)</span>            
         </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">JIEM</span>
+        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top" ng-repeat="project in top_keyword_projects_fail" ng-click="goProject(project)">
+          <span class="pl-8">{{project.name}}</span>
           <span flex></span>
-          <span class="text-bold red-800-fg pr-8">100</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">FHU-31032016</span>
-          <span flex></span>
-          <span class="text-bold red-800-fg pr-8">100</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">FHU</span>
-          <span flex></span>
-          <span class="text-bold red-800-fg pr-8">83.33</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">[Demo] Test JBoss Site</span>
-          <span flex></span>
-          <span class="text-bold red-800-fg pr-8">75</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">Test Body Shop Site</span>
-          <span flex></span>
-          <span class="text-bold red-800-fg pr-8">25</span>            
+          <span class="text-bold red-800-fg pr-8">{{project.percentFail}}</span>            
         </div>
         <!--End Body-->
 
@@ -180,30 +140,10 @@
           <span flex></span>
           <span class="grey-fg text-bold pr-8">Test Case(s)</span>            
         </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">JIEM</span>
+        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top" ng-repeat="project in top_biggest_project"  ng-click="goProject(project)">
+          <span class="pl-8">{{project.name}}</span>
           <span flex></span>
-          <span class="text-bold blue-900-fg pr-8">56</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">FHU</span>
-          <span flex></span>
-          <span class="text-bold blue-900-fg pr-8">27</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">Test Body Shop Site</span>
-          <span flex></span>
-          <span class="text-bold blue-900-fg pr-8">23</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">[Demo] Test JBoss Site</span>
-          <span flex></span>
-          <span class="text-bold blue-900-fg pr-8">4</span>            
-        </div>
-        <div layout="row" layout-align="space-between center" class="div-list pv-16 border-top">
-          <span class="pl-8">TC 25</span>
-          <span flex></span>
-          <span class="text-bold blue-900-fg pr-8">4</span>            
+          <span class="text-bold blue-900-fg pr-8">{{project.numberCase}}</span>            
         </div>
         <!--End Body-->
 
@@ -246,67 +186,17 @@
               <th><span class="text-bold">Error rate(%)</span></th>
             </thead>
             <tbody>
-              <tr>
-                <td><span class="text-bold blue-900-fg">1</span></td>
+              <tr ng-repeat="project in persProjects">
+                <td><span class="text-bold blue-900-fg">{{$index+1}}</span></td>
                 <td>
-                  <span >Mock 1</span>
+                  <span ng-click="goProject(project)">{{project.projectName}}</span>
                 </td>
-                <td><span >20</span></td>
-                <td><span >5</span></td>
-                <td><span >1000</span></td>
-                <td><span >5</span></td>
-                <td><span >1</span></td>
-                <td><span class="text-bold red-800-fg">98</span></td>
-              </tr>
-              <tr>
-                <td><span class="text-bold blue-900-fg">2</span></td>
-                <td><span >Mock 2</span></td>
-                <td><span >20</span></td>
-                <td><span >5</span></td>
-                <td><span >1000</span></td>
-                <td><span >5</span></td>
-                <td><span >1</span></td>
-                <td><span class="text-bold red-800-fg">98</span></td>
-              </tr>
-              <tr>
-                <td><span class="text-bold blue-900-fg">3</span></td>
-                <td><span >Mock 3</span></td>
-                <td><span >20</span></td>
-                <td><span >5</span></td>
-                <td><span >1000</span></td>
-                <td><span >5</span></td>
-                <td><span >1</span></td>
-                <td><span class="text-bold red-800-fg">98</span></td>
-              </tr>
-              <tr>
-                <td><span class="text-bold blue-900-fg">4</span></td>
-                <td><span >Mock 4</span></td>
-                <td><span >20</span></td>
-                <td><span >5</span></td>
-                <td><span >1000</span></td>
-                <td><span >5</span></td>
-                <td><span >1</span></td>
-                <td><span class="text-bold red-800-fg">98</span></td>
-              </tr>
-              <tr>
-                <td><span class="text-bold blue-900-fg">5</span></td>
-                <td><span >Mock 5</span></td>
-                <td><span >20</span></td>
-                <td><span >5</span></td>
-                <td><span >1000</span></td>
-                <td><span >5</span></td>
-                <td><span >1</span></td>
-                <td><span class="text-bold red-800-fg">98</span></td>
-              </tr>
-              <tr>
-                <td><span class="text-bold blue-900-fg">6</span></td>
-                <td><span >Mock 6</span></td>
-                <td><span >20</span></td>
-                <td><span >5</span></td>
-                <td><span >1000</span></td>
-                <td><span >5</span></td>
-                <td><span >1</span></td>
-                <td><span class="text-bold red-800-fg">98</span></td>
+                <td><span >{{project.samples}}</span></td>
+                <td><span >{{project.number_engines}}</span></td>
+                <td><span >{{project.users}}</span></td>
+                <td><span >{{project.ram_up}}</span></td>
+                <td><span >{{project.loops}}</span></td>
+                <td><span class="text-bold red-800-fg">{{project.error_percent}}</span></td>
               </tr>
             </tbody>
           </table>

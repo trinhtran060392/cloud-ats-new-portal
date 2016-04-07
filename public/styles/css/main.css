@@ -164,3 +164,8 @@
       max-width: inherit;
     }
 
+
+.login-toast .md-toast-content {
+  box-shadow: none !important; 
+  background-color: #D32F2F !important;
+}

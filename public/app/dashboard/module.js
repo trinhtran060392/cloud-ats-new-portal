@@ -17,7 +17,8 @@ define([
           templateUrl: 'app/dashboard/views/dashboard.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'dashboard/controllers/dashboard-ctrl'
+              'dashboard/controllers/dashboard-ctrl',
+              'services/dashboard-service',
             ])
           }
         }
