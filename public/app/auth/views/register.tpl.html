@@ -21,19 +21,25 @@
           <div class="title">
             Create an account
           </div>
-          <form name="registerForm">
-            <md-input-container class ="md-block"><input type="text" name="Name"
-            ng-model="form.name" placeholder="Name" >
+          <form name="registerForm" ng-submit="submit()" ng-controller="RegisterCtrl">
+            <md-input-container class ="md-block"><input type="text" name="firstName"
+            ng-model="form.firstname" placeholder="First Name" >
+            </md-input-container>
+            <md-input-container class ="md-block"><input type="text" name="lastName"
+            ng-model="form.lastname" placeholder="Last Name" >
             </md-input-container>
 
             <md-input-container class="md-block">
-              <input type="email" name="email" ng-model="form.email" placeholder="Email" ng-pattern="/^.+@.+\..+$/" required>
+              <input type="email" name="email" ng-model="form.email" placeholder="Email" ng-pattern="/^.+@.+\..+$/" required="" email-validate>
               <div ng-messages="registerForm.email.$error">
                 <div ng-message="required">
                   <span>Email field is required</span>
                 </div>
-                <div>
-                  
+                <div ng-message="pattern">
+                  <span>Wrong format</span>
+                </div>
+                <div ng-if="checkEmail" class="md-input-email-validate">
+                  <span>The email exists, you can use another email</span>
                 </div>
               </div>
               <div class="md-errors-spacer"></div>
@@ -49,10 +55,13 @@
             </md-input-container>
             <md-input-container class="md-block">
             <input type="password" name="passwordConfirm"
-            ng-model="form.passwordConfirm" placeholder="Password (Confirm)" required="">
-               <div ng-messages="registerForm.passwordConfirm.$error" role="alert" aria-live="assertive">
+            ng-model="form.passwordConfirm" placeholder="Password (Confirm)" required="" compare-to="form.password">
+               <div ng-messages="registerForm.passwordConfirm.$error" role="alert" aria-live="assertive" >
                   <div ng-message="required">
                     <span>Password Confirm field is required</span>
+                  </div>
+                  <div ng-message="compareTo">
+                    <span>Password Confirm is different to password</span>
                   </div>
                </div>
                <div class="md-errors-spacer">
@@ -64,11 +73,10 @@
             </md-input-container>
             <md-input-container class="md-block">
               <label>Tenant</label>
-              <md-select name="chooseTenant" ng-model="tenant" required="">
-                <md-option value="1">Fsoft</md-option>
-                <md-option value="2">JAV.G</md-option>
+              <md-select name="tenant" required=""  ng-model="form.tenant">
+                <md-option ng-repeat="tenant in tenants" value="{{tenant}}">{{tenant._id}}</md-option>
               </md-select>
-              <div class="errors" ng-messages="form.chooseTenant.$error" ng-if="form.$dirty">
+              <div class="errors" ng-messages="form.tenant.$error" ng-if="form.$dirty">
                 <div ng-message="required">Tenant Required</div>
               </div>
             </md-input-container>

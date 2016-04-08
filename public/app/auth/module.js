@@ -30,7 +30,15 @@ define([
       url: '/register',
       views:{
         root: {
-          templateUrl: 'app/auth/views/register.tpl.html'
+          controller: 'RegisterCtrl',
+          templateUrl: 'app/auth/views/register.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'auth/controllers/register-ctrl',
+              'auth/directives/compare-pass',
+              'auth/directives/email-validate'
+            ])
+          }
         }
       },
       data:{

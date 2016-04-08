@@ -55,6 +55,7 @@ define(['app'], function(app) {
     };
 
     function register(email, password, firstname, lastname, tenant, space, callback) {
+      console.log(tenant);
       var request = {
         method: 'POST',
         url: appConfig.RestEntry + '/api/v1/user/register',
