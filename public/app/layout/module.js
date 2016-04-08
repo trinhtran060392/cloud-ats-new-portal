@@ -22,6 +22,9 @@ define([
               deps: $couchPotatoProvider.resolveDependencies([
                 'auth/controllers/logout-controller',
                 'layout/directives/list-space',
+                'layout/directives/user-info',
+                'components/language/language-controller',
+                'components/language/language',
               ])
             }
         }

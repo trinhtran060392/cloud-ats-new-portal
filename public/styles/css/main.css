@@ -193,3 +193,10 @@ button.action-icon:hover > * {
   margin-top: 0;
   padding-top: 5px;
 }
+.flag {
+  width: 16px;
+  height: 11px;
+  background: url(../img/flags/jp.png) no-repeat;
+  margin-top: -.18em;
+  display: inline-block;
+}
