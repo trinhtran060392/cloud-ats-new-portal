@@ -25,8 +25,9 @@ define([
           }
         }
       },
-      data: {
-        title: 'Projects'
+       data: {
+        title: 'Projects',
+        requireLogin: true
       }
     })
   }]);

@@ -57,9 +57,9 @@
                 </md-menu>
               </md-menu-item>
               <md-menu-divider></md-menu-divider>
-              <md-menu-item class="md-indent">
+              <md-menu-item class="md-indent" ng-controller="LogoutCtrl">
                 <md-icon md-svg-icon="logout-variant" class="md-warn"></md-icon>
-                <md-button ui-sref="login">Logout</md-button>
+                <md-button ng-click="logout()">Logout</md-button>
               </md-menu-item>
             </md-menu-content>
 

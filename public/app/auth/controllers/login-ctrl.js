@@ -54,5 +54,6 @@ define(['auth/module'], function (module) {
         });
       }
 		}
+
 	}]);
 })

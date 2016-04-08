@@ -17,7 +17,12 @@ define([
       abstract: true,
       views: {
         'root': {
-          templateUrl: 'app/layout/views/layout.tpl.html'
+          templateUrl: 'app/layout/views/layout.tpl.html',
+          resolve: {
+              deps: $couchPotatoProvider.resolveDependencies([
+                'auth/controllers/logout-controller'
+              ])
+            }
         }
       }
     });

@@ -24,7 +24,8 @@ define([
         }
       },
       data: {
-        title: 'Dashboard'
+        title: 'Dashboard',
+        requireLogin: true
       }
     });
   }]);
