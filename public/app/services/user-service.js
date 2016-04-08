@@ -22,7 +22,7 @@ define(['app'], function(app) {
         .error(function(data, status) {
           switch (status) {
             case 403:
-              $state.go('403');
+              $state.go('login');
               break;
             case 401:
               $state.go('401');

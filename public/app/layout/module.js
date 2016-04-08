@@ -20,7 +20,8 @@ define([
           templateUrl: 'app/layout/views/layout.tpl.html',
           resolve: {
               deps: $couchPotatoProvider.resolveDependencies([
-                'auth/controllers/logout-controller'
+                'auth/controllers/logout-controller',
+                'layout/directives/list-space',
               ])
             }
         }

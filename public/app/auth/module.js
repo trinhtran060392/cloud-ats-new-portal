@@ -44,6 +44,17 @@ define([
       data:{
         title:'Register'
       }
+    }).state('403',  {
+      url: '/403.html',
+      views: {
+        root: {
+          templateUrl: 'app/auth/views/errors/403.html'
+        }
+      },
+      data: {
+        title: 'Forbidden',
+        htmlId: 'extr-page'
+      }
     });
   }]);
 

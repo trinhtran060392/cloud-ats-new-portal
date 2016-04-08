@@ -8,6 +8,9 @@ define(['layout/module', 'highcharts', 'lodash'], function (module, highcharts, 
     var fails = [];
     var ids = [];
     DashboardService.summary(function (data, status) {
+      if (!data) {
+        return;
+      }
       var recents = JSON.parse(data.recentProjects);
       var topbiggest = JSON.parse(data.topBiggestProject);
       var topKeywordFail = JSON.parse(data.topKeywordFail);

@@ -23,7 +23,6 @@ define(['layout/module'], function(module) {
               }
 
               var current = $window.sessionStorage.getItem('context');
-              console.log(current);
               //call to service to get current context with authToken if session is not setted
               if (current === 'null' || current === null) {
                 AuthenticationService.context().then(function(context) {
