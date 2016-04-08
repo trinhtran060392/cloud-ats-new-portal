@@ -19,13 +19,13 @@
   <div layout="column" flex>
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
-      <div ng-repeat="i in ['1','2','3','4','5','6', '1','2','3','4','5','6', '1','2','3','4','5','6'] track by $index" layout="row" flex="20" class="project ms-card"> 
+      <div ng-repeat="project in projects track by $index" layout="row" flex="20" class="project ms-card"> 
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
           <div class="text h2 p-16">
             <a href="javascript:void(0)" ng-click="clickProject($event)" class="md-primary-fg">
-              <md-tooltip>CloudATS Project FHU FPT site{{i}}</md-tooltip>
-              CloudATS Project FHU FPT site{{i}}
+              <md-tooltip>{{project.name}}</md-tooltip>
+              {{project.name}}
             </a>
           </div>
 
@@ -34,12 +34,12 @@
             <div layout="column" flex>
               <div class="title" layout="row" layout-align="start center">
                 <a href="javascript:void(0)" class="text" flex>
-                  <md-tooltip>Hai Nguyen Hand some boy</md-tooltip>
-                  Hai Nguyen Hand some boy
+                  <md-tooltip>{{project.creator._id}}</md-tooltip>
+                  {{project.creator._id}}
                 </a>
                 <span flex>created on</span>
               </div>
-              <div class="subtitle secondary-text">April 5, 2016</div>
+              <div class="subtitle secondary-text">{{project.created_date.$date}}</div>
             </div>
           </div>
 

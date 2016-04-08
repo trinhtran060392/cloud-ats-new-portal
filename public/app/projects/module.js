@@ -17,7 +17,10 @@ define([
           templateUrl: 'app/projects/views/projects.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'projects/controllers/projects-ctrl'
+              'projects/controllers/projects-ctrl',
+              'services/keyword-service',
+              'services/selenium-upload-service',
+              'services/performance-service'
             ])
           }
         }

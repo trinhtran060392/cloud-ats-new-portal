@@ -1,4 +1,4 @@
-define(['selenium/module'], function(module) {
+define(['layout/module'], function(module) {
   'use strict';
 
   module.registerFactory('SeleniumUploadService', ['$http', '$cookies', function($http, $cookies) {

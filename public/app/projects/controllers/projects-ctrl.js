@@ -1,7 +1,35 @@
-define(['projects/module'], function (module) {
+define(['projects/module', 'lodash'], function (module, _) {
   'use strict';
 
-  module.registerController('ProjectsCtrl', ['$scope', '$mdBottomSheet', function($scope, $mdBottomSheet) {
+  module.registerController('ProjectsCtrl', ['SeleniumUploadService', '$scope', '$mdBottomSheet', 'KeywordService', 'PerformanceService', function(SeleniumUploadService, $scope, $mdBottomSheet, KeywordService, PerformanceService) {
+
+    var loadPerformanceProjects = function() {
+      PerformanceService.projects(function (response) {
+        if ($scope.projects === undefined) $scope.projects = [];
+        $scope.projects.push(response);
+        $scope.projects = _.flatten($scope.projects, true);
+      });
+    };
+
+    var loadKeywordProjects = function() {
+      KeywordService.list(function (response) {
+        if ($scope.projects === undefined) $scope.projects = [];
+        $scope.projects.push(response);
+        $scope.projects = _.flatten($scope.projects, true);
+      });
+    };
+
+    var loadKeywordUploadProjects = function() {
+      SeleniumUploadService.list(function (response) {
+        if ($scope.projects === undefined) $scope.projects = [];
+        $scope.projects.push(response);
+        $scope.projects = _.flatten($scope.projects, true);
+      });
+    };
+
+    loadPerformanceProjects();
+    loadKeywordProjects();
+    loadKeywordUploadProjects();
 
     $scope.clickProject = function ($event) {
       $scope.projectName = $event.currentTarget.innerText;
@@ -16,6 +44,5 @@ define(['projects/module'], function (module) {
         console.log(clickedItem);
       })
     }
-
   }]);
 })

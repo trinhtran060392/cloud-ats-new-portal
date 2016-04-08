@@ -7,7 +7,6 @@ define(['auth/module'], function(module) {
 
 		AuthenticationService.getTenants(function(data){
 			$scope.tenants = data;
-      console.log(data);
       if (data.length > 0) {
         $scope.checkTenant = true;
       } else {
@@ -22,7 +21,7 @@ define(['auth/module'], function(module) {
       tenant._id = $scope.form.tenant._id;
       if ($scope.checkEmail == false) {
         AuthenticationService.register($scope.form.email, $scope.form.password, 
-           $scope.form.firstname, $scope.form.lastname, $scope.form.tenant,
+           $scope.form.firstname, $scope.form.lastname, JSON.parse($scope.form.tenant)._id,
            $scope.form.space, function(data) {
           if (data.error) {
             $scope.checkEmail = true;
