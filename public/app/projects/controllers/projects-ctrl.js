@@ -6,11 +6,9 @@ define(['projects/module', 'lodash'], function (module, _) {
     var parse = function (timestamp) {
 
       var date = new Date(timestamp);
-      var day = date.getDay();
-      var year = date.getFullYear();
-      var minutes = date.getMinutes();
-      var month = date.getMonth();
-      var result = date.toLocaleDateString() + '||'+ date.toLocaleTimeString();
+      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+      var result = months[date.getMonth()] +" " + date.getDate() +" "+ date.getFullYear();
 
       return result;
     }
