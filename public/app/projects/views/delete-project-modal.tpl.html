@@ -1,0 +1,38 @@
+<md-dialog aria-label="Create Project"  ng-cloak ng-controller="ProjectsCtrl">
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Delete Project:{{projectName}}</span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <h4>Enter Project Name and Password of User Create this Project</h4>
+      <div class="md-dialog-content">
+        <form name="deleteForm">
+          <md-input-container class="md-block">
+          <input type="text" name="projectName" placeholder="Project Name" required ng-model="form.projectName">
+          <div ng-messages="deleteForm.projectName.$error" role="alert" aria-live="assertive" >
+              <div ng-message="required">Project name is required</div>
+              <div ng-if="wrongName" class="md-input-email-validate">Project name wrong</div>
+          </div>
+          </md-input-container>
+          
+          <md-input-container class="md-block">
+          <input type="password" name="password" placeholder="Password" required="" ng-model="form.password">
+          <div ng-messages="deleteForm.password.$error" role="alert" aria-live="assertive">
+              <div ng-message="required">Password is required</div>
+          </div>
+          </md-input-container>
+          
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <span flex></span>
+      <md-button ng-click="submit()" ng-disabled="deleteForm.$invalid || deleteForm.$pristine || wrongName">
+       SUBMIT
+      </md-button>
+      <md-button ng-click="cancel()" style="margin-right:20px;">
+        CANCEL
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

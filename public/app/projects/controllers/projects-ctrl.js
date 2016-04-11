@@ -1,7 +1,7 @@
-define(['projects/module', 'lodash'], function (module, _) {
+define(['projects/module','lodash'], function (module, _) {
   'use strict';
 
-  module.registerController('ProjectsCtrl', ['SeleniumUploadService', '$scope', '$mdBottomSheet', 'KeywordService', 'PerformanceService', function(SeleniumUploadService, $scope, $mdBottomSheet, KeywordService, PerformanceService) {
+  module.registerController('ProjectsCtrl', ['SeleniumUploadService', '$scope', '$mdBottomSheet', 'KeywordService', 'PerformanceService', '$mdDialog', function(SeleniumUploadService, $scope, $mdBottomSheet, KeywordService, PerformanceService, $mdDialog) {
 
     var parse = function (timestamp) {
 
@@ -60,11 +60,69 @@ define(['projects/module', 'lodash'], function (module, _) {
         scope: $scope,
         preserveScope: true,
         controller: function () {
-          console.log($scope);
+          // console.log($scope);
         }
       }).then(function (clickedItem) {
-        console.log(clickedItem);
+        // console.log(clickedItem);
       })
-    }
+    };
+
+    $scope.showCreateNewProject = function(ev) {
+    $mdDialog.show({
+      templateUrl: 'app/projects/views/new-project-modal.tpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      scope: $scope,
+      preserveScope: true,
+      controller: function DialogController($scope, $mdDialog) {
+          $scope.newProject ="";
+          $scope.hide = function() {
+            $mdDialog.hide();
+          };
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
+          $scope.submit = function() {
+            console.log($scope.newProject);
+          };
+        }
+    });
+  };
+
+  $scope.showDeleteProject = function(ev) {
+    $mdDialog.show({
+        
+        templateUrl: 'app/projects/views/delete-project-modal.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        scope: $scope,
+        preserveScope: true,
+        controller: function DialogController($scope, $mdDialog) {
+
+            $scope.form = {};
+            $scope.$watch('form.projectName', function (newValue, old) {
+              if($scope.projectName !== $scope.form.projectName && $scope.form.projectName){
+                $scope.wrongName = true;
+               } else {
+                $scope.wrongName = false;
+               };
+            });
+
+            $scope.hide = function() {
+              $mdDialog.hide();
+            };
+            $scope.cancel = function() {
+              $mdDialog.cancel();
+            };
+            $scope.submit = function() {
+              console.log("delete Project");
+            };
+          }
+      })
+  }
+  
+    
   }]);
 })

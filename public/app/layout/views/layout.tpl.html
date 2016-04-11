@@ -11,10 +11,10 @@
       <div class="nav" layout="row" layout-align="start center">
         <div class="md-toolbar-tools">
           <a data-ui-sref="app.dashboard">
-            <md-button class="nav-button"><span>{{getWord('Dashboard')}}</span></md-button>
+            <md-button class="nav-button" aria-label="Dashboard"><span>{{getWord('Dashboard')}}</span></md-button>
           </a>
           <a data-ui-sref="app.projects">
-            <md-button class="nav-button"><span>{{getWord('Projects')}}</span></md-button>
+            <md-button class="nav-button" aria-label="Projects"><span>{{getWord('Projects')}}</span></md-button>
           </a>
         </div>
       </div>
@@ -28,11 +28,11 @@
         <md-menu-bar class="user-menu-bar">
           <md-menu md-position-mode="left bottom">
             
-            <md-button class="user-button" ng-click="$mdOpenMenu()">
+            <md-button class="user-button" ng-click="$mdOpenMenu()" aria-label="Language">
               <div layout="row" layout-align="space-between center">
                 <span layout="row" layout-align="start center" class="ng-scope layout-align-start-center layout-row">
                   <img class="flag" ng-src="{{currentImg}}">
-                  <md-button>{{currentTitle}}</md-button>
+                  <md-button aria-label="Language">{{currentTitle}}</md-button>
                 </span>
                 <md-icon md-svg-icon="chevron-down"></md-icon>
               </div>
@@ -42,7 +42,7 @@
               <md-menu-item class="md-indent" ng-repeat="i in languages" ng-click="choose(i)">
                 <span layout="row" layout-align="start center" class="ng-scope layout-align-start-center layout-row">
                   <img class="flag" ng-src="styles/img/flags/{{i.key}}.png">
-                  <md-button>{{i.title}}</md-button>
+                  <md-button aria-label="LanguageItem">{{i.title}}</md-button>
                 </span>
               </md-menu-item>
               
