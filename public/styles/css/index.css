@@ -30221,7 +30221,7 @@ ms-nav {
     overflow: hidden; }
     .ms-navigation ul li {
       position: relative; }
-      .ms-navigation ul li.collapsed ul {
+      .ms-navigation ul li ul {
         display: none; }
   .ms-navigation .animate-height {
     transition: height 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
@@ -30300,9 +30300,9 @@ ms-nav {
       line-height: 32px;
       color: rgba(255, 255, 255, 0.3); }
   .ms-navigation .ms-navigation-node:not(.group).has-children:not(.collapsed) {
-    background-color: rgba(0, 0, 0, 0.12); }
+    background-color: rgba(0, 0, 0, 0.05); }
   .ms-navigation .ms-navigation-node:not(.group).has-children.collapsing {
-    background-color: rgba(0, 0, 0, 0.12); }
+    background-color: rgba(0, 0, 0, 0.05); }
   .ms-navigation .ms-navigation-node:not(.group).has-children .has-children:not(.collapsed) {
     background: none; }
   .ms-navigation li .ms-navigation-button {

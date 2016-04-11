@@ -1,0 +1,98 @@
+<ul>
+  <li class="ms-navigation-node">
+    <div class="ms-navigation-item" layout="row">
+      <a data-state="app.project.overview" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.overview'}" ng-click="active($event)">
+        <i class="icon s16 icon-chart-line black-fg"></i>
+        <span class="title black-fg" flex>Overview</span>
+      </a>
+    </div>
+  </li>
+
+  <!-- Start keyword items -->
+  <li id="keyword-menu" class="ms-navigation-node has-children collapsed">
+    <div class="ms-navigation-item" layout="row">
+      <a class="ms-navigation-button" ng-click="expand($event)">
+        <i class="icon s16 icon-share-variant black-fg"></i>
+        <span class="title black-fg" flex>Functional</span>
+        <i class="icon-chevron-right s16 ng-scope black-fg arrow"></i>
+      </a>
+    </div>
+
+    <ul>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.keyword-reports" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.keyword-reports'}" ng-click="active($event)">
+            <span class="title black-fg" flex>Reports</span>
+          </a>
+        </div>
+      </li>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.keyword-suites" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.keyword-suites'}" ng-click="active($event)">
+            <span class="title black-fg" flex>Suites</span>
+          </a>
+        </div>
+      </li>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.keyword-cases" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.keyword-cases'}" ng-click="active($event)">
+            <span class="title black-fg" flex>Cases</span>
+          </a>
+        </div>
+      </li>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.keyword-data" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.keyword-data'}" ng-click="active($event)">
+            <span class="title black-fg" flex>Data Driven</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <!-- End keyword items -->
+
+  <!-- Start performance items -->
+  <li id="performance-menu" class="ms-navigation-node has-children collapsed">
+    <div class="ms-navigation-item" layout="row">
+      <a class="ms-navigation-button" ng-click="expand($event)">
+        <i class="icon s16 icon-speedometer black-fg"></i>
+        <span class="title black-fg" flex>Performance</span>
+        <i class="icon-chevron-right s16 ng-scope black-fg arrow"></i>
+      </a>
+    </div>
+
+    <ul>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.performance-reports" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.performance.reports'}" ng-click="active($event)">
+            <span class="title black-fg" flex>Reports</span>
+          </a>
+        </div>
+      </li>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.performance-scripts" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.performance.scripts'}" ng-click="active($event)">
+            <span class="title black-fg" flex>Scripts</span>
+          </a>
+        </div>
+      </li>
+      <li class="ms-navigation-node">
+        <div class="ms-navigation-item" layout="row">
+          <a data-state="app.project.performance-csv"  class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.performance.csv'}" ng-click="active($event)">
+            <span class="title black-fg" flex>CSV Data</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <!-- End performance items -->
+
+  <li class="ms-navigation-node">
+    <div class="ms-navigation-item" layout="row">
+      <a data-state="app.project.selenium-upload" class="ms-navigation-button" ng-class="{active: state.current.name == 'app.project.selenium-upload'}" ng-click="active($event)">
+        <i class="icon s16 icon-cloud-upload black-fg"></i>
+        <span class="title black-fg" flex>Selenium Upload</span>
+      </a>
+    </div>
+  </li>
+</ul>

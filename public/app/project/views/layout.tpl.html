@@ -1,0 +1,15 @@
+<div id="layout-vertical-navigation" layout="row" flex>
+  <md-sidenav id="vertical-navigation" md-is-locked-open="$mdMedia('gt-sm')">
+    
+    <div class="header-box" id="header-box" data-ui-view="header-box">
+    </div>
+
+    <md-divider></md-divider>
+
+    <div class="ms-navigation ms-scroll" perfect-scrollbar>
+      <project-nav></project-nav>
+    </div>
+  </md-sidenav>
+  <md-content id="sub-content" data-ui-view="sub-content" class="md-hue-1" perfect-scrollbar flex>
+  </md-content>
+</div> 

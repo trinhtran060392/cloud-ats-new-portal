@@ -9,6 +9,9 @@ define([
   
   'dashboard/module',
   'projects/module',
+  'project/module',
+  'project/keyword-module',
+  'project/performance-module',
   'auth/module'
 ], function() {
   'use strict';

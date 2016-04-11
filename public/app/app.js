@@ -17,6 +17,9 @@ define([
     'app.layout',
     'app.dashboard',
     'app.projects',
+    'app.project',
+    'app.project.keyword',
+    'app.project.performance',
     'app.auth'
   ]);
 
