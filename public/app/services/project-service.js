@@ -21,7 +21,7 @@ define(['layout/module'], function (module) {
           callback(data, status);
         });
       },
-      create: function (name, creator, callback) {
+      create: function (name, callback) {
         var request = {
           method: 'POST',
           url: appConfig.RestEntry + '/api/v1/project',
@@ -30,8 +30,7 @@ define(['layout/module'], function (module) {
             'X-SPACE': $cookies.get('space')
           },
           data: {
-            name : name,
-            creator: creator
+            name : name
           }
         };
 

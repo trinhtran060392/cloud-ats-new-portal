@@ -1,26 +1,30 @@
 <md-dialog aria-label="Create Project"  ng-cloak>
-  <form>
     <md-toolbar>
       <div class="md-toolbar-tools" style="background: #2E62B1 !important;">
         <h2>Create New Project</h2>
       </div>
     </md-toolbar>
     <md-dialog-content>
+     <form name="project">
       <div class="md-dialog-content">
         <md-input-container >
-          <input type="text" name="newProject" ng-model="newProject" placeholder="Project Name" >
+          <input type="text" name="newProject" md-maxlength="30" ng-model="newProject" placeholder="Project Name" required="">
+          <div ng-messages="project.newProject.$error" role="alert" aria-live="assertive">
+              <div ng-message="required">Project Name is required</div>
+              <div ng-message="md-maxlength">That's too long</div>
+          </div>
         </md-input-container>
   
       </div>
+     </form>
     </md-dialog-content>
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="submit()">
+      <md-button ng-click="submit()" ng-disabled="project.$invalid || project.$pristine">
        Create
       </md-button>
       <md-button ng-click="cancel()" style="margin-right:20px;">
         Cancel
       </md-button>
     </md-dialog-actions>
-  </form>
 </md-dialog>

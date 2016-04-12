@@ -1,7 +1,7 @@
 define(['projects/module','lodash'], function (module, _) {
   'use strict';
 
-  module.registerController('ProjectsCtrl', ['ProjectService', 'SeleniumUploadService', '$scope', '$mdBottomSheet', 'KeywordService', 'PerformanceService', '$mdDialog', function(ProjectService, SeleniumUploadService, $scope, $mdBottomSheet, KeywordService, PerformanceService, $mdDialog) {
+  module.registerController('ProjectsCtrl', ['ProjectService', 'SeleniumUploadService', '$scope', '$mdBottomSheet', 'KeywordService', 'PerformanceService', '$mdDialog','$mdToast', function(ProjectService, SeleniumUploadService, $scope, $mdBottomSheet, KeywordService, PerformanceService, $mdDialog, $mdToast) {
 
     var parse = function (timestamp) {
 
@@ -20,47 +20,6 @@ define(['projects/module','lodash'], function (module, _) {
 
       $scope.projects = data;
     });
-
-    
-    /*var loadPerformanceProjects = function() {
-      PerformanceService.projects(function (response) {
-        _.forEach(response, function (project) {
-          project.created_date = parse(project.created_date);
-        });
-
-        if ($scope.projects === undefined) $scope.projects = [];
-        $scope.projects.push(response);
-        $scope.projects = _.flatten($scope.projects, true);
-      });
-    };
-
-    var loadKeywordProjects = function() {
-      KeywordService.list(function (response) {
-         _.forEach(response, function (project) {
-          project.created_date = parse(project.created_date);
-        });
-
-        if ($scope.projects === undefined) $scope.projects = [];
-        $scope.projects.push(response);
-        $scope.projects = _.flatten($scope.projects, true);
-      });
-    };
-
-    var loadKeywordUploadProjects = function() {
-      SeleniumUploadService.list(function (response) {
-         _.forEach(response, function (project) {
-          project.created_date = parse(project.created_date);
-        });
-
-        if ($scope.projects === undefined) $scope.projects = [];
-        $scope.projects.push(response);
-        $scope.projects = _.flatten($scope.projects, true);
-      });
-    };*/
-
-    /*loadPerformanceProjects();
-    loadKeywordProjects();
-    loadKeywordUploadProjects();*/
 
     $scope.clickProject = function ($event) {
       $scope.projectName = $event.currentTarget.innerText;
@@ -93,9 +52,16 @@ define(['projects/module','lodash'], function (module, _) {
             $mdDialog.cancel();
           };
           $scope.submit = function() {
-            console.log($scope.newProject);
+            ProjectService.create($scope.newProject, function(data, status){
+               if (status) {
+                $scope.projects.push(data);
+                $mdDialog.hide();
+                $mdToast.show($mdToast.simple().position('top right').textContent('Create new project success!'));
+               }
+            });
           };
         }
+    }).then(function () {
     });
   };
 
