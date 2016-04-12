@@ -6,7 +6,8 @@ define([
 
   'services/user-service',
   'services/authentication-service',
-  
+  'services/project-service',
+
   'dashboard/module',
   'projects/module',
   'project/module',
