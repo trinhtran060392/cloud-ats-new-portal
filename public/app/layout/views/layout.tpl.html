@@ -30,20 +30,20 @@
             
             <md-button class="user-button" ng-click="$mdOpenMenu()" aria-label="Language">
               <div layout="row" layout-align="space-between center">
-                <span layout="row" layout-align="start center" class="ng-scope layout-align-start-center layout-row">
-                  <img class="flag" ng-src="{{currentImg}}">
-                  <md-button aria-label="Language">{{currentTitle}}</md-button>
-                </span>
+                <img class="flag" ng-src="{{currentImg}}">
+                <span>{{currentTitle}}</span>
                 <md-icon md-svg-icon="chevron-down"></md-icon>
               </div>
             </md-button>
 
             <md-menu-content width="3">
               <md-menu-item class="md-indent" ng-repeat="i in languages" ng-click="choose(i)">
-                <span layout="row" layout-align="start center" class="ng-scope layout-align-start-center layout-row">
-                  <img class="flag" ng-src="styles/img/flags/{{i.key}}.png">
-                  <md-button aria-label="LanguageItem">{{i.title}}</md-button>
-                </span>
+                <md-button style="padding-left: 32px;">
+                  <span layout="row" layout-align="start center" class="ng-scope layout-align-start-center layout-row">
+                    <img class="flag" ng-src="styles/img/flags/{{i.key}}.png">
+                    <span>{{i.title}}</span>
+                  </span>
+                </md-button>
               </md-menu-item>
               
             </md-menu-content>

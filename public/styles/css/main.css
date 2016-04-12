@@ -196,6 +196,6 @@ button.action-icon:hover > * {
   width: 16px;
   height: 11px;
   background: url(../img/flags/jp.png) no-repeat;
-  margin-top: -.18em;
+  margin-right: 8px;
   display: inline-block;
 }

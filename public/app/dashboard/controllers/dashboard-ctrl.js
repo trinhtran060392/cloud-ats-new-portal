@@ -16,8 +16,9 @@ define(['layout/module', 'highcharts', 'lodash'], function (module, highcharts, 
       var topKeywordFail = JSON.parse(data.topKeywordFail);
       var topKeywordPass = JSON.parse(data.topKeywordPass);
       var persProjects = JSON.parse(data.persProjects);
+      var i = 0;
       _.forEach(recents, function (data) {
-        names.push('1.'+data.x);
+        names.push((++i) + '.' + data.x);
         passes.push(data.P);
         fails.push(data.F);
         ids.push(data._id);
