@@ -6,7 +6,7 @@
       <md-icon md-font-icon="icon-magnify" class="icon s24" aria-hidden="true"></md-icon>
       <input type="text" placeholder="Search for project name" aria-invalid="false" flex>
       <div class="projects-action grey-300-border-left pl-16" layout="row" layout-align="start center">
-        <md-button class="md-icon-button action-icon" aria-label="Create New Project" ng-controller="ProjectsCtrl" ng-click="showCreateNewProject($event)">
+        <md-button class="md-icon-button action-icon" aria-label="Create New Project" ng-click="showCreateNewProject($event)">
           <md-tooltip>
             Create New Project
           </md-tooltip>
@@ -15,6 +15,7 @@
       </div>
     </div>
   </div>
+
   <div layout="column" flex>
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
@@ -22,7 +23,7 @@
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
           <div class="text h2 p-16">
-            <a href="javascript:void(0)" ng-click="clickProject($event)" class="md-primary-fg">
+            <a href="javascript:void(0)" ng-click="clickProject($event, project._id)" class="md-primary-fg">
               <md-tooltip>{{project.name}}</md-tooltip>
               {{project.name}}
             </a>
