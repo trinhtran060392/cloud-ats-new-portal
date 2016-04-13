@@ -136,7 +136,7 @@ define(['projects/module','lodash'], function (module, _) {
           $scope.submit = function() {
             ProjectService.clone(id, $scope.data_name, function (data, status){
               if (status === 200) {
-               
+                data.created_date = parse(data.created_date);
                 $scope.projects.push(data);
                 $mdDialog.hide();
                 $mdToast.show($mdToast.simple().position('top right').textContent('The project has been cloned!'));

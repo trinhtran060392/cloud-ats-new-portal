@@ -1,4 +1,4 @@
-define(['keyword/module'], function (module) {
+define(['project/keyword-module'], function (module) {
   'use strict';
 
   module.registerFactory('SuiteService', ['$http', '$cookies', function($http, $cookies) {
@@ -62,6 +62,22 @@ define(['keyword/module'], function (module) {
         var request = {
           method: 'DELETE',
           url: appConfig.RestEntry + '/api/v1/project/keyword/' + projectId + '/suite/' + suiteId ,
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          }
+        };
+
+        $http(request).success(function(data, status) {
+          callback(data, status);
+        }).error(function(data, status) {
+          callback(data, status)
+        });        
+      },
+      clone: function (projectId, suiteId, suiteName, callback) {
+        var request = {
+          method: 'GET',
+          url: appConfig.RestEntry + '/api/v1/project/keyword/' + projectId + '/suite/' + suiteId +'/clone?name='+suiteName ,
           headers: {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
