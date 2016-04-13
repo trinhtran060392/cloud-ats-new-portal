@@ -5,7 +5,7 @@
       </div>
     </md-toolbar>
     <md-dialog-content>
-      <h4>Enter Project Name and Password of User Create this Project</h4>
+      <span>Enter Project Name and Password of User Create this Project</span>
       <div class="md-dialog-content">
         <form name="deleteForm">
           <md-input-container class="md-block">
@@ -20,6 +20,7 @@
           <input type="password" name="password" placeholder="Password" required="" ng-model="form.password">
           <div ng-messages="deleteForm.password.$error" role="alert" aria-live="assertive">
               <div ng-message="required">Password is required</div>
+              <div ng-if="!wrongPassword" class="md-input-email-validate">Password is wrong</div>
           </div>
           </md-input-container>
           

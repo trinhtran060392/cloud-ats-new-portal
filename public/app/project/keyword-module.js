@@ -17,7 +17,8 @@ define([
           templateUrl: 'app/project/views/keyword/reports.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav'
+              'project/directives/project-nav',
+              'project/controllers/execution-func-ctrl'
             ])
           }
         },

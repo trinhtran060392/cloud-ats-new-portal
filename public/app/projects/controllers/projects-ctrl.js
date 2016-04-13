@@ -36,13 +36,13 @@ define(['projects/module','lodash'], function (module, _) {
           // console.log($scope);
         }
       }).then(function (clickedItem) {
-        console.log(clickedItem);
+        // console.log(clickedItem);
       })
     };
 
     $scope.showCreateNewProject = function(ev) {
       $mdDialog.show({
-        templateUrl: 'app/projects/views/new-project-modal.tpl.html',
+        templateUrl: 'app/projects/views/new-project-dialog.tpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -59,9 +59,10 @@ define(['projects/module','lodash'], function (module, _) {
             $scope.submit = function() {
               ProjectService.create($scope.newProject, function(data, status){
                  if (status) {
+                  data.created_date = parse(data.created_date);
                   $scope.projects.push(data);
                   $mdDialog.hide();
-                  $mdToast.show($mdToast.simple().position('top right').textContent('Create new project success!'));
+                  $mdToast.show($mdToast.simple().position('top right').textContent('Create New Project Success!'));
                  }
               });
             };
@@ -71,10 +72,10 @@ define(['projects/module','lodash'], function (module, _) {
   };
 
   $scope.showDeleteProject = function(ev) {
-
+    $scope.wrongPassword = true ;
     $mdDialog.show({
         
-        templateUrl: 'app/projects/views/delete-project-modal.tpl.html',
+        templateUrl: 'app/projects/views/delete-project-dialog.tpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -100,12 +101,14 @@ define(['projects/module','lodash'], function (module, _) {
             $scope.submit = function() {
               ProjectService.delete($scope.currentId, $scope.form.projectName, $scope.form.password, function (data, status){
                 if (status === 200) {
-                  console.log($scope.projects);
                   _.remove($scope.projects, function (project) {
                     return project._id === $scope.currentId;
                   });
                   $mdDialog.hide();
                   $mdBottomSheet.hide();
+                  $mdToast.show($mdToast.simple().position('top right').textContent('Delete Project Success!'));
+                } else {
+                  $scope.wrongPassword = false ;
                 }
               });
             };
