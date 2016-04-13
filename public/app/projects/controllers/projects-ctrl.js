@@ -36,7 +36,6 @@ define(['projects/module','lodash'], function (module, _) {
           // console.log($scope);
         }
       }).then(function (clickedItem) {
-        // console.log(clickedItem);
       })
     };
 
@@ -68,8 +67,8 @@ define(['projects/module','lodash'], function (module, _) {
             };
           }
       }).then(function () {
-    });
-  };
+      });
+    };
 
   $scope.showDeleteProject = function(ev) {
     $scope.wrongPassword = true ;
@@ -83,39 +82,67 @@ define(['projects/module','lodash'], function (module, _) {
         preserveScope: true,
         controller: function DialogController($scope, $mdDialog) {
 
-            $scope.form = {};
-            $scope.$watch('form.projectName', function (newValue, old) {
-              if($scope.projectName !== $scope.form.projectName && $scope.form.projectName){
-                $scope.wrongName = true;
-               } else {
-                $scope.wrongName = false;
-               };
-            });
+          $scope.form = {};
+          $scope.$watch('form.projectName', function (newValue, old) {
+            if($scope.projectName !== $scope.form.projectName && $scope.form.projectName){
+              $scope.wrongName = true;
+             } else {
+              $scope.wrongName = false;
+             };
+          });
 
-            $scope.hide = function() {
-              $mdDialog.hide();
-            };
-            $scope.cancel = function() {
-              $mdDialog.cancel();
-            };
-            $scope.submit = function() {
-              ProjectService.delete($scope.currentId, $scope.form.projectName, $scope.form.password, function (data, status){
-                if (status === 200) {
-                  _.remove($scope.projects, function (project) {
-                    return project._id === $scope.currentId;
-                  });
-                  $mdDialog.hide();
-                  $mdBottomSheet.hide();
-                  $mdToast.show($mdToast.simple().position('top right').textContent('Delete Project Success!'));
-                } else {
-                  $scope.wrongPassword = false ;
-                }
-              });
-            };
-          }
+          $scope.hide = function() {
+            $mdDialog.hide();
+          };
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
+          $scope.submit = function() {
+            ProjectService.delete($scope.currentId, $scope.form.projectName, $scope.form.password, function (data, status){
+              if (status === 200) {
+                _.remove($scope.projects, function (project) {
+                  return project._id === $scope.currentId;
+                });
+                $mdDialog.hide();
+                $mdBottomSheet.hide();
+                $mdToast.show($mdToast.simple().position('top right').textContent('Delete Project Success!'));
+              } else {
+                $scope.wrongPassword = false ;
+              }
+            });
+          };
+        }
       })
-  }
-  
+    }
     
+    $scope.clone = function (id, ev) {
+      $mdDialog.show({
+          
+        templateUrl: 'app/projects/views/clone-project-dialog.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        scope: $scope,
+        preserveScope: true,
+        controller: function DialogController($scope, $mdDialog) {
+
+          $scope.project_name = undefined;
+
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
+          $scope.submit = function() {
+            ProjectService.clone(id, $scope.project_name, function (data, status){
+              if (status === 200) {
+               
+                $scope.projects.push(data);
+                $mdDialog.hide();
+              }
+            });
+          };
+        }
+      })
+    }
+
   }]);
 })
