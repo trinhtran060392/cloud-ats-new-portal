@@ -2,7 +2,7 @@
 
   <md-toolbar layout="row" class="md-menu-toolbar master-toolbar">
 
-    <div class="md-toolbar-tools">
+    <div class="md-toolbar-tools height-56">
       
       <div class="logo" layout="row" layout-align="start center">
         <img src="styles/img/CITUS_ATS-02_02.png">
@@ -20,18 +20,21 @@
       </div>
 
       <div class="space" layout="row" layout-align="start center" list-space>
-        <span>{{getWord('Space: Public')}}</span>
+        <span>{{getWord('Space')}}: Public</span>
       </div>
 
-      <span flex></span>
-      <div layout="row" layout-align="start center" ng-controller="LanguageCtrl">
+      <!-- Search box -->
+      <div id="search-box" data-ui-view="search-box" flex></div>
+      <!-- End search box -->
+
+      <div layout="row" layout-align="start center" ng-controller="LanguageCtrl" ng-hide="true">
         <md-menu-bar class="user-menu-bar">
           <md-menu md-position-mode="left bottom">
             
             <md-button class="user-button" ng-click="$mdOpenMenu()" aria-label="Language">
               <div layout="row" layout-align="space-between center">
                 <img class="flag" ng-src="{{currentImg}}">
-                <span>{{currentTitle}}</span>
+                <span class="text-uppercase">{{currentTitle}}</span>
                 <md-icon md-svg-icon="chevron-down"></md-icon>
               </div>
             </md-button>

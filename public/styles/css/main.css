@@ -25,12 +25,30 @@
   left: 0;
 }
 
+.master-toolbar .search-box md-icon,
+.master-toolbar .search-box input {
+  color: rgba(255,255,255,0.87);
+}
+
+.master-toolbar .search-box input::-webkit-input-placeholder {
+  color: rgba(255,255,255,0.87);
+}
+.master-toolbar .search-box input:-moz-placeholder {
+  color: rgba(255,255,255,0.87);
+}
+.master-toolbar .search-box input::-moz-placeholder {
+  color: rgba(255,255,255,0.87);
+}
+.master-toolbar .search-box input:-ms-input-placeholder {
+  color: rgba(255,255,255,0.87);
+}
+
 .master-toolbar {
   background-color: #2E62B1 !important;
   box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
-  height: 64px;
-  min-height: 64px;
-  max-height: 64px;
+  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
   z-index: 55 !important;
 }
 
@@ -44,7 +62,7 @@
 }
 
 .master-toolbar .nav .nav-button {
-  height: 64px;
+  height: 56px;
   background: transparent; 
 }
 
@@ -93,17 +111,13 @@
 .master-toolbar .user-menu-bar .user-button {
   margin: 0;
   padding: 0 16px;
-  height: 64px;
+  height: 56px;
   text-transform: none;
   background: transparent;
 }
 
 .master-toolbar .user-menu-bar .user-button span, .master-toolbar .user-menu-bar .user-button md-icon {
   color: rgba(255,255,255,0.87);
-}
-
-#dashboard {
-  padding: 16px;
 }
 
 .tr-hover > tbody > tr:hover,
@@ -123,37 +137,10 @@
   overflow: hidden;
 }
 
-#projects .projects-search-container {
-  padding: 28px;
-  height: 104px;
-  min-height: 104px;
-  max-height: 104px;
-}
-
-#projects .projects-search-container .projects-search {
-  height: 56px;
-  line-height: 56px;
-  padding: 18px;
-  background: #FFFFFF;
-}
-
-#projects .projects-search .icon {
-  margin: 0;
-}
-
-#projects .projects-search input {
-  padding-left: 16px !important;
-  height: 56px;
-  color: rgba(0, 0, 0, 0.54);
-}
-
-#projects .projects-action {
-  border-left: 1px solid;
-}
-
 #projects .projects-container {
-  margin-right: 21px; 
-  margin-left: 21px;
+  margin-right: 4px; 
+  margin-left: 4px;
+  padding-top: 4px;
 }
 
 #projects .projects-container .project .ms-card-content-wrapper {
@@ -174,6 +161,10 @@
 }
 
 button.action-icon:hover > * {
+  color: #000000;
+}
+
+a.action-icon:hover > * {
   color: #000000;
 }
 
@@ -198,4 +189,29 @@ button.action-icon:hover > * {
   background: url(../img/flags/jp.png) no-repeat;
   margin-right: 8px;
   display: inline-block;
+}
+
+#loading-bar .bar {
+  background-color: rgb(244,67,54);
+  top: 56px;
+}
+
+.sidenav-toggle {
+  margin: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  background: #FFFFFF !important;
+  border-radius: 0 !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.search-box {
+  background: rgba(255,255,255,.15);
+  border-radius: 2px;
+}
+
+.search-box input {
+  background: none; 
+  border: none; 
+  box-sizing: border-box;
 }

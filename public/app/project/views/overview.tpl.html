@@ -1,3 +1,25 @@
-<div id="overview">
-  <p>Overview project content</p>
+<div id="overview" perfect-scrollbar>
+  
+  <!-- Breadcrumbbs -->
+  <div layout="row" flex="100" class="ms-widget">
+    <div class="ms-widget-front white-bg pv-8">
+      <div layout="row" layout-align="start center">
+        <md-button aria-label="menu" hide-gt-md class="md-icon-button sidenav-toggle" ng-click="toggleProjectNavLeft()">
+          <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+        </md-button>
+        <div class="breadcrumb pl-8" layout-align="start center" layout="row">
+          <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+          <md-icon md-font-icon="icon-chevron-right" class="s16 mh-8"></md-icon>
+          <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Project</a>
+          <md-icon md-font-icon="icon-chevron-right" class="s16 mh-8"></md-icon>
+          <a>Cases</a>
+          <md-icon md-font-icon="icon-chevron-right" class="s16 mh-8"></md-icon>
+          <span>Test Case 1</span>
+          <span flex></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End breadcrumbs -->
+
 </div>

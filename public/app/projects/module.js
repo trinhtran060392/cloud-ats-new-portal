@@ -23,6 +23,9 @@ define([
               'services/performance-service'
             ])
           }
+        },
+        'search-box@app': {
+          templateUrl: 'app/projects/views/projects-search-box.tpl.html'
         }
       },
       data: {

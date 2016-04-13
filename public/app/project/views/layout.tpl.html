@@ -1,6 +1,11 @@
-<div id="layout-vertical-navigation" layout="row" flex>
-  <md-sidenav id="vertical-navigation" md-is-locked-open="$mdMedia('gt-sm')">
-    
+<div id="layout-vertical-navigation" layout="row" flex 
+  ng-init="isSidenavOpen = true; isSidenavLockedOpen = true">
+
+  <md-sidenav id="vertical-navigation" class="md-sidenav-left"
+    md-component-id="project-nav-left" 
+    md-is-locked-open="isSidenavLockedOpen"
+    md-is-open="isSidenavOpen">
+
     <div class="header-box" id="header-box" data-ui-view="header-box">
     </div>
 
@@ -10,6 +15,8 @@
       <project-nav></project-nav>
     </div>
   </md-sidenav>
+
+
   <md-content id="sub-content" data-ui-view="sub-content" class="md-hue-1" perfect-scrollbar flex>
   </md-content>
 </div> 

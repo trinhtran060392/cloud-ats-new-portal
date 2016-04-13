@@ -11,7 +11,7 @@ var require = {
     'angular-aria': '../plugin/angular-aria/angular-aria.min',
     'angular-ui-router': '../plugin/angular-ui-router/release/angular-ui-router.min',
     'angular-couch-potato': '../plugin/angular-couch-potato/dist/angular-couch-potato',
-    'angular-material': '../plugin/angular-material/angular-material',
+    'angular-material': '../plugin/angular-material/angular-material.min',
     'angular-material-icons': '../plugin/angular-material-icons/angular-material-icons.min',
     'angular-loading-bar': '../plugin/angular-loading-bar/build/loading-bar.min',
     'perfect-scrollbar': '../plugin/perfect-scrollbar/js/perfect-scrollbar',
@@ -20,7 +20,7 @@ var require = {
     'c3':'../plugin/c3/c3.min',
     'd3':'../plugin/d3/d3.min',
     'highcharts':'../plugin/highcharts/highcharts',
-    'lodash': '../plugin/lodash/lodash',
+    'lodash': '../plugin/lodash/lodash.min',
     
     'modules-includes': 'includes',
     'appConfig': 'app.config'

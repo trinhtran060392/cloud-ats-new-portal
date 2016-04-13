@@ -5,6 +5,7 @@ define([
   'angular-couch-potato',
   'angular-ui-router',
   'angular-material',
+  'angular-loading-bar',
   'perfect-scrollbar',
   'perfect-scrollbar-jquery'
 ], function (ng, couchPotato) {
@@ -14,6 +15,8 @@ define([
     'ngMaterial',
     'ngMessages',
     'ui.router',
+    'angular-loading-bar',
+
     'app.layout',
     'app.dashboard',
     'app.projects',
@@ -25,8 +28,11 @@ define([
 
   couchPotato.configureApp(app);
 
-  app.config(['$mdThemingProvider', '$mdIconProvider', function ($mdThemingProvider, $mdIconProvider) {
+  app.config(['$mdThemingProvider', '$mdIconProvider', 'cfpLoadingBarProvider', 
+    function ($mdThemingProvider, $mdIconProvider, cfpLoadingBarProvider) {
     
+    cfpLoadingBarProvider.includeSpinner = false;
+
     $mdThemingProvider.definePalette('cloudats-palette', {
       '50': '#EBF1FA',
       '100': '#C2D4EF',

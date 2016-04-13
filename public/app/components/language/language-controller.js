@@ -10,7 +10,7 @@ define(['layout/module'], function(app) {
     Language.getLanguages(function(data) {
       $rootScope.currentImg = 'styles/img/flags/us.png';
       $rootScope.languages = data;
-      $rootScope.currentTitle = data[0].title;
+      $rootScope.currentTitle = data[0].key;
       Language.getLang(data[0].key, function(data) {
         $rootScope.lang = data;
       });
