@@ -115,10 +115,10 @@ define(['projects/module','lodash'], function (module, _) {
       })
     }
     
-    $scope.clone = function (id, ev) {
+    $scope.clone = function (id, ev, name) {
       $mdDialog.show({
           
-        templateUrl: 'app/projects/views/clone-project-dialog.tpl.html',
+        templateUrl: 'app/projects/views/clone-data-dialog.tpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -126,17 +126,20 @@ define(['projects/module','lodash'], function (module, _) {
         preserveScope: true,
         controller: function DialogController($scope, $mdDialog) {
 
-          $scope.project_name = undefined;
+          $scope.oldData = name;
+          $scope.data_name = undefined;
+          $scope.title = "Project";
 
           $scope.cancel = function() {
             $mdDialog.cancel();
           };
           $scope.submit = function() {
-            ProjectService.clone(id, $scope.project_name, function (data, status){
+            ProjectService.clone(id, $scope.data_name, function (data, status){
               if (status === 200) {
                
                 $scope.projects.push(data);
                 $mdDialog.hide();
+                $mdToast.show($mdToast.simple().position('top right').textContent('The project has been cloned!'));
               }
             });
           };

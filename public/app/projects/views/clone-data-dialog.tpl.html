@@ -1,17 +1,17 @@
 <md-dialog aria-label="Clone Project"  ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools md-primary-bg">
-        <span class="md-title text-nowrap">Clone Project:{{projectName}}</span>
+        <span class="md-title text-nowrap">Clone {{title}}:{{oldData}}</span>
       </div>
     </md-toolbar>
     <md-dialog-content>
-      <h4>Enter New Project Name</h4>
       <div class="md-dialog-content">
         <form name="cloneForm">
           <md-input-container class="md-block">
-          <input type="text" name="projectName" placeholder="Project Name" required ng-model="project_name">
+          <label>New {{title}} name</label>
+          <input type="text" name="projectName" required ng-model="data_name">
           <div ng-messages="cloneForm.projectName.$error" role="alert" aria-live="assertive" >
-              <div ng-message="required">Project name is required</div>
+              <div ng-message="required">{{title}} name is required</div>
           </div>
           </md-input-container>
           

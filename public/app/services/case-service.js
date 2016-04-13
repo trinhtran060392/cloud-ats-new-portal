@@ -1,4 +1,4 @@
-define(['keyword/module'], function (module) {
+define(['project/module'], function (module) {
   'use strict';
 
   module.registerFactory('CaseService', ['$http', '$cookies', function($http, $cookies) {
@@ -77,6 +77,22 @@ define(['keyword/module'], function (module) {
         var request = {
           method: 'DELETE',
           url: appConfig.RestEntry + '/api/v1/project/keyword/' + projectId + '/case/' + caseId ,
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          }
+        };
+
+        $http(request).success(function(data, status) {
+          callback(data, status);
+        }).error(function(data, status) {
+          callback(data, status)
+        });        
+      },
+      clone: function (projectId, caseId, caseName, callback) {
+        var request = {
+          method: 'GET',
+          url: appConfig.RestEntry + '/api/v1/project/keyword/' + projectId + '/case/' + caseId +'/clone?name='+caseName ,
           headers: {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
