@@ -1,9 +1,14 @@
-<div class="header p-24" layout="column" layout-align="space-between start">
+<div class="header-logo" layout="row" layout-align="start end" flex>
+  <md-icon md-font-icon="icon-chart-bar"></md-icon>
+  <span class="pl-8 md-title" flex>Keyword - Reports</span>
+</div>
+
+<div class="header-info p-24" layout="column" layout-align="space-between start">
   <div layout="row" layout-align="start center" flex>
     <span class="text-bold">Total Report</span>
   </div>
 </div>
 
-<div class="ph-16 pb-24" layout="row" layout-align="start center" ng-controller="ExecutionFuncCtrl">
+<div class="header-action" layout="row" layout-align="start center" ng-controller="ExecutionFuncCtrl">
   <md-button class="md-raised md-accent" flex ng-click="showExecutionFunctional($event)">Excecution</md-button>      
 </div>   
