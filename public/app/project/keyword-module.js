@@ -2,11 +2,12 @@ define([
   'angular',
   'angular-couch-potato',
   'angular-ui-router',
-  'angular-messages'
+  'angular-messages',
+  'angular-drag-and-drop-lists'
 ], function (ng, couchPotato) {
   'use strict';
 
-  var module = ng.module('app.project.keyword', ['ui.router', 'ngMessages']);
+  var module = ng.module('app.project.keyword', ['ui.router', 'ngMessages', 'dndLists']);
 
   module.config(['$stateProvider', '$couchPotatoProvider', function ($stateProvider, $couchPotatoProvider) {
     $stateProvider
@@ -34,6 +35,9 @@ define([
     .state('app.project.keyword-suites', {
       url: '/project/:id/keyword/suites',
       views: {
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/suites-search-box.tpl.html'
+        },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/suites.tpl.html',
           controller: 'SuiteCtrl',
@@ -42,6 +46,30 @@ define([
               'project/directives/project-nav',
               'project/controllers/suite-controller',
               'services/suite-service'
+            ])
+          }
+        },
+        'header-box@app.project': {
+          templateUrl: 'app/project/views/keyword/suites-header-box.tpl.html'
+        }
+      },
+      data: {
+        title: 'Project Keyword Suites',
+        requireLogin: true
+      }
+    })
+    .state('app.project.keyword-suite', {
+      url: '/project/:id/keyword/suite/:suiteId',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/keyword/suite.tpl.html',
+          controller: 'EachSuiteCtrl',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+              'project/controllers/each-suite-controller',
+              'services/suite-service',
+              'services/case-service'
             ])
           }
         },

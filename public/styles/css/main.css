@@ -130,7 +130,7 @@
   fill: rgba(0, 0, 0, 0.66);
 }
 
-#projects,#cases,#sub-content {
+#projects,#cases,#sub-content,#case {
   min-height: 100%;
   height: 100%;
   position: relative;
@@ -215,6 +215,40 @@ a.action-icon:hover > * {
   box-sizing: border-box;
 }
 
+/*Drag and drop css*/
+[dnd-list] .dndDraggingSource {
+    display: none;
+}
+
+[draggable] {
+  /* not applied by the directive, but useful to indicate a draggable element */
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: move;
+}
+
+.dndDragging {
+  opacity: 0.5;
+}
+
+.dndPlaceholder {
+  background-color: #ddd !important;
+  display: block;
+  border-radius: 2px;
+  border: 3px dashed;
+  position: relative;
+  width: 25%;
+  padding: 5px 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 60px;
+}
+
+.test-case-list .md-subheader-inner {
+  padding: 0 !important;
+}
 .breadcrumbs {
   margin-top: 16px;
   margin-bottom: 8px;
@@ -241,3 +275,9 @@ a.action-icon:hover > * {
 .header-box .header-action {
   padding: 0 4px;
 }
+.badge-order {
+  border-radius: 20px;
+}
+.selected-case {
+  min-height: 60px !important;
+} 

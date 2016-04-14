@@ -53,7 +53,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         clickOutsideToClose:true,
         scope: $scope,
         preserveScope: true,
-        controller: function DialogController($scope, $mdDialog) {
+        controller: function() {
 
         	$scope.oldData = name;
           $scope.data_name = undefined;

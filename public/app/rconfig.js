@@ -21,7 +21,8 @@ var require = {
     'd3':'../plugin/d3/d3.min',
     'highcharts':'../plugin/highcharts/highcharts',
     'lodash': '../plugin/lodash/lodash.min',
-    
+    'angular-drag-and-drop-lists': '../plugin/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min',
+
     'modules-includes': 'includes',
     'appConfig': 'app.config'
   }, 
@@ -39,7 +40,8 @@ var require = {
     'angular-loading-bar': {deps: ['angular']},
     'angular-couch-potato': { deps: ['angular'] },
     'angular-material' : { deps: ['angular', 'angular-animate', 'angular-aria']},
-    'angular-material-icons': {deps:['angular', 'angular-material']}
+    'angular-material-icons': {deps:['angular', 'angular-material']},
+    'angular-drag-and-drop-lists': { deps: ['angular']}
   },
   priority: [
     'jquery',

@@ -21,7 +21,22 @@ define(['project/keyword-module'], function (module) {
 
         });
       },
+      get: function(projectId, suiteId, callback) {
+        var request = {
+          method: 'GET',
+          url: appConfig.RestEntry + '/api/v1/project/keyword/' + projectId + '/suite/'+suiteId ,
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          }
+        };
 
+        $http(request).success(function(data, status) {
+          callback(data, status);
+        }).error(function(data, status) {
+          callback(data, status)
+        });        
+      },
       create: function(projectId, suite, callback) {
         var request = {
           method: 'POST',

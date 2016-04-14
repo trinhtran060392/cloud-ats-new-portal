@@ -1,0 +1,43 @@
+<md-dialog aria-label="Create Suite"  ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Create New Suite</span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form name="createForm">
+          <md-input-container class="md-block">
+          <label>New Suite Name</label>
+          <input type="text" name="suiteName" required ng-model="suite.name" md-autofocus>
+          <div ng-messages="createForm.suiteName.$error" role="alert" aria-live="assertive" >
+              <div ng-message="required">Suite name is required</div>
+          </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Choose Mode</label>
+            <md-select ng-model="suite.sequence_mode" name="mode" required>
+              <md-option value="sequence">
+                Sequence mode
+              </md-option>
+              <md-option value="isolate">
+                Isolate mode
+              </md-option>
+            </md-select>
+            <div ng-messages="createForm.mode.$error" role="alert" aria-live="assertive" >
+              <div ng-message="required">Suite mode is required</div>
+            </div>
+          </md-input-container>
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <span flex></span>
+      <md-button ng-click="submit()" ng-disabled="createForm.$invalid || createForm.$pristine">
+       Create
+      </md-button>
+      <md-button ng-click="cancel()" style="margin-right:20px;">
+        CANCEL
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>
