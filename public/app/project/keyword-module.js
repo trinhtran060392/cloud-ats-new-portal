@@ -57,13 +57,16 @@ define([
     .state('app.project.keyword-cases', {
       url: '/project/:id/keyword/cases',
       views: {
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/cases-search-box.tpl.html'
+        },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/cases.tpl.html',
-          controller: 'CaseCtrl',
+          controller: 'CasesCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/case-controller',
+              'project/controllers/cases-controller',
               'services/case-service'
             ])
           }

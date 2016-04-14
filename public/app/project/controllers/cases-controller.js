@@ -1,9 +1,24 @@
 define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
-	module.registerController('CaseCtrl', ['$scope', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', function ($scope, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
+	module.registerController('CasesCtrl', [
+    '$mdMedia', '$mdSidenav', '$scope', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
+    function ($mdMedia, $mdSidenav, $scope, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
 
-		$scope.projectId = $stateParams.id;
+		$scope.$parent.isSidenavOpen = true;
+    $scope.$parent.isSidenavLockedOpen = $mdMedia('gt-md');
+
+    $scope.$watch(function() { return $mdMedia('gt-md'); }, function(big) {
+      $scope.$parent.isSidenavLockedOpen = big;
+      $scope.$parent.isSidenavOpen = big;
+    });
+
+    $scope.toggleProjectNavLeft = function() {
+      $scope.$parent.isSidenavLockedOpen = false;
+      $mdSidenav('project-nav-left').toggle();
+    };
+
+    $scope.projectId = $stateParams.id;
 		CaseService.list($scope.projectId, function (data, status) {
 			$scope.cases = data;
 		});
