@@ -19,7 +19,9 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/execution-func-ctrl'
+              'project/controllers/execution-func-ctrl',
+              'services/suite-service',
+              'services/keyword-service'
             ])
           }
         },

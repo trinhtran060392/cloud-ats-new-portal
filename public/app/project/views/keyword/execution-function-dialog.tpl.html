@@ -1,27 +1,202 @@
 <md-dialog aria-label="Create Project"  ng-cloak ng-controller="ExecutionFuncCtrl">
     <md-toolbar>
       <div class="md-toolbar-tools md-primary-bg">
-        <span class="md-title text-nowrap">Execution Functional : Project Name</span>
+        <span flex="95" class="md-title text-nowrap">Execution Functional : Project Name</span>
+        <md-button ng-click="cancel()" aria-label="cancel">
+          <md-icon md-font-icon="icon-cancel" flex="5" ></md-icon>
+        </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content>
-      <div class="md-dialog-content">
-        <form name ="stepExecution">
+    <md-dialog-content style="padding: 0px;">
+      <div class="md-dialog-content" style="padding: 3px;">
+        <form name="stepper" class="ms-stepper ng-untouched" style="max-height: 650px;max-width: 550px;">
           <div class="ms-stepper-horizontal">
             <div class="ms-stepper-navigation-wrapper">
+              <div class="ms-stepper-navigation layout-row" layout="row" layout-align="center center" style="max-height: 36px; min-height: 36px;">
+                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="1 Choose Suites">
+                  <div class="step md-accent-bg" layout="row" layout-align="center center">
+                    <span>1</span>
+                  </div>
+                  <div layout="column" layout-align="start start" class="layout-column">
+                    <div>Suites</div>
+                  </div>
+                </button>
+                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="2 Choose Browsers">
+                  <div class="step md-accent-bg" layout="row" layout-align="center center">
+                    <span>2</span>
+                  </div>
+                  <div layout="column" layout-align="start start" class="layout-column">
+                    <div>Browsers</div>
+                  </div>
+                </button>
+                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="3 Selenium Version">
+                  <div class="step md-accent-bg" layout="row" layout-align="center center">
+                    <span>3</span>
+                  </div>
+                  <div layout="column" layout-align="start start" class="layout-column">
+                    <div>Selenium</div>
+                  </div>
+                </button>
+                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="4 Choose OS">
+                  <div class="step md-accent-bg" layout="row" layout-align="center center">
+                    <span>4</span>
+                  </div>
+                  <div layout="column" layout-align="start start" class="layout-column">
+                    <div>OS</div>
+                  </div>
+                </button>
+                
+              </div>
+            </div>
+            <div class="ms-stepper-steps" style="padding: 2px 2px;">
+              <ms-stepper-step id="1" step-title="'Choose Suites'" class="ms-stepper-step" ng-show="currentStep === 1" >
+                  <div class="md-padding">
+                    <div layout="row" layout-wrap>
+                      <div layout="column">
+                            <div layout="row" layout-wrap flex>
+                              <div class="demo-select-all-checkboxes" flex="100" ng-repeat="suite in suites">
+                                <md-checkbox ng-click="selectSuite(suite._id);">
+                                 <span>{{ suite.name }}</span>
+                                </md-checkbox>
+                              </div>
+                            </div>
+                      </div>
+                    </div>
+                  </div>
+              </ms-stepper-step>
+
+              <ms-stepper-step id="2" step-title="'Choose Browsers'" class="ms-stepper-step" ng-show="currentStep === 2">
+                  <div class="md-padding">
+                    <md-radio-group ng-model="project.browser">
+                      <div layout="column">
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center" >
+                          <md-radio-button value="firefox" aria-label="firefox">
+                            <img ng-src="/styles/img/browsers/firefox.jpg" width="30" height="30">
+                          </md-radio-button>
+                        </div>
+                        <div layout='row' >
+                          <div layout="row" layout-align="start center">
+                            <md-select ng-model="browserVersionFireFox" aria-label="firefoxVersion">
+                              <md-option selected="selected">41.0.2</md-option>
+                              <md-option>38.3.0esr</md-option>
+                              <md-option>26.0</md-option>
+                              <md-option>17.0.9esr</md-option>
+                            </md-select>
+                         </div>
+                        </div>
+                        </div>
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center" >
+                          <md-radio-button value="chrome" aria-label="chrome">
+                            <img ng-src="/styles/img/browsers/chrome.jpg" width="30" height="30">
+                          </md-radio-button>
+                        </div>
+                        <div layout='row' >
+                          <div layout="row" layout-align="start center">
+                            <md-select ng-model="browserVersionChrome" aria-label="chromeVersion">
+                              <md-option selected="selected">46.0.2490.80</md-option>
+                            </md-select>
+                         </div>
+                        </div>
+                        </div>
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center" >
+                          <md-radio-button value="ie" aria-label="ie">
+                            <img ng-src="/styles/img/browsers/ie.png" width="30" height="30">
+                          </md-radio-button>
+                        </div>
+                        <div layout='row' >
+                          <div layout="row" layout-align="start center">
+                            <md-select ng-model="browserVersionIE" aria-label="ieVersion">
+                              <md-option selected="selected">11</md-option>
+                            </md-select>
+                         </div>
+                        </div>
+                        </div>
+                      </div>
+                     </md-radio-group>
+                  </div>
+              </ms-stepper-step>
+
+              <ms-stepper-step id="3" step-title="'Version Selenium'" class="ms-stepper-step" ng-show="currentStep === 3">
+                <div class="md-padding">
+                      <div layout="column">
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center" >
+                            <img ng-src="/styles/img/selenium.png" width="40" height="40">
+                          </div>
+                        <div layout='row' >
+                          <div layout="row" layout-align="start center">
+                            <md-select ng-model="project.seleniumVersion" aria-label="seleniumVersion">
+                              <md-option selected="selected">2.48.2</md-option>
+                              <md-option>2.47.1</md-option>
+                              <md-option>2.46.0</md-option>
+                              <md-option>2.45.0</md-option>
+                              <md-option>2.44.0</md-option>
+                              <md-option>2.43.1</md-option>
+                              <md-option>2.42.0</md-option>
+                              <md-option>2.41.0</md-option>
+                            </md-select>
+                         </div>
+                        </div>
+                        </div>
+                      </div>
+                  </div>
+              </ms-stepper-step>
+
+              <ms-stepper-step id="4" step-title="'Version OS'" class="ms-stepper-step" ng-show="currentStep === 4">
+                  <div class="md-padding">
+                    <md-radio-group ng-model="project.os">
+                      <div layout="column">
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center" >
+                          <md-radio-button value="ubuntu" aria-label="ubuntu">
+                            <img ng-src="/styles/img/ubuntu.png" width="30" height="30">
+                          </md-radio-button>
+                        </div>
+                        <div layout='row' >
+                          <div layout="row" layout-align="start center">
+                            <span>Ubuntu 14.04 64bit</span>
+                         </div>
+                        </div>
+                        </div>
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center" >
+                          <md-radio-button value="window" aria-label="window">
+                            <img ng-src="/styles/img/window.jpg" width="30" height="30">
+                          </md-radio-button>
+                        </div>
+                        <div layout='row' >
+                          <div layout="row" layout-align="start center">
+                            <span>Windows Server 2012</span>
+                         </div>
+                        </div>
+                        </div>
+                      </div>
+                     </md-radio-group>
+                  </div>
+              </ms-stepper-step>
               
             </div>
+           
           </div>
         </form>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row" >
-      <span flex></span>
-      <md-button ng-click="submit()" ng-disabled="deleteForm.$invalid || deleteForm.$pristine || wrongName">
-       RUN
-      </md-button>
-      <md-button ng-click="cancel()" style="margin-right:20px;">
-        CANCEL
-      </md-button>
+       <div class="ms-stepper-controls layout-align-center-center layout-row" layout="row" layout-align="center center">
+              <button class="md-accent md-raised md-button md-ink-ripple md-default-theme" type="button" aria-label="Back" ng-disabled="currentStep === 1"
+              ng-click="backStepExecution()">
+                <span class="ng-scope">Back</span>
+                <div class="md-ripple-container"></div>
+              </button>
+              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Next" ng-disabled="currentStep === 4 || checkSuiteSelected || radioValue" ng-click="nextStepExecution()">
+                <span class="ng-scope">Next</span>
+              </button>
+              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Next" ng-disabled="currentStep != 4">
+                <span class="ng-scope" ng-click="run()">RUN</span>
+              </button>
+            </div>
     </md-dialog-actions>
 </md-dialog>
