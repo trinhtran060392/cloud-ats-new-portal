@@ -62,12 +62,12 @@ define([
       url: '/project/:id/keyword/suite/:suiteId',
       views: {
         'sub-content@app.project': {
-          templateUrl: 'app/project/views/keyword/suite.tpl.html',
+          templateUrl: 'app/project/views/keyword/suite-detail.tpl.html',
           controller: 'EachSuiteCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/each-suite-controller',
+              'project/controllers/suite-detail-controller',
               'services/suite-service',
               'services/case-service'
             ])

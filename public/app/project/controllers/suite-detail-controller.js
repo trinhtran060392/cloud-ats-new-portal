@@ -13,17 +13,18 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     $scope.filterIsShow = false;
     $scope.suite.cases = undefined;
     SuiteService.get($scope.projectId, $scope.suiteId, function (data, status) {
-      $scope.suite.cases = data;
+      $scope.suite = data; 
       $scope.suite.originCases = angular.copy($scope.suite.cases);
       CaseService.references($scope.projectId, function(response) {
         $scope.cases = response;
-        console.log($scope.cases);
       });
 
     });
 
     $scope.save = function () {
-      console.log($scope.suite.cases);
+      SuiteService.update($scope.projectId, $scope.suite, function (data, status) {
+
+      });
       $scope.organizeMode = false;
     }
 
