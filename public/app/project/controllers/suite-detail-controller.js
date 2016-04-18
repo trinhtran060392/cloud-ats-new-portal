@@ -1,7 +1,7 @@
 define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
-	module.registerController('EachSuiteCtrl', ['$scope', 'SuiteService', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', function ($scope, SuiteService, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
+	module.registerController('SuiteDetailCtrl', ['$scope', 'SuiteService', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', function ($scope, SuiteService, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
 
     $scope.$parent.isSidenavOpen = false;
     $scope.$parent.isSidenavLockedOpen = false;

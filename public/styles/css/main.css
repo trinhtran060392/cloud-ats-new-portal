@@ -216,8 +216,12 @@ a.action-icon:hover > * {
 }
 
 /*Drag and drop css*/
-[dnd-list] .dndDraggingSource {
-    display: none;
+[dnd-list] .organize-mode.dndDraggingSource {
+  display: none;
+}
+
+[dnd-list] .organize-mode {
+  cursor: move;
 }
 
 [draggable] {
@@ -328,4 +332,12 @@ a.btn-border-line {
 }
 table.simple thead tr th {
   padding: 2px 2px;
+}
+
+.step-list {
+  padding: 4px 16px !important;
+}
+
+.step-input {
+  margin: 0px !important;
 }

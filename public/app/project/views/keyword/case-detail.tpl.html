@@ -19,30 +19,37 @@
 <div id="case" layout="row">
   <md-content class="md-hue-1" flex="80" perfect-scrollbar>
     <div class="projects-container"  flex="100" layout-wrap layout="row"
-      dnd-list="suite.cases" 
+      dnd-list="case.steps" 
       dnd-horizontal-list="true" 
       dnd-external-sources="false"
       dnd-disable-if="!organizeMode" style="min-height: 30px;">
-      <div ng-repeat="case in suite.cases" layout="row" flex="25" class="project ms-card"  
-        dnd-draggable="case"  
+      <div ng-repeat="step in case.steps" layout="row" flex="25" class="project ms-card"  
+        dnd-draggable="step"  
         dnd-type="'containerType'"
         dnd-effect-allowed="move" 
-        dnd-moved="suite.cases.splice($index, 1)"
+        dnd-moved="case.steps.splice($index, 1)"
         dnd-disable-if="!organizeMode"
         ng-class="{'organize-mode' : organizeMode}"> 
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
           <div layout="column">
-            <a href="javascript:void(0)" ng-click="clickProject($event, project._id)" class="md-primary-fg text-nowrap-ellipsis h5 p-16">
-              <md-tooltip>{{case.name}}</md-tooltip>
-              {{case.name}}
-            </a>
+            <div layout="row" flex>
+              <a ng-if="!step.params.length" class="md-primary-fg text-nowrap-ellipsis h5 p-16" style="cursor: pointer">
+                <md-tooltip>{{step.type}}</md-tooltip>
+                {{step.type}}
+              </a>
+              <a ng-if="step.params.length" ng-click="clickToStep($event, step, $index)" class="md-primary-fg text-nowrap-ellipsis h5 p-16" style="cursor: pointer">
+                <md-tooltip>{{step.type}}</md-tooltip>
+                {{step.type}}
+              </a>
+              <span flex=></span>
+              <md-icon md-font-icon="icon-close-circle" class="s20 md-warn-fg" style="cursor: pointer"></md-icon>
+            </div>
             <div layout="row">
               <span flex></span>
               <span class="badge-order white-fg green-400-bg width-20 text-center">{{$index+1}}</span>
             </div>
           </div>
-
           <md-divider></md-divider>
 
         </div>
@@ -53,7 +60,7 @@
       <md-button class="md-blue-300-bg md-primary" ng-click="save()" ng-if="organizeMode">
         Save
       </md-button>
-      <md-button class="md-accent-bg " ng-click="edit()" ng-if="!organizeMode && suite.cases">
+      <md-button class="md-accent-bg " ng-click="edit()" ng-if="!organizeMode">
         Edit
       </md-button>
       <md-button class="" ng-click="cancel()" ng-if="organizeMode">
@@ -63,32 +70,32 @@
   </md-content>
 
   <md-content class="md-background-bg" perfect-scrollbar flex>
-    <md-list flex>
-      <md-subheader layout="row" class="md-primary-bg test-case-list">
-        <md-button class="md-no-transition" aria-label="Open/Close Filter" ng-click="filterIsShow = !filterIsShow">
-          <md-tooltip >Open/Close Filter</md-tooltip>
-            <md-icon md-font-icon="icon-magnify" class="s16 white-fg"></md-icon>
-        </md-button>
-        <span>List of test case</span>
-      </md-subheader>
-      <md-subheader class="md-white-bg" ng-show="filterIsShow">
-        <div layout="row">
-          <md-input-container flex style="margin: 0px;">
-            <label>Filter by name</label>
-            <input type="text">
-          </md-input-container>                        
-        </div>
-      </md-subheader>
-      <div>
-        <md-list-item class="md-1-line border-bottom" ng-repeat="case in cases" style="cursor: move;" 
-          dnd-draggable="case" 
+    <section>
+      <md-subheader class="md-primary-bg">Customs</md-subheader>
+      <md-list layout="column" layout-padding class="margin-bottom-10">
+        <md-list-item class="md-1-line border-bottom step-list" ng-repeat="custom in customs" ng-class="{'organize-mode' : organizeMode}" 
+          dnd-draggable="custom"
           dnd-effect-allowed="move"
+          dnd-dragend="dropCustom(custom)"
           dnd-disable-if="!organizeMode">
-          <div class="md-list-item-text" layout="column">
-            <span>{{case.name}}</span>
+          <div class="md-list-item-text">
+            {{custom.name}}
           </div>
         </md-list-item>
-      </div>
-    </md-list>
+      </md-list>
+    </section>
+    <section ng-repeat="cat in categories">
+      <md-subheader class="md-primary-bg">{{cat}}</md-subheader>
+      <md-list layout="column" layout-padding class="margin-bottom-10">
+        <md-list-item class="md-1-line border-bottom step-list" ng-repeat="keyword in keywords[cat] track by $index" ng-class="{'organize-mode' : organizeMode}" 
+          dnd-draggable="keyword" 
+          dnd-effect-allowed="move"
+          dnd-disable-if="!organizeMode">
+          <div class="md-list-item-text">
+            {{keyword.type}}
+          </div>
+        </md-list-item>
+      </md-list>
+    </section>
   </md-content>
 </div>

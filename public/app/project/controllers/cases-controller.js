@@ -23,6 +23,10 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 			$scope.cases = data;
 		});
 
+    $scope.clickCase = function (ev, id) {
+      $state.go('app.project.keyword-case', {id : $scope.projectId,caseId : id});
+    }
+    
 		$scope.delete = function (ev, id) {
 			var confirm = $mdDialog.confirm()
         .title('Would you like to delete your case?')
@@ -74,5 +78,34 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         }
       })
 		}
+
+    $scope.create = function (ev) {
+      $mdDialog.show({
+          
+        templateUrl: 'app/project/views/keyword/create-case-dialog.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        scope: $scope,
+        preserveScope: true,
+        controller: function() {
+
+          $scope.case = {};
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
+          $scope.submit = function() {
+            $scope.case.steps = [];
+            CaseService.create($scope.projectId, $scope.case, function (data, status){
+              console.log();
+              if (status === 201) {
+                $mdDialog.hide();
+                $state.go('app.project.keyword-case', {id : $scope.projectId, caseId : data._id});
+              }
+            });
+          };
+        }
+      })
+    }
 	}]);
 })

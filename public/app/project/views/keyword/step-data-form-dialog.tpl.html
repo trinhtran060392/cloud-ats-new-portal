@@ -1,0 +1,39 @@
+<md-dialog aria-label="Step form"  ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools md-primary-bg">
+      <span class="md-title text-nowrap">Fill data to step {{step.type}}</span>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <div ng-repeat="param in step.params">
+        <md-input-container class="md-block"  ng-if="param !== 'locator' && param !== 'targetLocator'">
+          <label>{{param}}</label>
+          <input type="text" ng-model="step[param]">
+        </md-input-container>
+        <div ng-if="param === 'locator' || param ==='targetLocator'">
+          <md-input-container class="md-block">
+            <label>{{param}} type</label>
+            <md-select ng-model="step[param].type">
+              <md-option ng-repeat="type in types" value="{{type.value}}">
+                {{type.value}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>{{param}} value</label>
+            <input type="text" ng-model="step[param].value">
+          </md-input-container>
+        </div>
+      </div>
+  </md-dialog-content>
+  <md-dialog-actions layout="row" >
+    <span flex></span>
+    <md-button ng-click="submit()" aria-label="fill">
+     Fill
+    </md-button>
+    <md-button ng-click="cancelDialog()" aria-label="cancel" style="margin-right:20px;">
+      CANCEL
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>

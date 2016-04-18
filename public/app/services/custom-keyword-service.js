@@ -1,4 +1,4 @@
-define(['keyword/module'], function (module) {
+define(['project/keyword-module'], function (module) {
   'use strict';
 
   module.registerFactory('CustomKeywordService', ['$http', '$cookies', function($http, $cookies) {

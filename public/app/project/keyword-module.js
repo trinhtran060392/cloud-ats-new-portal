@@ -132,7 +132,7 @@ define([
       views: {
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/suite-detail.tpl.html',
-          controller: 'EachSuiteCtrl',
+          controller: 'SuiteDetailCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
@@ -165,6 +165,31 @@ define([
               'project/directives/project-nav',
               'project/controllers/cases-controller',
               'services/case-service'
+            ])
+          }
+        },
+        'header-box@app.project': {
+          templateUrl: 'app/project/views/keyword/cases-header-box.tpl.html'
+        }
+      },
+      data: {
+        title: 'Project Keyword Cases',
+        requireLogin: true
+      }
+    })
+    .state('app.project.keyword-case', {
+      url: '/project/:id/keyword/case/:caseId',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/keyword/case-detail.tpl.html',
+          controller: 'CaseDetailCtrl',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+              'project/controllers/case-detail-controller',
+              'services/case-service',
+              'services/keyword-service',
+              'services/custom-keyword-service'
             ])
           }
         },
