@@ -1,0 +1,109 @@
+<div aria-label="Job Report" id="case" ng-controller="ReportJobDetailCtrl" layout="column" perfect-scrollbar>
+	<div layout="row" class="breadcrumbs" layout-align="start center">
+	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
+	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+	    </md-button>
+
+	    <div class="pl-8" layout="row" layout-align="start center">
+	      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Report</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>Reports</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>JobId</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>Suite</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+        <a>Case</a>
+	    </div>
+	</div>
+  <div layout="row">
+    <h4><strong>{{case.name}}</strong>
+      <span ng-class="{'label label-error': !case.isPass,'label label-success': case.isPass}">{{case.isPass ? 'Pass' : 'Fail'}}</span></h4>
+  </div>
+	<div class="simple-table-container md-whiteframe-4dp" ng-if="case.data_source.length">
+		<div class="table-title">List Params</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple">
+				  <thead >
+              <th>Variable Name</th>
+              <th>Value</th>
+		      </thead>
+		      <tbody>
+              <tr ng-repeat="(key, val) in case.data_source[0] track by $index">
+                  <td >{{key}}</td>
+                  <td >{{val}}</td>
+              </tr> 
+		      </tbody>
+			</table>
+		</div>
+	</div>
+
+  <div class="simple-table-container md-whiteframe-4dp" >
+    <div class="table-title">Script</div>
+    <div class="ms-responsive-table-wrapper">
+      <table class="simple" ms-responsive-table="">
+          <thead >
+            <th >{{getWord('#')}} </th>
+            <th >{{getWord('KeyWord')}}</th>
+            <th >{{getWord('Params')}}</th>
+            <th >{{getWord('Result')}}</th>
+            <th >{{getWord('Capture')}}</th>
+          </thead>
+          <tbody>
+              <tr ng-repeat="step in listStep track by $index">
+                  <td>{{$index+1}}</td>
+                  <td>
+                    <a ng-if="step.output" data-toggle="tooltip" title="Click to view detail" ng-click="showOutput($event, step.output)">{{step.name}}</a>
+                    <span ng-if="!step.output">{{step.name}}</span>
+                  </td>
+                  <td>
+                    <ul>
+                      <li ng-repeat="param in step.params">
+                        <p ng-repeat="(key, val) in param">{{key}} : {{val}}</p>
+                      </li>
+                    </ul>
+                  </td>
+                  <td ng-if="step.isPass == true"><span class="label label-success">Pass</span></td>
+                  <td ng-if="step.isPass != true"><span class="label label-error">Fail</span></td>
+
+                  <td>
+                    <a ng-if="step.name ==='saveScreenshot '"ng-click="showImageByName(step.params[0].file, true)">Show image</a>
+                    <a ng-if="step.hasImage" ng-click="showImageByName(step._id, false)">Show image</a>
+                  </td>
+                </tr>
+          </tbody>
+      </table>
+      <a ng-if="case.hasImage" ng-click="showImage(step)">Show image</a>
+    </div>
+  </div>
+  <div class="simple-table-container md-whiteframe-4dp" ng-if="skips.length > 0">
+    <div class="table-title">Skipped steps</div>
+    <div class="ms-responsive-table-wrapper">
+      <table class="simple" ms-responsive-table="">
+          <thead >
+            <th >{{getWord('#')}} </th>
+            <th >{{getWord('KeyWord')}}</th>
+            <th >{{getWord('Params')}}</th>
+          </thead>
+          <tbody>
+              <tr ng-repeat="step in skips track by $index">
+                  <td >{{$index+1}}</td>
+                  <td >{{step.type}}</td>
+                  <td >
+                    <ul>
+                      <li ng-repeat="(key, val) in step" ng-if="(key !=='params') && (key !== 'description') && (key !== 'type')">
+                        <p>{{key}} : {{val}}</p>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+          </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal fade" id="image-case">
+</div>	
+
+

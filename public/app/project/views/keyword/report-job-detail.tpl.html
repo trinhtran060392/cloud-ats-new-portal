@@ -1,0 +1,58 @@
+<div aria-label="Job Report" id="case" ng-controller="ReportJobDetailCtrl" layout="column">
+	<div layout="row" class="breadcrumbs" layout-align="start center">
+	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
+	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+	    </md-button>
+
+	    <div class="pl-8" layout="row" layout-align="start center">
+	      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Report</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>Reports</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>JobId</a>
+	    </div>
+	</div>
+	<div class="layout-align-start-center layout-row">
+		<div layout="row" layout-align="start center" flex>
+          	<div id="chart">
+            
+            </div>
+        </div>
+	</div>
+	<div class="simple-table-container md-whiteframe-4dp" perfect-scrollbar>
+		<div class="table-title">
+			<span>Job Report</span> 
+			<a class="btn-border-line btnViewLog" ng-click="viewLog()">{{getWord('View Log')}}</a>
+		</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple" ms-responsive-table="">
+				<thead>
+					<tr>
+						<th >{{getWord('Test Suite')}}</th>
+						<th class="text-left">{{getWord('Test Case')}}</th>
+						<th class="text-left">{{getWord('Pass')}}</th>
+						<th class="text-left">{{getWord('Fail')}}</th>
+						<th class="text-left">{{getWord('Skip')}}</th>
+						<th class="text-left">{{getWord('Duration(s)')}}</th>
+						<th class="text-left">{{getWord('Test Result')}}</th>
+					</tr>
+				</thead>
+				<tbody>
+				    <tr ng-repeat="suiteData in suiteReports">
+						<td ><a ng-click="redirectToSuiteReport(suiteData.suiteId, suiteData._id)">{{suiteData.name}}</a></td>
+						<td class="text-left">{{suiteData.totalCase}}</td>
+						<td class="text-left" style="color: #00B4A1">{{suiteData.totalPass}}</td>
+						<td class="text-left" style="color: #ff5050">{{suiteData.totalFail}}</td>
+						<td class="text-left" style="color: #ffaa2a">{{suiteData.totalSkip}}</td>
+						<th class="text-left">{{suiteData.duration/1000}}</th>
+						<td class="text-left"><span  ng-class="{'label label-error': suiteData.test_result === 'Fail','label label-success': suiteData.test_result === 'Pass'}">{{getWord(suiteData.test_result)}}</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>	
+
+

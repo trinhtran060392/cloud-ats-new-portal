@@ -1,0 +1,18 @@
+<md-dialog aria-label="image"  ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Log</span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="width: 650px;height: 550px;">
+        <pre>
+        {{project.log}}        
+        </pre>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()" style="margin-right:20px;">
+        Close
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

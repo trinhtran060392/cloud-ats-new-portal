@@ -47,7 +47,7 @@ define(['projects/module','lodash'], function (module, _) {
         clickOutsideToClose:true,
         scope: $scope,
         preserveScope: true,
-        controller: function DialogController($scope, $mdDialog) {
+        controller: function() {
             $scope.newProject ="";
             $scope.hide = function() {
               $mdDialog.hide();
@@ -80,7 +80,7 @@ define(['projects/module','lodash'], function (module, _) {
         clickOutsideToClose:true,
         scope: $scope,
         preserveScope: true,
-        controller: function DialogController($scope, $mdDialog) {
+        controller: function() {
 
           $scope.form = {};
           $scope.$watch('form.projectName', function (newValue, old) {

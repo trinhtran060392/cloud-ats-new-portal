@@ -22,7 +22,7 @@ var require = {
     'highcharts':'../plugin/highcharts/highcharts',
     'lodash': '../plugin/lodash/lodash.min',
     'angular-drag-and-drop-lists': '../plugin/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min',
-
+    'angular-material-data-table': '../plugin/angular-material-data-table/dist/md-data-table.min',
     'modules-includes': 'includes',
     'appConfig': 'app.config'
   }, 
@@ -34,6 +34,7 @@ var require = {
     'angular-sanitize': { deps: ['angular'] },
     'angular-messages': { deps: ['angular'] },
     'angular-aria': { deps: ['angular']},
+    'angular-material-data-table': {deps:['angular-material']},
 
     'c3': { deps: ['d3']},
     'angular-ui-router': { deps: ['angular'] },

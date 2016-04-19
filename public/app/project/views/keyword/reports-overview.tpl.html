@@ -1,0 +1,71 @@
+<div aria-label="Test Report" ng-controller="ReportFuncCtrl" id="case" layout="column">
+	<div layout="row" class="breadcrumbs" layout-align="start center">
+	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
+	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+	    </md-button>
+
+	    <div class="pl-8" layout="row" layout-align="start center">
+	      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Report</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>Reports</a>
+	    </div>
+
+	</div>
+
+	<div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+		<div class="title">PROJECT NAME</div>
+		<div layout="row">
+                <div layout="column" flex="100">
+                    <div>{{getWord('Test Suites')}}</div>
+                    <div>{{project.totalSuites}}</div>
+                </div>
+                <div layout="column" flex="100">
+                    <div>{{getWord('Test Cases')}}</div>
+                    <div>{{project.totalCases}}</div>
+                </div>
+                <div layout="column">
+                    <div>{{getWord('Last Running')}}</div>
+                    <div>{{project.lastRunning === undefine ? 'N/A' : project.lastRunning}}</div>
+                </div>
+           </div>
+	</div>
+
+	<div class="simple-table-container md-whiteframe-4dp" perfect-scrollbar>
+		<div class="table-title">Job Report</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple" ms-responsive-table="">
+				<thead>
+					<tr>
+						<th>Report Title</th>
+						<th>Total Suites</th>
+						<th>Suites Pass</th>
+						<th>Suites Fail</th>
+						<th>Project Result</th>
+						<th>Duration(s)</th>
+						<th>Create By</th>
+						<th>Download Resource</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="rep in listReports track by $index">
+	            		<td class="test-report"><a ng-click="redirectTo(rep.jobId)">Report-{{rep.created_date}}</a>
+	            		</td>
+	            		<td>{{rep.numberPassedSuite + rep.numberFailedSuite}}</td>
+	           			<td>{{rep.numberPassedSuite}}</td>
+	            		<td>{{rep.numberFailedSuite}}</td>
+	            		<td><span ng-class="{'label label-error': rep.test_result === 'Fail',
+	            		'label label-success': rep.test_result === 'Pass'}">{{getWord(rep.test_result)}}</span></td>
+	            		<td>{{rep.duration}}</td>
+	            		<td>{{project.creator._id}}</td>
+	            		<td><a class = 'btn-border-line' 
+	            		download='final-result.tar.gz' ng-click="downloadResult(project._id,rep.jobId)">{{getWord('Click Here')}}</a></td>
+	          		</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>	
+
+

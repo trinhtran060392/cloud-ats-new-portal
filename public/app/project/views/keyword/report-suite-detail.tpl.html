@@ -1,0 +1,90 @@
+<div aria-label="Job Report" id="case" ng-controller="ReportJobDetailCtrl" layout="column" perfect-scrollbar>
+	<div layout="row" class="breadcrumbs" layout-align="start center">
+	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
+	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+	    </md-button>
+
+	    <div class="pl-8" layout="row" layout-align="start center">
+	      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Report</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>Reports</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>JobId</a>
+	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+	      <a>Suite</a>
+	    </div>
+	</div>
+	<div layout="row">
+    <div class="simple-table-container md-whiteframe-4dp" >
+      <div class="table-title">{{getWord('10 Lastest reports of the suite')}}</div>
+      <div  >
+        <table class="simple">
+          <thead style="height: 20px;">
+            <th >{{getWord('#')}} </th>
+            <th >{{getWord('Suite Name')}}</th>
+            <th >{{getWord('Total Pass')}}</th>
+            <th >{{getWord('Total Fail')}}</th>
+            <th >{{getWord('Result')}}</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="suite in suites track by $index" style="height: 20px;">
+                <td>{{$index + 1}}</td>
+                <td><a class="text-info" ng-click="goToJobReport(suite.jobId)">{{suite.name}}</a></td>
+                <td><span class="label label-success">{{suite.totalPass}}</span></td>
+                <td><span class='label label-error'>{{suite.totalFail}}</span></td>
+                <td><span  ng-class="{'label label-error': suite.totalFail, 'label label-success': !suite.totalFail}">{{suite.totalFail ? 'Fail' : 'Pass'}}</span></td>
+              </tr> 
+          </tbody>
+        </table>
+      </div>
+  </div>
+    <div style="width: 350px !important;">
+      <div layout="row" layout-align="start center" >
+            <div id="suiteChart">
+            
+            </div>
+        </div>
+    </div>
+	</div>
+
+	<div class="simple-table-container md-whiteframe-4dp" >
+		<div class="table-title">Report Suite Detail</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple" ms-responsive-table="">
+				<thead >
+                	<tr>
+				        <th >{{getWord('#')}} </th>
+				        <th >{{getWord('Test Case')}}</th>
+				        <th >{{getWord('Result')}}</th>
+                	</tr>
+		        </thead>
+		      	<tbody>
+		      		<tr ng-repeat="i in case_reports track by $index">
+                		<td>{{$index + 1}}</td>
+               			<td ng-if="!i.useDataDriven" width="70%"><a ng-click="redirectToTestCaseReport(i._id)">{{i.name}}</a></td>
+                		<td  ng-if="i.useDataDriven" width="70%">
+                  			<a ng-click="dataShow = !dataShow" data-target="{{'#'+$index}}">{{i.name}}</a>
+                 			<div id="{{$index}}" ng-show="dataShow">
+                    			<table width="100%" class="fixed-table">
+                      				<tr ng-repeat="report in i.data_source" class="margin-bottom-10 padding-10">
+                        				<td width="80%" class="pr-name padding-5">
+                          					<a ng-click="redirectToTestCaseReport(report._id)">{{report.name+report.data_source}}</a>
+                        				</td>
+                        				<td width="20%" class="padding-5">
+                          					<span class="pull-right"  ng-class="{'label label-error': !report.isPass,'label label-success': report.isPass}">{{report.isPass ? 'Pass' : 'Fail'}}</span>
+                        				</td>
+                      				</tr>
+                    			</table>
+                 			</div>
+                		</td>
+                		<td width="20%"><span  ng-class="{'label label-error': !i.isPass,'label label-success': i.isPass}">{{i.isPass ? 'Pass' : 'Fail'}}</span></td>
+              		</tr>
+		      	</tbody>
+			</table>
+		</div>
+	</div>
+</div>	
+
+
