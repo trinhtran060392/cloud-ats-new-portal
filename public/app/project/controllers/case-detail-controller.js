@@ -51,7 +51,6 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     };
 
     CustomKeywordService.list($scope.projectId, function(response) {
-      console.log(response);
       $scope.customs = response;
     });
 
@@ -74,17 +73,12 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
       if (!data.steps.length) {
         $scope.organizeMode = true;
-      }
-    });
 
-    $scope.dropCustom = function (custom) {
-      _.forEach(custom.steps, function (step) {
-        $scope.case.steps.push(step);
+      }
+      _.forEach($scope.case.steps, function (step) {
+        step.inCurrentCase = true;
       });
-      _.remove($scope.case.steps, function (step) {
-        return !step.type;
-      });
-    }
+    });
 
     $scope.save = function () {
       CaseService.update($scope.case.project_id, $scope.case, function (data, status){
@@ -92,6 +86,9 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           case 200: 
             $mdToast.show($mdToast.simple().position('top right').textContent('The case has been updated!'));
             $scope.organizeMode = false;
+            _.forEach($scope.case.steps, function (step) {
+              step.inCurrentCase = true;
+            });
             break;
           case 204:
             $mdToast.show($mdToast.simple().position('top right').textContent('There is nothing to update!'));
@@ -100,6 +97,41 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           default: break; 
         }
       });
+    }
+
+    $scope.dropCallBack = function (event, index, item, type, external) {
+      if (item._id) {
+        _.forEach(item.steps, function (step) {
+          $scope.case.steps.splice(index, 0, step);
+          index ++;
+        });
+        _.remove($scope.case.steps, function (step) {
+          return !step.type;
+        });
+
+        $scope.step = item.steps[0];
+      } else {
+        //$scope.case.steps.splice(index, 0, item);
+        $scope.step = item;
+      }
+      if ($scope.step.params.length) {
+        $mdDialog.show({
+          templateUrl: 'app/project/views/keyword/step-data-form-dialog.tpl.html',
+          parent: angular.element(document.body),
+          targetEvent: 'body',
+          scope: $scope,
+          preserveScope: true,
+          controller: function() {
+            $scope.cancelDialog = function() {
+              $scope.step = $scope.originStep;
+              $mdDialog.cancel();
+            };
+            $scope.submit = function() {
+              $mdDialog.cancel();
+            };
+          }
+        })
+      }
     }
 
     $scope.edit = function () {
@@ -111,11 +143,18 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     $scope.cancel = function () {
       $scope.case = $scope.originCase;
       $scope.organizeMode = false;
+      _.remove($scope.case.steps, function (step) {
+        return !step.inCurrentCase;
+      });
+    }
+
+    $scope.removeStep = function (index) {
+      $scope.organizeMode = true;
+      $scope.case.steps.splice(index, 1)
     }
 
     $scope.clickToStep = function (ev, step, $index) {
 
-      $scope.originCase = angular.copy($scope.case);
       $scope.step = angular.copy(step);
       $scope.organizeMode = true;
       $scope.originStep = angular.copy($scope.step);
@@ -124,7 +163,6 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         templateUrl: 'app/project/views/keyword/step-data-form-dialog.tpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
-        clickOutsideToClose:true,
         scope: $scope,
         preserveScope: true,
         controller: function() {

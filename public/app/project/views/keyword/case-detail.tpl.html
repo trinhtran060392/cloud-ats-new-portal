@@ -22,8 +22,9 @@
       dnd-list="case.steps" 
       dnd-horizontal-list="true" 
       dnd-external-sources="false"
+      dnd-inserted="dropCallBack(event, index, item, type, external)"
       dnd-disable-if="!organizeMode" style="min-height: 30px;">
-      <div ng-repeat="step in case.steps" layout="row" flex="25" class="project ms-card"  
+      <div ng-repeat="step in case.steps track by $index" layout="row" flex="25" class="project ms-card"  
         dnd-draggable="step"  
         dnd-type="'containerType'"
         dnd-effect-allowed="move" 
@@ -43,7 +44,7 @@
                 {{step.type}}
               </a>
               <span flex=></span>
-              <md-icon md-font-icon="icon-close-circle" class="s20 md-warn-fg" style="cursor: pointer"></md-icon>
+              <md-icon ng-if="organizeMode" md-font-icon="icon-close-circle" class="s22 md-warn-fg" style="cursor: pointer" ng-click="removeStep($index)"></md-icon>
             </div>
             <div layout="row">
               <span flex></span>
@@ -76,7 +77,6 @@
         <md-list-item class="md-1-line border-bottom step-list" ng-repeat="custom in customs" ng-class="{'organize-mode' : organizeMode}" 
           dnd-draggable="custom"
           dnd-effect-allowed="move"
-          dnd-dragend="dropCustom(custom)"
           dnd-disable-if="!organizeMode">
           <div class="md-list-item-text">
             {{custom.name}}
@@ -90,7 +90,7 @@
         <md-list-item class="md-1-line border-bottom step-list" ng-repeat="keyword in keywords[cat] track by $index" ng-class="{'organize-mode' : organizeMode}" 
           dnd-draggable="keyword" 
           dnd-effect-allowed="move"
-          dnd-disable-if="!organizeMode">
+          dnd-disable-if="!organizeMode"
           <div class="md-list-item-text">
             {{keyword.type}}
           </div>
