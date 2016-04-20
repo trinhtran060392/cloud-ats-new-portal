@@ -23,6 +23,8 @@ var require = {
     'lodash': '../plugin/lodash/lodash.min',
     'angular-drag-and-drop-lists': '../plugin/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min',
     'angular-material-data-table': '../plugin/angular-material-data-table/dist/md-data-table.min',
+    'ng-file-upload': '../plugin/ng-file-upload/ng-file-upload-all.min',
+
     'modules-includes': 'includes',
     'appConfig': 'app.config'
   }, 
@@ -42,7 +44,8 @@ var require = {
     'angular-couch-potato': { deps: ['angular'] },
     'angular-material' : { deps: ['angular', 'angular-animate', 'angular-aria']},
     'angular-material-icons': {deps:['angular', 'angular-material']},
-    'angular-drag-and-drop-lists': { deps: ['angular']}
+    'angular-drag-and-drop-lists': { deps: ['angular']},
+    'ng-file-upload': {deps: ['angular']}
   },
   priority: [
     'jquery',

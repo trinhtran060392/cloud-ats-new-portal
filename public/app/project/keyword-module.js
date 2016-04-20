@@ -4,11 +4,12 @@ define([
   'angular-ui-router',
   'angular-messages',
   'angular-drag-and-drop-lists',
-  'angular-material-data-table'
+  'angular-material-data-table',
+  'ng-file-upload'
 ], function (ng, couchPotato) {
   'use strict';
 
-  var module = ng.module('app.project.keyword', ['ui.router', 'ngMessages', 'dndLists']);
+  var module = ng.module('app.project.keyword', ['ui.router', 'ngMessages', 'dndLists', 'md.data.table', 'ngFileUpload']);
 
   module.config(['$stateProvider', '$couchPotatoProvider', function ($stateProvider, $couchPotatoProvider) {
     $stateProvider
@@ -223,10 +224,14 @@ define([
       url: '/project/:id/keyword/data',
       views: {
         'sub-content@app.project': {
+          controller: 'DataCtrl',
           templateUrl: 'app/project/views/keyword/data-driven.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav'
+              'project/directives/project-nav',
+              'project/controllers/data-ctrl',
+              'services/case-service',
+              'services/data-service'
             ])
           }
         },

@@ -441,3 +441,33 @@ table.simple tbody tr td.absorbing-column {
 #cases .list-cases .case:hover {
   border-left: 3px solid #2E62B1;
 }
+
+.data-table .md-input {
+  border-width: 0 0 0;
+}
+table.md-table td.md-cell {
+  color: rgba(0,0,0,.87);
+  font-size: 13px;
+  border-top: none !important;
+  border-bottom: 1px rgba(0,0,0,.12) solid;
+}
+.md-table-pagination {
+  border-top: none !important;
+}
+.data-header {
+  border-bottom: 1px rgba(0,0,0,.12) solid !important;
+}
+
+.md-toolbar-tools form .data-filter {
+  width: 100%;
+  margin: 0;
+  border: none;
+  color: rgba(0, 0, 0, 0.87);
+}
+.data-selected {
+  background-color: rgba(0,0,0,0.15);
+  border-right: 5px solid #FF4F52;
+}
+.not-allow-click {
+  pointer-events: none;
+}

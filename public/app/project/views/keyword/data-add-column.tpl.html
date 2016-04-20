@@ -1,0 +1,14 @@
+<div layout="column" layout-padding>
+	<form name="columnDataForm">
+		<md-input-container>
+	    <label>Column Name: </label>
+	    <input type="text" required name="column_name" ng-model="column_name">
+	    <div ng-messages="columnDataForm.column_name.$error">
+	    	<div ng-message="required">
+	    		This is required
+	    	</div>
+	    </div>
+	  </md-input-container>
+	  <md-button ng-disabled="columnDataForm.$error.required" ng-click="doAddColumnData()"><ng-md-icon icon="add_circle"></ng-md-icon> Add </md-button>
+	</form>
+</div>

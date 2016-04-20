@@ -1,3 +1,125 @@
-<div>
-  Keyword data content
+<div id="cases" layout="column" flex>
+    <!-- Breadcrumbbs -->
+    <div layout="row" class="breadcrumbs" layout-align="start center">
+
+      <div layout="row" layout-align="start center">
+        <md-button aria-label="menu" class="md-icon-button" ng-click="toggleProjectNavLeft()">
+          <md-tooltip md-direction="right">Navigation Menu</md-tooltip>
+          <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+        </md-button>
+      </div>
+
+      <div class="item" layout="row" layout-align="start center">
+        <a data-ui-sref="app.projects">Projects</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+      </div>
+      <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
+        <a class="text-nowrap-ellipsis" ng-if="!$last" ng-href="{{$state.href(item.state, item.data)}}">
+        {{item.name}}
+        </a>
+        <span ng-if="$last">{{item.name}}</span>
+        <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+      </div>
+
+      <span flex></span>
+      <div ng-if="edit">
+       <md-button class="btn pull-right" ng-click="updateDataDriven()">
+         <md-icon md-font-icon="icon-content-save" class='s24 md-primary-fg'></md-icon> {{current._id ? 'Update' : 'Save'}}
+       </md-button>
+       <md-button class="btn pull-right" ng-click="cancelEdit()">
+         <md-icon md-font-icon="icon-cancel" class="s24 md-warn-fg"></md-icon> Cancel
+       </md-button>
+      </div>
+      <md-button class="md-icon-button" aria-label="settings">
+        <md-tooltip md-direction="left">Data Settings</md-tooltip>
+        <md-icon md-font-icon="icon-cog" aria-hidden="true"></md-icon>
+      </md-button>
+    </div>
+    <!-- End breadcrumbs -->
+
+    <div layout="row" class="content-wrapper" flex>
+
+      <div flex="80" layout="row" layout-align="start start" layout-wrap>
+      	<md-toolbar class="md-table-toolbar md-default">
+				  <div class="md-toolbar-tools">
+				    <ng-md-icon icon="search"></ng-md-icon>
+				    <form name="filter.form" flex class="">
+				      <input type="text" placeholder="search" ng-model-options="filter.options" ng-model="query.filter" aria-invalid="false" class="data-filter"  ng-disabled="edit">
+				    </form>
+				    <md-button class="md-icon-button" aria-label="More" ng-if="selected.length" ng-click="deleteRowDataDriven()">
+				      <md-icon md-font-icon="icon-delete" class='md-warn-fg'></md-icon>
+				    </md-button>
+				  </div>
+				</md-toolbar>
+				<md-table-container style="width: 100%" class="padding-10" perfect-scrollbar>
+				  <table md-table md-row-select ng-model="selected" md-progress="promise">
+				    <thead md-head>
+				      <tr md-row class="data-header md-accent-bg">
+				        <th md-column ng-repeat="param in params track by $index" style="padding: 0 0 0 0 !important;">
+				          <md-input-container  class="data-table md-block" style="margin: none !important;height: 42px;">
+				            <input value="{{param}}" aria-label="{{param}}" ng-model="params[$index]" ng-change="changeParam()" style="margin: none !important;"/>
+				          </md-input-container> 
+				        </th>
+				      </tr>
+				    </thead>
+				    <tbody md-body>
+				      <tr md-row md-select="i" md-select-id="{{i.$index}}" ng-repeat="i in dataSelected track by $index">
+				        <td md-cell ng-repeat="(key, val) in i" style="padding:0 0 0 0 !important;">
+				          <md-input-container style="margin: none !important;height: 42px;" class="data-table md-block">
+				            <input value="{{val}}" aria-label="{{val}}" ng-model="i[key]" ng-change="changeData()" style="margin: none !important;" />
+				          </md-input-container>
+				        </td>
+				      </tr>
+				    </tbody>
+				  </table>
+				</md-table-container>
+
+				<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{data.length}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+      </div>
+
+      <div layout="row" flex="20" class="list-cases ms-widget md-whiteframe-14dp">
+        <div class="ms-widget-front white-bg" layout="column" flex>
+          
+          <div layout="row" layout-align="start center" class="p-16 filter">
+            <md-icon md-font-icon="icon-magnify"></md-icon>
+            <input class="pl-8" flex placeholder="Search for test case name"  ng-model="queryText">
+            <a href-void ng-show="queryText" ng-click="queryText = undefined;"><md-icon md-font-icon="icon-close"></md-icon></a>
+            <md-menu>
+				      <md-button aria-label="Open Actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+				        <md-icon md-font-icon="icon-menu" aria-label="menu">
+				          
+				        </md-icon>
+				      </md-button>
+				      <md-menu-content>
+				        <md-menu-item>
+				          <md-button ng-click="addNewDataDriven($event)">
+				            <md-icon md-font-icon="icon-plus" class="md-primary-fg"></md-icon> Create New
+				          </md-button>
+				        </md-menu-item>
+				        <md-menu-item>
+				          <md-button ngf-select="addNewFile($files)" accept=".csv"  multiple="true">
+				            <md-icon md-font-icon="icon-upload" class="md-primary-fg"></md-icon> Upload csv file
+				          </md-button>
+				        </md-menu-item>
+				      </md-menu-content>
+				    </md-menu>
+          </div>
+
+          <md-content perfect-scrollbar class="pt-8">
+            <div layout="column">
+              <div class="p-16 border-bottom" style="cursor: pointer;" layout="row" flex="100"
+                ng-repeat="data in datas | filter: queryText" ng-class="{'data-selected':data._id == current._id , 'not-allow-click': editable}"
+       ng-click="chooseData(data)">
+                  <span flex>{{data.name}}</span>
+                  <a ng-if="data._id == current._id" ng-click="deleteDataDriven(data, $index, event)" class="md-icon-button">
+                  	<md-tooltip>Remove</md-tooltip>
+                  	<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+                  </a>
+              </div>              
+            </div>
+          </md-content>
+        </div>
+      </div>
+
+    </div>
 </div>

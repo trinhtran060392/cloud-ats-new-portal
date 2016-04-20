@@ -1,4 +1,4 @@
-define(['datadriven/module'], function(module) {
+define(['project/keyword-module'], function(module) {
   'use strict';
 
   module.registerFactory('DataService', ['$http', '$q', '$cookies', '$state',

@@ -70,7 +70,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     }
 
     initData();
-
+    
     $scope.$watch('suite.cases', function(newCases, oldCases) {
       if (newCases !== oldCases && detectChanged(newCases, $scope.suite.originCases)) {
         $scope.hasChanged = true;
