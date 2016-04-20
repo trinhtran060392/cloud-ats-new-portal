@@ -13,7 +13,6 @@ define(['project/module', 'highcharts', 'lodash'], function (module, highcharts,
     var getReport = function () {
       KeywordService.suiteReports($scope.projectId, $scope.jobId, $scope.suiteId, $scope.suiteReportId, function (response, status) {
         var data = response;
-        console.log(response);
         _.forEach(data, function (obj) {
           if (obj.useDataDriven) {
             var caze = {
@@ -42,7 +41,6 @@ define(['project/module', 'highcharts', 'lodash'], function (module, highcharts,
             }
           } else $scope.case_reports.push(obj);
         });
-        console.log($scope.case_reports);
       });
     }
 

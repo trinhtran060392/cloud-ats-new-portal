@@ -1,0 +1,29 @@
+<div aria-label="Sampler Report" id="case" layout="column" perfect-scrollbar>
+  <div layout="row" class="breadcrumbs" layout-align="start center">
+      <md-button aria-label="menu" hide-gt-md class="md-icon-button">
+        <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+      </md-button>
+
+      <div class="pl-8" layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-home" class="s24"></md-icon>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+        <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Report</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+        <a>Reports</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+        <a>Job</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+        <a>Sampler</a>
+      </div>
+
+  </div>
+  
+  <div class="simple-table-container md-whiteframe-4dp" layout="column" flex="100">
+      <div class="ds-text-rotate ds-text-project">{{getWord('Number of hits/second')}}</div>
+      <div class="chart no-padding sampler-report-hits">
+      </div>
+      <div>{{getWord('Number of transactions/second')}} </div>
+      <div class="chart no-padding sampler-report-trans">
+      </div>
+  </div>
+</div>  

@@ -1,4 +1,4 @@
-<div aria-label="Job Report" id="case" ng-controller="ReportJobDetailCtrl" layout="column" perfect-scrollbar>
+<div aria-label="Suite Report" id="case" layout="column" perfect-scrollbar >
 	<div layout="row" class="breadcrumbs" layout-align="start center">
 	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
 	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
@@ -16,12 +16,12 @@
 	      <a>Suite</a>
 	    </div>
 	</div>
-	<div layout="row">
-    <div class="simple-table-container md-whiteframe-4dp" >
-      <div class="table-title">{{getWord('10 Lastest reports of the suite')}}</div>
+	<div layout="row" flex class="simple-table-container md-whiteframe-4dp" style="max-height: 40%">
+    <div  flex="55">
+      <div class="table-title">{{getWord('5 Lastest reports of the suite')}}</div>
       <div  >
         <table class="simple">
-          <thead style="height: 20px;">
+          <thead>
             <th >{{getWord('#')}} </th>
             <th >{{getWord('Suite Name')}}</th>
             <th >{{getWord('Total Pass')}}</th>
@@ -29,7 +29,7 @@
             <th >{{getWord('Result')}}</th>
           </thead>
           <tbody>
-            <tr ng-repeat="suite in suites track by $index" style="height: 20px;">
+            <tr ng-repeat="suite in suites track by $index">
                 <td>{{$index + 1}}</td>
                 <td><a class="text-info" ng-click="goToJobReport(suite.jobId)">{{suite.name}}</a></td>
                 <td><span class="label label-success">{{suite.totalPass}}</span></td>
@@ -40,16 +40,14 @@
         </table>
       </div>
   </div>
-    <div style="width: 350px !important;">
-      <div layout="row" layout-align="start center" >
-            <div id="suiteChart">
+    <div flex>
+      <div id="suiteChart">
             
-            </div>
-        </div>
+      </div>
     </div>
 	</div>
 
-	<div class="simple-table-container md-whiteframe-4dp" >
+	<div class="simple-table-container md-whiteframe-4dp">
 		<div class="table-title">Report Suite Detail</div>
 		<div class="ms-responsive-table-wrapper">
 			<table class="simple" ms-responsive-table="">

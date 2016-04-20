@@ -1,4 +1,4 @@
-<div aria-label="Job Report" id="case" ng-controller="ReportJobDetailCtrl" layout="column">
+<div aria-label="Job Report" id="case" ng-controller="ReportJobDetailCtrl" layout="column" perfect-scrollbar>
 	<div layout="row" class="breadcrumbs" layout-align="start center">
 	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
 	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
@@ -21,7 +21,7 @@
             </div>
         </div>
 	</div>
-	<div class="simple-table-container md-whiteframe-4dp" perfect-scrollbar>
+	<div class="simple-table-container md-whiteframe-4dp">
 		<div class="table-title">
 			<span>Job Report</span> 
 			<a class="btn-border-line btnViewLog" ng-click="viewLog()">{{getWord('View Log')}}</a>

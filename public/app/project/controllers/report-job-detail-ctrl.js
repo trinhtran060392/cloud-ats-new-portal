@@ -23,7 +23,6 @@ define(['project/module', 'highcharts', 'lodash'], function (module, highcharts,
       var getDataReport = function(data) {
         var i = 0;
         _.forEach(data,function(obj,key) {
-            console.log(obj);
             names.push((++i) + '.' + obj.name);
             passes.push(obj.totalPass);
             fails.push(obj.totalFail);

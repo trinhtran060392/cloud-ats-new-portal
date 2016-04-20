@@ -14,10 +14,14 @@ define([
       url: '/project/:id/performance/reports',
       views: {
         'sub-content@app.project': {
-          templateUrl: 'app/project/views/performance/reports.tpl.html',
+          templateUrl: 'app/project/views/performance/reports-overview.tpl.html',
+          controller: 'ReportOverviewPerfCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav'
+              'project/directives/project-nav',
+              'services/performance-service',
+              'project/controllers/report-overview-perf-ctrl'
+
             ])
           }
         },
@@ -27,6 +31,53 @@ define([
       },
       data: {
         title: 'Project Performance Reports',
+        requireLogin: true
+      }
+    })
+    .state('app.project.performance-reports.job', {
+      url: '/job/:jobId',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/performance/report-job-detail.tpl.html',
+          controller: 'ReportPerformanceCtrl',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+              'project/controllers/report-perf-ctrl',
+              'project/directives/performance-report',
+              'services/report-service'
+            ])
+          }
+        },
+        'header-box@app.project': {
+          templateUrl: 'app/project/views/performance/reports-header-box.tpl.html'
+        }
+      },
+      data: {
+        title: 'Project Performance Reports Job',
+        requireLogin: true
+      }
+    })
+    .state('app.project.performance-reports.job.sampler', {
+      url: '/sampler/:reportId/:index/:hit/:trans',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/performance/report-perf-sampler.html',
+          controller: 'ReportPerformanceSamplerCtrl',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+              'project/controllers/report-perf-sampler-ctrl',
+              'services/report-service'
+            ])
+          }
+        },
+        'header-box@app.project': {
+          templateUrl: 'app/project/views/performance/reports-header-box.tpl.html'
+        }
+      },
+      data: {
+        title: 'Project Performance Reports Sampler',
         requireLogin: true
       }
     })

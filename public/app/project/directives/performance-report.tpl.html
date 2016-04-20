@@ -1,0 +1,72 @@
+<div class="simple-table-container md-whiteframe-4dp" style="padding: 10px 10px;">
+	
+	<div>
+		<div class="table-title">{{summaryReport.script_name}}</div>
+	</div>		
+	
+	<div>
+		<div>{{getWord('Number of hits/second')}}</div>
+		<div id="hits_chart_{{bindTo}}"></div>
+		<div style="text-align: center; margin-bottom: 5px;"><button class="btn-primary show-hide-button" ng-click="toggle('hits_chart')">{{show_hits ? 'Hide All' : 'Show All'}}</button></div>
+	</div>
+	<div>
+		<div>{{getWord('Number of transactions/second')}} </div>
+		<div id="trans_chart_{{bindTo}}"></div>
+		<div style="text-align: center; margin-bottom: 5px;"><button class="btn-primary show-hide-button" ng-click="toggle('trans_chart')">{{show_trans ? 'Hide All' : 'Show All'}}</button></div>
+	</div>
+	<div class="chart-legend">
+		<div ng-repeat="color in colors" class="label-performance">
+			<div style="background-color: {{color.color}};"></div> {{color.label}}
+		</div>
+	</div>
+
+	<div class="clearfix table-container">
+		<div flex>
+		<div class="table-title">{{summaryReport.script_name}} {{getWord('summary')}}</div>
+			<table class="simple">
+				<thead>
+                <tr>
+					<th >{{getWord('Label')}} </th>
+					<th >#{{getWord('Sampler')}}</th>
+					<th class="text-right">{{getWord('Average')}}</th>
+					<th class="text-right">{{getWord('Min')}}</th>
+					<th class="text-right">{{getWord('Max')}}</th>
+					<th class="text-right">{{getWord('Std.Dev')}}</th>
+					<th class="text-center">{{getWord('Error %')}}</th>
+					<th class="text-center">{{getWord('Throughput')}}</th>
+					<th class="text-center">{{getWord('KB/sec')}}</th>
+					<th class="text-center">{{getWord('Avg. Bytes')}}</th>
+				</tr>
+     			</thead>
+     			<tbody>
+     				<tr>
+					<td class="label-report"><a ng-click="openReportEachSampler(summaryReport, $index)">{{summaryReport.label}}</a></td>
+					<td>{{summaryReport.summary.samples}}</td>
+					<td class="text-right">{{summaryReport.summary.average}}</td>
+					<td class="text-right">{{summaryReport.summary.min_time}}</td>
+					<td class="text-right">{{summaryReport.summary.max_time}}</td>
+					<td class="text-right">{{summaryReport.summary.standard_deviation}}</td>
+					<td class="text-center">{{summaryReport.summary.error_percent}}</td>
+					<td class="text-center">{{summaryReport.summary.throughtput}}</td>
+					<td class="text-center">{{summaryReport.summary.kb_per_second}}</td>
+					<td class="text-center">{{summaryReport.summary.average_bytes}}</td>
+				</tr>
+				<tr ng-repeat="report in reports track by $index">
+					<td class="label-report"><a ng-click="openReportEachSampler(report, $index)">{{report.label}}</a></td>
+					<td>{{report.summary.samples}}</td>
+					<td class="text-right">{{report.summary.average}}</td>
+					<td class="text-right">{{report.summary.min_time}}</td>
+					<td class="text-right">{{report.summary.max_time}}</td>
+					<td class="text-right">{{report.summary.standard_deviation}}</td>
+					<td class="text-center">{{report.summary.error_percent}}</td>
+					<td class="text-center">{{report.summary.throughtput}}</td>
+					<td class="text-center">{{report.summary.kb_per_second}}</td>
+					<td class="text-center">{{report.summary.average_bytes}}</td>
+				</tr>
+     			</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>
+
