@@ -1,7 +1,7 @@
 define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
-	module.registerController('EachSuiteCtrl', 
+	module.registerController('SuiteDetailCtrl', 
     ['SharedDataService', '$mdSidenav', '$scope', 'SuiteService', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
       function (SharedDataService, $mdSidenav, $scope, SuiteService, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
 
