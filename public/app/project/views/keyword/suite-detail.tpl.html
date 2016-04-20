@@ -72,14 +72,14 @@
           
           <div layout="row" layout-align="start center" class="p-16 filter">
             <md-icon md-font-icon="icon-magnify"></md-icon>
-            <input class="pl-8" flex placeholder="Search for test case name">
-            <md-icon md-font-icon="icon-close"></md-icon>
+            <input class="pl-8" flex placeholder="Search for test case name" ng-model="queryText">
+            <a href-void ng-show="queryText" ng-click="queryText = undefined;"><md-icon md-font-icon="icon-close"></md-icon></a>
           </div>
 
-          <md-content perfect-scrollbar class="pt-8">
+          <md-content perfect-scrollbar>
             <div layout="row" flex="100" layout-wrap>
               <div class="p-16 border-bottom" style="cursor: move;" flex="100"
-                ng-repeat="case in cases | orderBy:'name'" 
+                ng-repeat="case in cases | orderBy:'name' | filter: queryText" 
                 dnd-draggable="case" 
                 dnd-effect-allowed="move"
                 dnd-moved="removeInListCase(case)"
