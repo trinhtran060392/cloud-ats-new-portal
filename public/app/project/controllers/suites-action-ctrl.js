@@ -8,9 +8,10 @@ define(['project/keyword-module'], function (module) {
       $scope.sharedData = SharedDataService;
 
       $scope.create = function (ev) {
+        $scope.title = 'Create New Suite';
         $mdDialog.show({
             
-          templateUrl: 'app/project/views/keyword/create-suite-dialog.tpl.html',
+          templateUrl: 'app/project/views/keyword/suite-form-dialog.tpl.html',
           parent: angular.element(document.body),
           targetEvent: ev,
           clickOutsideToClose:true,

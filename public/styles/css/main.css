@@ -244,9 +244,9 @@ a.action-icon:hover > * {
   border: 3px dashed #2E62B1;
   position: relative;
   width: 20%;
-  min-height: 60px;
-  max-height: 100px;
-  height: 100px;
+  min-height: 80px;
+  max-height: 80px;
+  height: 80px;
 }
 
 .test-case-list .md-subheader-inner {
@@ -433,4 +433,11 @@ table.simple tbody tr td.absorbing-column {
 #cases .list-cases .filter input {
   border: none;     
   color: rgba(0, 0, 0, 0.54);
+}
+
+#cases .list-cases .case {
+  cursor: move;
+}
+#cases .list-cases .case:hover {
+  border-left: 3px solid #2E62B1;
 }

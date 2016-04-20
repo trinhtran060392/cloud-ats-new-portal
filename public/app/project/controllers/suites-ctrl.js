@@ -28,7 +28,6 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
 		SuiteService.list($scope.projectId, function (data, status) {
 			$scope.sharedData.project = data;
-      console.log($scope.sharedData);
 		});
 
 		$scope.delete = function (ev, id) {
@@ -67,13 +66,13 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           $scope.data_name = undefined;
           $scope.title = "Suite";
           $scope.cancel = function() {
+            console.log($scope);
             $mdDialog.cancel();
           };
           $scope.submit = function() {
             SuiteService.clone($scope.projectId, id, $scope.data_name, function (data, status){
               if (status === 200) {
-               
-                $scope.suites.push(data);
+                $scope.sharedData.project.suites.push(data);
                 $mdDialog.hide();
                 $mdToast.show($mdToast.simple().position('top right').textContent('The Suite has been cloned!'));
               }

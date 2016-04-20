@@ -20,11 +20,11 @@
     </md-dialog-content>
     <md-dialog-actions layout="row" >
       <span flex></span>
-      <md-button ng-click="submit()" ng-disabled="cloneForm.$invalid || cloneForm.$pristine">
-       CLONE
+      <md-button class="md-raised md-primary" ng-click="submit()" ng-disabled="cloneForm.$invalid || cloneForm.$pristine">
+       <span class="white-fg">Clone</span>
       </md-button>
-      <md-button ng-click="cancel()" style="margin-right:20px;">
-        CANCEL
+      <md-button class="md-raised mr-24" ng-click="cancel()">
+        Cancel
       </md-button>
     </md-dialog-actions>
 </md-dialog>

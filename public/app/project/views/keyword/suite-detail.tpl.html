@@ -23,9 +23,25 @@
 
       <span flex></span>
 
-      <md-button class="md-icon-button" aria-label="settings">
-        <md-tooltip md-direction="left">Suite Settings</md-tooltip>
-        <md-icon md-font-icon="icon-cog" aria-hidden="true"></md-icon>
+      <md-button class="animate-slide-down" ng-click="save()" ng-show="hasChanged">
+        <div layout="row" layout-align="start center" class="md-primary-fg">
+          <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg"></md-icon>
+          <span class="pl-8" flex>Save change</span>
+        </div>
+      </md-button>
+
+      <md-button class="animate-slide-down" ng-click="cancel()" ng-show="hasChanged">
+        <div layout="row" layout-align="start center" class="grey-700-fg">
+          <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
+          <span class="pl-8" flex>Cancel</span>
+        </div>
+      </md-button>
+
+      <md-button ng-click="setting($event)">
+        <div layout="row" layout-align="start center" class="md-warn-fg md-hue-2">
+          <md-icon md-font-icon="icon-cog" aria-hidden="true" class="md-warn-fg md-hue-2"></md-icon>
+          <span class="pl-8" flex>Settings</span>          
+        </div>
       </md-button>
     </div>
     <!-- End breadcrumbs -->
@@ -34,18 +50,17 @@
 
       <div class="cases-container" flex="80" layout="row" layout-align="start start" layout-wrap  
         perfect-scrollbar
-        dnd-list="sharedData.suite.cases" 
+        dnd-list="suite.cases" 
         dnd-horizontal-list="true" 
-        dnd-external-sources="false"
-        dnd-disable-if="!organizeMode">
+        dnd-external-sources="false">
 
-        <div ng-repeat="case in sharedData.suite.cases" layout="row" flex="20" 
+        <div ng-repeat="case in suite.cases" layout="row" flex="20" 
           class="case ms-card animate-slide-left"  
           dnd-draggable="case"  
           dnd-type="'containerType'"
           dnd-effect-allowed="move" 
-          dnd-moved="suite.cases.splice($index, 1)"
-          dnd-disable-if="!organizeMode"> 
+          dnd-moved="suite.cases.splice($index, 1)">
+
           <div class="ms-card-content-wrapper" layout="column">
 
             <div layout="row" class="p-8" flex>
@@ -78,12 +93,11 @@
 
           <md-content perfect-scrollbar>
             <div layout="row" flex="100" layout-wrap>
-              <div class="p-16 border-bottom" style="cursor: move;" flex="100"
-                ng-repeat="case in cases | orderBy:'name' | filter: queryText" 
+              <div class="p-16 border-bottom case" flex="100"
+                ng-repeat="case in listCases | orderBy:'name' | filter: queryText" 
                 dnd-draggable="case" 
                 dnd-effect-allowed="move"
-                dnd-moved="removeInListCase(case)"
-                dnd-disable-if="!organizeMode">
+                dnd-moved="removeInListCase(case)">
                   <span>{{case.name}}</span>
               </div>              
             </div>

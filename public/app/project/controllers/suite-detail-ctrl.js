@@ -2,8 +2,8 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
 	module.registerController('SuiteDetailCtrl', 
-    ['SharedDataService', '$mdSidenav', '$scope', 'SuiteService', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
-      function (SharedDataService, $mdSidenav, $scope, SuiteService, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
+    ['$mdSidenav', '$scope', 'SuiteService', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
+      function ($mdSidenav, $scope, SuiteService, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
 
     $scope.$parent.isSidenavOpen = false;
     $scope.$parent.isSidenavLockedOpen = false;
@@ -14,52 +14,84 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
 		$scope.projectId = $stateParams.id;
     $scope.suiteId = $stateParams.suiteId;
-    $scope.organizeMode = true;
-    $scope.sharedData = SharedDataService;
+    $scope.hasChanged = false;
 
-    $scope.filterIsShow = false;
-
-    SuiteService.get($scope.projectId, $scope.suiteId, function (data, status) {
-      $scope.sharedData.suite = data;
-      $scope.sharedData.suite.originCases = angular.copy($scope.sharedData.suite.cases);
-
-      var overview = {
-        name: $scope.sharedData.suite.project.name,
-        state: 'app.project.overview',
-        data: {
-          id: $scope.projectId
+    var detectChanged = function(newCases, oldCases) {
+      var changed = false;
+      if(newCases.length !== oldCases.length) changed = true;
+      else {
+        for(var i = 0; i < newCases.length; i++) {
+          if (newCases[i]._id !== oldCases[i]._id) {
+            changed = true;
+            break;
+          }
         }
       }
-      var suites = {
-        name: 'Suites',
-        state: 'app.project.keyword-suites',
-        data: {
-          id: $scope.projectId
-        }
-      }
-      var suite = {
-        name: $scope.sharedData.suite.name
-      }
-      $scope.breadcrumbs = [overview, suites, suite];
-    });
+      return changed;
+    }
 
-    CaseService.references($scope.projectId, function(response) {
-      $scope.cases = [];
-      _.forEach(response, function(caze) {
-        var found = _.filter($scope.sharedData.suite.cases, function (sel) {
-          return sel._id == caze._id;
+    var initData = function() {
+      SuiteService.get($scope.projectId, $scope.suiteId, function (data, status) {
+        $scope.suite = data;
+        $scope.suite.originCases = angular.copy($scope.suite.cases);
+
+        CaseService.references($scope.projectId, function(response) {
+          $scope.listCases = [];
+          _.forEach(response, function(caze) {
+            var found = _.filter($scope.suite.cases, function (sel) {
+              return sel._id == caze._id;
+            });
+            if (_.isEmpty(found)) {
+              $scope.listCases.push(caze);
+            }
+          });
+          $scope.originListCases = angular.copy($scope.listCases);
         });
-        if (_.isEmpty(found)) {
-          $scope.cases.push(caze);
+
+        var overview = {
+          name: $scope.suite.project.name,
+          state: 'app.project.overview',
+          data: {
+            id: $scope.projectId
+          }
         }
+        var suites = {
+          name: 'Suites',
+          state: 'app.project.keyword-suites',
+          data: {
+            id: $scope.projectId
+          }
+        }
+        var suite = {
+          name: $scope.suite.name
+        }
+        $scope.breadcrumbs = [overview, suites, suite];
       });
-    });
+    }
+
+    initData();
+
+    $scope.$watch('suite.cases', function(newCases, oldCases) {
+      if (newCases !== oldCases && detectChanged(newCases, $scope.suite.originCases)) {
+        $scope.hasChanged = true;
+      } else {
+        $scope.hasChanged = false;
+      }
+    }, true);
 
     $scope.save = function () {
-      SuiteService.update($scope.projectId, $scope.suite, function (data, status) {
-
+      var suite = {};
+      suite._id = $scope.suite._id;
+      suite.name = $scope.suite.name;
+      suite.cases = $scope.suite.cases;
+      suite.sequence_mode = $scope.suite.sequence_mode;
+      SuiteService.update($scope.projectId, suite, function (data, status) {
+        if (status == 200) {
+          $mdToast.show($mdToast.simple().position('top right').textContent('The Suite has been updated!'));
+          initData();
+          $scope.hasChanged = false;
+        }
       });
-      $scope.organizeMode = false;
     }
 
     $scope.edit = function () {
@@ -67,19 +99,60 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     }
 
     $scope.cancel = function () {
-      $scope.suite.cases = $scope.suite.originCases;
-      $scope.organizeMode = false;
+      $scope.suite.cases = angular.copy($scope.suite.originCases);
+      $scope.listCases = angular.copy($scope.originListCases);
     }
 
     $scope.remove = function ($index) {
-      var caze = $scope.sharedData.suite.cases.splice($index, 1)[0];
-      $scope.cases.push(caze);
+      var caze = $scope.suite.cases.splice($index, 1)[0];
+      $scope.listCases.push(caze);
     }
 
     $scope.removeInListCase = function (caze) {
-      _.remove($scope.cases, function(sel) {
+      _.remove($scope.listCases, function(sel) {
         return sel._id == caze._id;
       });
+    }
+
+    $scope.setting = function (ev) {
+      $scope.title = 'Test Suite Information';
+      $mdDialog.show({
+          
+        templateUrl: 'app/project/views/keyword/suite-form-dialog.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:false,
+        scope: $scope,
+        preserveScope: true,
+        controller: function() {
+
+          $scope.originSuiteName = $scope.suite.name;
+          $scope.originSuiteMode = $scope.suite.sequence_mode;
+
+          $scope.cancel = function() {
+            $scope.suite.name = $scope.originSuiteName;
+            $scope.suite.sequence_mode = $scope.originSuiteMode;
+            $mdDialog.cancel();
+          };
+          $scope.submit = function() {
+            var suite = {};
+            suite._id = $scope.suite._id;
+            suite.name = $scope.suite.name;
+            suite.sequence_mode = $scope.suite.sequence_mode;
+            SuiteService.update($scope.projectId, suite, function (data, status) {
+              if (status == 200) {
+                $mdToast.show($mdToast.simple().position('top right').textContent('The Suite has been updated!'));
+                initData();
+                $scope.hasChanged = false;
+              } else if (status == 204) {
+                $mdToast.show($mdToast.simple().position('top right').textContent('Nothing to update.'));
+              }
+
+              $mdDialog.cancel();
+            });
+          };
+        }
+      })
     }
 
 	}]);

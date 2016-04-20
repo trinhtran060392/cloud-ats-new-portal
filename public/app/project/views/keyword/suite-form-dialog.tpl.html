@@ -1,14 +1,14 @@
 <md-dialog aria-label="Create Suite"  ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools md-primary-bg">
-        <span class="md-title text-nowrap">Create New Suite</span>
+        <span class="md-title text-nowrap">{{title}}</span>
       </div>
     </md-toolbar>
     <md-dialog-content>
       <div class="md-dialog-content">
         <form name="createForm">
           <md-input-container class="md-block">
-          <label>New Suite Name</label>
+          <label>Suite Name</label>
           <input type="text" name="suiteName" required ng-model="suite.name" md-autofocus>
           <div ng-messages="createForm.suiteName.$error" role="alert" aria-live="assertive" >
               <div ng-message="required">Suite name is required</div>
@@ -17,11 +17,11 @@
           <md-input-container class="md-block">
             <label>Choose Mode</label>
             <md-select ng-model="suite.sequence_mode" name="mode" required>
-              <md-option value="isolate">
-                Isolate mode
+              <md-option value="false">
+                Isolate
               </md-option>
-              <md-option value="sequence">
-                Sequence mode
+              <md-option value="true">
+                Sequence
               </md-option>
             </md-select>
             <div ng-messages="createForm.mode.$error" role="alert" aria-live="assertive" >
@@ -33,11 +33,11 @@
     </md-dialog-content>
     <md-dialog-actions layout="row" >
       <span flex></span>
-      <md-button ng-click="submit()" ng-disabled="createForm.$invalid || createForm.$pristine">
-       Create
+      <md-button class="md-raised md-primary" ng-click="submit()" ng-disabled="createForm.$invalid || createForm.$pristine">
+        <span class="white-fg">Ok</span>
       </md-button>
-      <md-button ng-click="cancel()" style="margin-right:20px;">
-        CANCEL
+      <md-button class="md-raised mr-24" ng-click="cancel()">
+        Cancel
       </md-button>
     </md-dialog-actions>
 </md-dialog>
