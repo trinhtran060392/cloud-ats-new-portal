@@ -1,27 +1,34 @@
 <div layout="column" flex>
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
-      <div ng-repeat="suite in suites track by $index" layout="row" flex="25" class="project ms-card"> 
+      <div ng-repeat="suite in sharedData.project.suites track by $index" layout="row" flex="20" class="project ms-card"> 
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
           <div class="text-nowrap-ellipsis h2 p-16">
-            <a ng-click="clickSuite($event, suite._id)" class="md-primary-fg">
+            <a href-void ng-click="clickSuite($event, suite._id)" class="md-primary-fg">
               <md-tooltip>{{suite.name}}</md-tooltip>
               {{suite.name}}
             </a>
           </div>
 
           <div class="creator ph-16 pb-16" layout="row" layout-align="start center">
-            <img class="avatar mr-16" ng-src="styles/img/avatars/male.png">
+            <!-- <img class="avatar mr-16" ng-src="styles/img/avatars/male.png"> -->
             <div layout="column" flex>
-              <div class="title" layout="row" layout-align="start center">
+              <div layout="row" layout-align="start center">
+                <span class="text-bold pr-8">Creator:</span>
                 <a href="javascript:void(0)" class="text-nowrap-ellipsis" flex>
-                  <md-tooltip>haint@cloudats.net</md-tooltip>
-                  haint@cloudats.net
+                  <md-tooltip>{{suite.creator.email}}</md-tooltip>
+                  {{suite.creator.first_name}} {{suite.creator.last_name}}
                 </a>
-                <span class="text" flex>created on</span>
               </div>
-              <div class="subtitle secondary-text">Apr 13 2016</div>
+              <div layout="row" layout-align="start center">
+                <span class="text-bold pr-8">Created Date:</span>
+                <span class="subtitle secondary-text">{{parse(suite.created_date)}}</span>
+              </div>
+              <div>
+                <span class="text-bold pr-8">Total Case(s):</span> 
+                <span>{{suite.cases.length}} Case(s)</span>
+              </div>
             </div>
           </div>
 

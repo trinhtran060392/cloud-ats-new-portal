@@ -1,94 +1,95 @@
-<!-- Breadcrumbbs -->
-  <div layout="row" class="breadcrumbs" layout-align="start center">
-    <md-button aria-label="menu" class="md-icon-button" ng-click="toggleProjectNavLeft()">
-      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
-    </md-button>
+<div id="cases" layout="column" flex>
+    <!-- Breadcrumbbs -->
+    <div layout="row" class="breadcrumbs" layout-align="start center">
 
-    <div class="pl-8" layout="row" layout-align="start center">
-      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Project</a>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <a>Cases</a>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <span>Test Case 1</span>      
-    </div>
-
-  </div>
-  <!-- End breadcrumbs -->
-<div id="case" layout="row">
-  <md-content class="md-hue-1" flex="80" perfect-scrollbar>
-    <div class="projects-container"  flex="100" layout-wrap layout="row"
-      dnd-list="suite.cases" 
-      dnd-horizontal-list="true" 
-      dnd-external-sources="false"
-      dnd-disable-if="!organizeMode" style="min-height: 30px;">
-      <div ng-repeat="case in suite.cases" layout="row" flex="25" class="project ms-card"  
-        dnd-draggable="case"  
-        dnd-type="'containerType'"
-        dnd-effect-allowed="move" 
-        dnd-moved="suite.cases.splice($index, 1)"
-        dnd-disable-if="!organizeMode"
-        ng-class="{'organize-mode' : organizeMode}"> 
-        <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
-
-          <div layout="column">
-            <a href="javascript:void(0)" ng-click="clickProject($event, project._id)" class="md-primary-fg text-nowrap-ellipsis h5 p-16">
-              <md-tooltip>{{case.name}}</md-tooltip>
-              {{case.name}}
-            </a>
-            <div layout="row">
-              <span flex></span>
-              <span class="badge-order white-fg green-400-bg width-20 text-center">{{$index+1}}</span>
-            </div>
-          </div>
-
-          <md-divider></md-divider>
-
-        </div>
-      </div>
-    </div>
-
-    <div layout="row" class="">
-      <md-button class="md-blue-300-bg md-primary" ng-click="save()" ng-if="organizeMode">
-        Save
-      </md-button>
-      <md-button class="md-accent-bg " ng-click="edit()" ng-if="!organizeMode && suite.cases">
-        Edit
-      </md-button>
-      <md-button class="" ng-click="cancel()" ng-if="organizeMode">
-        Cancel
-      </md-button>
-    </div>
-  </md-content>
-
-  <md-content class="md-background-bg" perfect-scrollbar flex>
-    <md-list flex>
-      <md-subheader layout="row" class="md-primary-bg test-case-list">
-        <md-button class="md-no-transition" aria-label="Open/Close Filter" ng-click="filterIsShow = !filterIsShow">
-          <md-tooltip >Open/Close Filter</md-tooltip>
-            <md-icon md-font-icon="icon-magnify" class="s16 white-fg"></md-icon>
+      <div layout="row" layout-align="start center">
+        <md-button aria-label="menu" class="md-icon-button" ng-click="toggleProjectNavLeft()">
+          <md-tooltip md-direction="right">Navigation Menu</md-tooltip>
+          <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
         </md-button>
-        <span>List of test case</span>
-      </md-subheader>
-      <md-subheader class="md-white-bg" ng-show="filterIsShow">
-        <div layout="row">
-          <md-input-container flex style="margin: 0px;">
-            <label>Filter by name</label>
-            <input type="text">
-          </md-input-container>                        
-        </div>
-      </md-subheader>
-      <div>
-        <md-list-item class="md-1-line border-bottom" ng-repeat="case in cases" style="cursor: move;" 
-          dnd-draggable="case" 
-          dnd-effect-allowed="move"
-          dnd-disable-if="!organizeMode">
-          <div class="md-list-item-text" layout="column">
-            <span>{{case.name}}</span>
-          </div>
-        </md-list-item>
       </div>
-    </md-list>
-  </md-content>
+
+      <div class="item" layout="row" layout-align="start center">
+        <a data-ui-sref="app.projects">Projects</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+      </div>
+      <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
+        <a class="text-nowrap-ellipsis" ng-if="!$last" ng-href="{{$state.href(item.state, item.data)}}">
+        {{item.name}}
+        </a>
+        <span ng-if="$last">{{item.name}}</span>
+        <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+      </div>
+
+      <span flex></span>
+
+      <md-button class="md-icon-button" aria-label="settings">
+        <md-tooltip md-direction="left">Suite Settings</md-tooltip>
+        <md-icon md-font-icon="icon-cog" aria-hidden="true"></md-icon>
+      </md-button>
+    </div>
+    <!-- End breadcrumbs -->
+
+    <div layout="row" class="content-wrapper" flex>
+
+      <div class="cases-container" flex="80" layout="row" layout-align="start start" layout-wrap  
+        perfect-scrollbar
+        dnd-list="sharedData.suite.cases" 
+        dnd-horizontal-list="true" 
+        dnd-external-sources="false"
+        dnd-disable-if="!organizeMode">
+
+        <div ng-repeat="case in sharedData.suite.cases" layout="row" flex="20" 
+          class="case ms-card animate-slide-left"  
+          dnd-draggable="case"  
+          dnd-type="'containerType'"
+          dnd-effect-allowed="move" 
+          dnd-moved="suite.cases.splice($index, 1)"
+          dnd-disable-if="!organizeMode"> 
+          <div class="ms-card-content-wrapper" layout="column">
+
+            <div layout="row" class="p-8" flex>
+              <a href-void ng-click="clickProject($event, project._id)" class="md-primary-fg text-nowrap-ellipsis">
+                <md-tooltip>{{case.name}}</md-tooltip>
+                {{case.name}}
+              </a>  
+            </div>
+            <div layout="row" class="p-8">
+              <span class="badge-order white-fg green-400-bg width-24 text-center">{{$index+1}}</span>
+              <span flex></span>
+              <a href-void ng-click="remove($index)">
+                <md-tooltip>Remove</md-tooltip>
+                <md-icon md-font-icon="s16 icon-close" class="md-warn-fg"></md-icon>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div layout="row" flex="20" class="list-cases ms-widget md-whiteframe-14dp">
+        <div class="ms-widget-front white-bg" layout="column" flex>
+          
+          <div layout="row" layout-align="start center" class="p-16 filter">
+            <md-icon md-font-icon="icon-magnify"></md-icon>
+            <input class="pl-8" flex placeholder="Search for test case name">
+            <md-icon md-font-icon="icon-close"></md-icon>
+          </div>
+
+          <md-content perfect-scrollbar class="pt-8">
+            <div layout="row" flex="100" layout-wrap>
+              <div class="p-16 border-bottom" style="cursor: move;" flex="100"
+                ng-repeat="case in cases | orderBy:'name'" 
+                dnd-draggable="case" 
+                dnd-effect-allowed="move"
+                dnd-moved="removeInListCase(case)"
+                dnd-disable-if="!organizeMode">
+                  <span>{{case.name}}</span>
+              </div>              
+            </div>
+          </md-content>
+        </div>
+      </div>
+
+    </div>
 </div>

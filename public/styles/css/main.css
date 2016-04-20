@@ -241,24 +241,16 @@ a.action-icon:hover > * {
   background-color: #ddd !important;
   display: block;
   border-radius: 2px;
-  border: 3px dashed;
+  border: 3px dashed #2E62B1;
   position: relative;
-  width: 25%;
-  padding: 5px 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  width: 20%;
   min-height: 60px;
+  max-height: 100px;
+  height: 100px;
 }
 
 .test-case-list .md-subheader-inner {
   padding: 0 !important;
-}
-.breadcrumbs {
-  margin-top: 16px;
-  margin-bottom: 8px;
-  height: 24px; 
-  min-height: 24px; 
-  max-height: 24px;
 }
 
 .no-padding-top {
@@ -340,4 +332,78 @@ table.simple thead tr th {
 
 .step-input {
   margin: 0px !important;
+}
+
+.toolbar-action-box {
+  height: 50px;
+  border-left: 1px solid rgba(255,255,255,0.2);
+  margin: 0;
+}
+.toolbar-action-box md-icon, .toolbar-action-box span {
+  color: rgba(255,255,255,0.87);
+}
+
+.breadcrumbs .item {
+ padding-top: 2px;
+}
+
+#cases .breadcrumbs {
+  position: relative;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+#cases .content-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+#cases .content-wrapper .cases-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+}
+
+#cases .content-wrapper .cases-container .case {
+  min-height: 80px;
+  max-height: 80px;
+  height: 80px;
+  padding: 0 8px 8px 4px !important;
+}
+
+#cases .content-wrapper .cases-container .case .ms-card-content-wrapper {
+  border-left: 3px solid #2E62B1;
+}
+
+#cases .list-cases {
+  margin-left: 80%;
+  padding: 0px 4px 4px 0 !important;
+  height: 100%; 
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#cases .list-cases .filter {
+  height: 56px; 
+  min-height: 56px; 
+  max-height: 56px; 
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.14), 
+    0px 2px 2px 0px rgba(0, 0, 0, 0.098), 
+    0px 1px 5px 0px rgba(0, 0, 0, 0.084);
+  margin-bottom: 4px;
+}
+
+#cases .list-cases .filter input {
+  border: none;     
+  color: rgba(0, 0, 0, 0.54);
 }

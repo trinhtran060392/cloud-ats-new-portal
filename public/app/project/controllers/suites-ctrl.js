@@ -1,11 +1,34 @@
 define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
-	module.registerController('SuiteCtrl', ['$scope', 'SuiteService', '$state', '$stateParams', '$mdDialog', '$mdToast', function ($scope, SuiteService, $state, $stateParams, $mdDialog, $mdToast) {
+	module.registerController('SuitesCtrl', [
+    'SharedDataService', '$mdMedia', '$scope', 'SuiteService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
+    function (SharedDataService, $mdMedia, $scope, SuiteService, $state, $stateParams, $mdDialog, $mdToast) {
+
+    $scope.$parent.isSidenavOpen = true;
+    $scope.$parent.isSidenavLockedOpen = $mdMedia('gt-md');
+
+    $scope.$watch(function() { return $mdMedia('gt-md'); }, function(big) {
+      $scope.$parent.isSidenavLockedOpen = big;
+      $scope.$parent.isSidenavOpen = big;
+    });
 
 		$scope.projectId = $stateParams.id;
+    $scope.sharedData = SharedDataService;
+    
+    $scope.parse = function (timestamp) {
+
+      var date = new Date(timestamp);
+      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+      var result = months[date.getMonth()] +" " + date.getDate() +" "+ date.getFullYear();
+
+      return result;
+    }
+
 		SuiteService.list($scope.projectId, function (data, status) {
-			$scope.suites = data;
+			$scope.sharedData.project = data;
+      console.log($scope.sharedData);
 		});
 
 		$scope.delete = function (ev, id) {
@@ -19,7 +42,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 	    	SuiteService.delete($scope.projectId, id, function (data, status) {
 	    		if (status === 200) {
 
-	    			_.remove($scope.suites, function (suite) {
+	    			_.remove($scope.sharedData.project.suites, function (suite) {
 	    				return suite._id === id;
 	    			});
 	    			$mdToast.show($mdToast.simple().position('top right').textContent('Delete The Suite Success!'));
@@ -61,38 +84,8 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 		}
 
     $scope.clickSuite = function (ev, id) {
-      $state.go('app.project.keyword-suite', {id : $scope.projectId, suiteId : id});
+      $state.go('app.project.keyword-suites.suite', {id : $scope.projectId, suiteId : id});
     }
 
-    $scope.create = function (ev) {
-      $mdDialog.show({
-          
-        templateUrl: 'app/project/views/keyword/create-suite-dialog.tpl.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        scope: $scope,
-        preserveScope: true,
-        controller: function() {
-
-          $scope.suite = {};
-          $scope.cancel = function() {
-            $mdDialog.cancel();
-          };
-          $scope.submit = function() {
-            $scope.suite.cases = [];
-            SuiteService.create($scope.projectId, $scope.suite, function (data, status){
-              console.log(data);
-              console.log(status);
-              if (status === 201) {
-               
-                $mdDialog.hide();
-                $state.go('app.project.keyword-suite', {id : $scope.projectId, suiteId : data._id});
-              }
-            });
-          };
-        }
-      })
-    }
 	}]);
 })

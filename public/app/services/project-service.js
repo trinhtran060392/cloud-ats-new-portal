@@ -21,6 +21,22 @@ define(['layout/module'], function (module) {
           callback(data, status);
         });
       },
+      get: function (id, callback) {
+        var request = {
+          method: 'GET',
+          url: appConfig.RestEntry + '/api/v1/project/' + id,
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          }
+        };
+
+        $http(request).success(function(data, status) {
+          callback(data, status);
+        }).error(function(data, status) {
+          callback(data, status);
+        });
+      },
       create: function (name, callback) {
         var request = {
           method: 'POST',

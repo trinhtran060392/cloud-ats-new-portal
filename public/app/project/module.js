@@ -27,12 +27,15 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/controllers/overview-ctrl',
-              'project/directives/project-nav'
+              'project/controllers/overview-header-box-ctrl',
+              'project/directives/project-nav',
+              'project/services/shared-data-service'
             ])
           }
         },
         'header-box@app.project': {
-          templateUrl: 'app/project/views/overview-header-box.tpl.html'
+          templateUrl: 'app/project/views/overview-header-box.tpl.html',
+          controller: 'OverviewHeaderBoxCtrl'
         }
       },
       data: {

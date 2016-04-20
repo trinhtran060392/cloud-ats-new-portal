@@ -105,21 +105,25 @@ define([
       url: '/project/:id/keyword/suites',
       views: {
         'search-box@app': {
-          templateUrl: 'app/project/views/keyword/suites-search-box.tpl.html'
+          templateUrl: 'app/project/views/keyword/suites-search-box.tpl.html',
+          controller: 'SuitesActionCtrl'
         },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/suites.tpl.html',
-          controller: 'SuiteCtrl',
+          controller: 'SuitesCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/suite-controller',
-              'services/suite-service'
+              'project/controllers/suites-ctrl',
+              'project/controllers/suites-action-ctrl',
+              'project/services/shared-data-service',
+              'services/suite-service',
             ])
           }
         },
         'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/suites-header-box.tpl.html'
+          templateUrl: 'app/project/views/keyword/suites-header-box.tpl.html',
+          controller: 'SuitesActionCtrl'
         }
       },
       data: {
@@ -127,16 +131,29 @@ define([
         requireLogin: true
       }
     })
-    .state('app.project.keyword-suite', {
-      url: '/project/:id/keyword/suite/:suiteId',
+    .state('app.project.keyword-suites.suite', {
+      url: '/:suiteId',
       views: {
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/suite-detail-action.tpl.html',
+          controller: 'SuiteActionCtrl',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/controllers/suite-detail-action-ctrl',
+              'project/services/shared-data-service',
+              'services/suite-service',
+              'services/case-service'
+            ])
+          }
+        },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/suite-detail.tpl.html',
           controller: 'SuiteDetailCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/suite-detail-controller',
+              'project/controllers/suite-detail-ctrl',
+              'project/services/shared-data-service',
               'services/suite-service',
               'services/case-service'
             ])
@@ -147,7 +164,7 @@ define([
         }
       },
       data: {
-        title: 'Project Keyword Suites',
+        title: 'Project Keyword Suite Detail',
         requireLogin: true
       }
     })
@@ -163,7 +180,7 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/cases-controller',
+              'project/controllers/cases-ctrl',
               'services/case-service'
             ])
           }
