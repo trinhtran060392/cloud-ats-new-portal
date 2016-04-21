@@ -1,9 +1,18 @@
 <div layout="column" layout-padding>
-	<form name="columnDataForm">
+	<form name="columnDataForm" layout="column">
 		<md-input-container>
 	    <label>Data Driven Name: </label>
 	    <input type="text" required name="data_name" ng-model="data_name">
 	    <div ng-messages="columnDataForm.data_name.$error">
+	    	<div ng-message="required">
+	    		This is required
+	    	</div>
+	    </div>
+	  </md-input-container>
+	  <md-input-container>
+	    <label>First Column Name: </label>
+	    <input type="text" required name="column_name" ng-model="column_name">
+	    <div ng-messages="columnDataForm.column_name.$error">
 	    	<div ng-message="required">
 	    		This is required
 	    	</div>

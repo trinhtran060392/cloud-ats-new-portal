@@ -39,34 +39,58 @@
 
     <div layout="row" class="content-wrapper" flex>
 
-      <div flex="80" layout="row" layout-align="start start" layout-wrap>
+      <div flex="80" layout="row" layout-align="start start" layout-wrap perfect-scrollbar>
       	<md-toolbar class="md-table-toolbar md-default">
 				  <div class="md-toolbar-tools">
-				    <ng-md-icon icon="search"></ng-md-icon>
+				    <md-icon md-font-icon="icon-magnify"></md-icon>
 				    <form name="filter.form" flex class="">
 				      <input type="text" placeholder="search" ng-model-options="filter.options" ng-model="query.filter" aria-invalid="false" class="data-filter"  ng-disabled="edit">
 				    </form>
 				    <md-button class="md-icon-button" aria-label="More" ng-if="selected.length" ng-click="deleteRowDataDriven()">
 				      <md-icon md-font-icon="icon-delete" class='md-warn-fg'></md-icon>
 				    </md-button>
+				    <md-menu>
+				      <md-button aria-label="Open Actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+				        <md-icon md-font-icon="icon-menu">
+				          
+				        </md-icon>
+				      </md-button>
+				      <md-menu-content>
+				        <md-menu-item>
+				          <md-button ng-click="addRow($event)">
+				            <md-icon md-font-icon="icon-plus"></md-icon> Add Row
+				          </md-button>
+				        </md-menu-item>
+				        <md-menu-item>
+				          <md-button ng-click="addColumn($event)">
+				            <md-icon md-font-icon="icon-plus"></md-icon> Add Column
+				          </md-button>
+				        </md-menu-item>
+				        <md-menu-item>
+				          <md-button ng-click="removeColumn($event)">
+				            <md-icon md-font-icon="icon-close"></md-icon> Remove Column
+				          </md-button>
+				        </md-menu-item>
+				      </md-menu-content>
+				    </md-menu>
 				  </div>
 				</md-toolbar>
-				<md-table-container style="width: 100%" class="padding-10" perfect-scrollbar>
+				<md-table-container style="width: 100%" class="padding-10 data-driven">
 				  <table md-table md-row-select ng-model="selected" md-progress="promise">
 				    <thead md-head>
 				      <tr md-row class="data-header md-accent-bg">
-				        <th md-column ng-repeat="param in params track by $index" style="padding: 0 0 0 0 !important;">
-				          <md-input-container  class="data-table md-block" style="margin: none !important;height: 42px;">
-				            <input value="{{param}}" aria-label="{{param}}" ng-model="params[$index]" ng-change="changeParam()" style="margin: none !important;"/>
+				        <th md-column ng-repeat="param in params track by $index">
+				          <md-input-container  class="data-table md-block">
+				            <input value="{{param}}" aria-label="{{param}}" ng-model="params[$index]" ng-change="changeParam()"/>
 				          </md-input-container> 
 				        </th>
 				      </tr>
 				    </thead>
 				    <tbody md-body>
 				      <tr md-row md-select="i" md-select-id="{{i.$index}}" ng-repeat="i in dataSelected track by $index">
-				        <td md-cell ng-repeat="(key, val) in i" style="padding:0 0 0 0 !important;">
-				          <md-input-container style="margin: none !important;height: 42px;" class="data-table md-block">
-				            <input value="{{val}}" aria-label="{{val}}" ng-model="i[key]" ng-change="changeData()" style="margin: none !important;" />
+				        <td md-cell ng-repeat="(key, val) in i">
+				          <md-input-container class="data-table md-block">
+				            <input value="{{val}}" aria-label="{{val}}" ng-model="i[key]" ng-change="changeData()"/>
 				          </md-input-container>
 				        </td>
 				      </tr>

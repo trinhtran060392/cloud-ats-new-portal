@@ -173,7 +173,6 @@ define(['project/keyword-module', 'lodash'], function(module, _) {
         }
 
         var updatedData = [];
-
         _.forEach($scope.data, function (data) {
           var obj = {};
           _.forEach($scope.params, function (param) {
@@ -255,13 +254,17 @@ define(['project/keyword-module', 'lodash'], function(module, _) {
             $scope.doAddNewData = function () {
               $scope.currentTag = angular.copy($scope.current);
               var data_driven_name = $scope.data_name;
+              var first_column_name = $scope.column_name;
               var obj = {};
               obj.name = data_driven_name;
               $scope.datas.push(obj);
               $scope.current = obj;
               $mdDialog.hide();
               $scope.data = [];
-              $scope.data.push({'Col 1' : 'empty'});
+
+              var temp = {};
+              temp[first_column_name] = 'empty';
+              $scope.data.push(temp);
             }
           }
         }).then(function () {
