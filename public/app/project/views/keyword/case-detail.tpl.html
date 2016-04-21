@@ -16,86 +16,149 @@
 
   </div>
   <!-- End breadcrumbs -->
-<div id="case" layout="row">
-  <md-content class="md-hue-1" flex="80" perfect-scrollbar>
-    <div class="projects-container"  flex="100" layout-wrap layout="row"
-      dnd-list="case.steps" 
-      dnd-horizontal-list="true" 
-      dnd-external-sources="false"
-      dnd-inserted="dropCallBack(event, index, item, type, external)"
-      dnd-disable-if="!organizeMode" style="min-height: 30px;">
-      <div ng-repeat="step in case.steps track by $index" layout="row" flex="25" class="project ms-card"  
-        dnd-draggable="step"  
-        dnd-type="'containerType'"
-        dnd-effect-allowed="move" 
-        dnd-moved="case.steps.splice($index, 1)"
-        dnd-disable-if="!organizeMode"
-        ng-class="{'organize-mode' : organizeMode}"> 
-        <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
+<div id="case">
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="script">
+        <div layout="row" flex style="min-height: 100%; max-height: 100%; height: 100%;overflow: hidden">
+          <md-content class="md-padding"  class="md-hue-1" flex="80" perfect-scrollbar>
+            <div class="projects-container"  flex="100" layout-wrap layout="row"
+              dnd-list="case.steps" 
+              dnd-horizontal-list="true" 
+              dnd-external-sources="false"
+              dnd-inserted="dropCallBack(event, index, item, type, external)"
+              dnd-disable-if="!organizeMode" style="min-height: 30px;">
+              <div ng-repeat="step in case.steps track by $index" layout="row" flex="25" class="project ms-card"  
+                dnd-draggable="step"  
+                dnd-type="'containerType'"
+                dnd-effect-allowed="move" 
+                dnd-moved="case.steps.splice($index, 1)"
+                dnd-disable-if="!organizeMode"
+                ng-class="{'organize-mode' : organizeMode}"> 
+                <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
-          <div layout="column">
-            <div layout="row" flex>
-              <a ng-if="!step.params.length" class="md-primary-fg text-nowrap-ellipsis h5 p-16" style="cursor: pointer">
-                <md-tooltip>{{step.type}}</md-tooltip>
-                {{step.type}}
-              </a>
-              <a ng-if="step.params.length" ng-click="clickToStep($event, step, $index)" class="md-primary-fg text-nowrap-ellipsis h5 p-16" style="cursor: pointer">
-                <md-tooltip>{{step.type}}</md-tooltip>
-                {{step.type}}
-              </a>
-              <span flex=></span>
-              <md-icon ng-if="organizeMode" md-font-icon="icon-close-circle" class="s22 md-warn-fg" style="cursor: pointer" ng-click="removeStep($index)"></md-icon>
+                  <div layout="column">
+                    <div layout="row" flex>
+                      <a ng-if="!step.params.length" class="md-primary-fg text-nowrap-ellipsis h5 p-16" style="cursor: pointer">
+                        <md-tooltip>{{step.type}}</md-tooltip>
+                        {{step.type}}
+                      </a>
+                      <a ng-if="step.params.length" ng-click="clickToStep($event, step, $index)" class="md-primary-fg text-nowrap-ellipsis h5 p-16" style="cursor: pointer">
+                        <md-tooltip>{{step.type}}</md-tooltip>
+                        {{step.type}}
+                      </a>
+                      <span flex=></span>
+                      <md-icon ng-if="organizeMode" md-font-icon="icon-close-circle" class="s22 md-warn-fg" style="cursor: pointer" ng-click="removeStep($index)"></md-icon>
+                    </div>
+                    <div layout="row">
+                      <span flex></span>
+                      <span class="badge-order white-fg green-400-bg width-20 text-center">{{$index+1}}</span>
+                    </div>
+                  </div>
+                  <md-divider></md-divider>
+
+                </div>
+              </div>
             </div>
-            <div layout="row">
-              <span flex></span>
-              <span class="badge-order white-fg green-400-bg width-20 text-center">{{$index+1}}</span>
+
+            <div layout="row" class="">
+              <md-button class="md-blue-300-bg md-primary" ng-click="save()" ng-if="organizeMode">
+                Save
+              </md-button>
+              <md-button class="md-accent-bg " ng-click="edit()" ng-if="!organizeMode">
+                Edit
+              </md-button>
+              <md-button class="" ng-click="cancel()" ng-if="organizeMode">
+                Cancel
+              </md-button>
             </div>
+          </md-content>
+          <div layout="column" flex style="height: 100%; min-height: 100%; max-height: 100%; position: relative;">
+            <md-content class="md-background-bg" flex perfect-scrollbar>
+            <section>
+              <md-subheader class="md-primary-bg">Customs</md-subheader>
+              <md-list layout="column" layout-padding class="margin-bottom-10">
+                <md-list-item class="md-1-line border-bottom step-list" ng-repeat="custom in customs" ng-class="{'organize-mode' : organizeMode}" 
+                  dnd-draggable="custom"
+                  dnd-effect-allowed="move"
+                  dnd-disable-if="!organizeMode">
+                  <div class="md-list-item-text">
+                    {{custom.name}}
+                  </div>
+                </md-list-item>
+              </md-list>
+            </section>
+            <section ng-repeat="cat in categories">
+              <md-subheader class="md-primary-bg">{{cat}}</md-subheader>
+              <md-list layout="column" layout-padding class="margin-bottom-10">
+                <md-list-item class="md-1-line border-bottom step-list" ng-repeat="keyword in keywords[cat] track by $index" ng-class="{'organize-mode' : organizeMode}" 
+                  dnd-draggable="keyword" 
+                  dnd-effect-allowed="move"
+                  dnd-disable-if="!organizeMode">
+                  <div class="md-list-item-text">
+                    {{keyword.type}}
+                  </div>
+                </md-list-item>
+              </md-list>
+            </section>
+          </md-content>  
           </div>
-          <md-divider></md-divider>
-
+          
         </div>
-      </div>
-    </div>
+      </md-tab>
+      <md-tab label="Data" ng-if="params.length">
+        <md-content>
+          <md-toolbar class="md-table-toolbar md-default">
+          <div class="md-toolbar-tools" layout="row" flex>
+            <md-button ng-click="addRow($event)">
+              <md-icon md-font-icon="icon-plus"></md-icon> Add Row
+            </md-button>
+            <span flex></span>
+            <form name="data_form" class="data-form">
+              <md-input-container class="md-block">
+              <input type="text" name="data_name" required ng-model="data_name">
+              <div ng-messages="data_form.data_name.$error" role="alert" aria-live="assertive" >
+                  <div ng-message="required">Data name is required</div>
+              </div>
+              </md-input-container>
+            </form>
 
-    <div layout="row" class="">
-      <md-button class="md-blue-300-bg md-primary" ng-click="save()" ng-if="organizeMode">
-        Save
-      </md-button>
-      <md-button class="md-accent-bg " ng-click="edit()" ng-if="!organizeMode">
-        Edit
-      </md-button>
-      <md-button class="" ng-click="cancel()" ng-if="organizeMode">
-        Cancel
-      </md-button>
-    </div>
-  </md-content>
+            <md-button ng-click="saveData($event)" ng-disabled="data_form.$invalid" ng-if="editData">
+              <md-icon md-font-icon="icon-save"></md-icon> Save
+            </md-button>
+            <md-button ng-click="cancelData()" ng-if="editData" style="margin-right:20px;">
+              CANCEL
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More" ng-click="deleteRowDataDriven()">
+              <md-icon md-font-icon="icon-delete" ng-if="selected.length" class='md-warn-fg'></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <md-table-container style="width: 100%" class="padding-10 data-driven">
+          <table md-table md-row-select ng-model="selected" md-progress="promise">
+            <thead md-head>
+              <tr md-row class="data-header md-accent-bg">
+                <th md-column ng-repeat="param in params track by $index">
+                  <span>{{param}}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row md-select="i" md-select-id="{{i.$index}}" ng-repeat="i in data track by $index">
+                <td md-cell ng-repeat="param in params track by $index">
+                  <md-input-container class="data-table md-block">
+                    <input value="{{i[param]}}" aria-label="{{i[param]}}" ng-model="i[param]" ng-change="changeData()"/>
+                  </md-input-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
 
-  <md-content class="md-background-bg" perfect-scrollbar flex>
-    <section>
-      <md-subheader class="md-primary-bg">Customs</md-subheader>
-      <md-list layout="column" layout-padding class="margin-bottom-10">
-        <md-list-item class="md-1-line border-bottom step-list" ng-repeat="custom in customs" ng-class="{'organize-mode' : organizeMode}" 
-          dnd-draggable="custom"
-          dnd-effect-allowed="move"
-          dnd-disable-if="!organizeMode">
-          <div class="md-list-item-text">
-            {{custom.name}}
-          </div>
-        </md-list-item>
-      </md-list>
-    </section>
-    <section ng-repeat="cat in categories">
-      <md-subheader class="md-primary-bg">{{cat}}</md-subheader>
-      <md-list layout="column" layout-padding class="margin-bottom-10">
-        <md-list-item class="md-1-line border-bottom step-list" ng-repeat="keyword in keywords[cat] track by $index" ng-class="{'organize-mode' : organizeMode}" 
-          dnd-draggable="keyword" 
-          dnd-effect-allowed="move"
-          dnd-disable-if="!organizeMode"
-          <div class="md-list-item-text">
-            {{keyword.type}}
-          </div>
-        </md-list-item>
-      </md-list>
-    </section>
+        <!-- <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{data.length}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination> -->
+        <!-- </md-content> --> 
+      </md-tab>
+    </md-tabs>
   </md-content>
+  
 </div>

@@ -207,7 +207,8 @@ define([
               'project/controllers/case-detail-controller',
               'services/case-service',
               'services/keyword-service',
-              'services/custom-keyword-service'
+              'services/custom-keyword-service',
+              'services/data-service'
             ])
           }
         },

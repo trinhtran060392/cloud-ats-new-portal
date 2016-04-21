@@ -1,9 +1,9 @@
 define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
-	module.registerController('CaseDetailCtrl', ['$scope', 'KeywordService', 
+	module.registerController('CaseDetailCtrl', ['DataService', '$scope', 'KeywordService', 
     'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 'CustomKeywordService',
-    function ($scope, KeywordService, CaseService, $state, $stateParams, $mdDialog, $mdToast, CustomKeywordService) {
+    function (DataService, $scope, KeywordService, CaseService, $state, $stateParams, $mdDialog, $mdToast, CustomKeywordService) {
 
     $scope.$parent.isSidenavOpen = false;
     $scope.$parent.isSidenavLockedOpen = false;
@@ -13,7 +13,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     $scope.organizeMode = false;
     $scope.filterIsShow = false;
     $scope.keywords = {};
-
+    $scope.selected = [];
     $scope.types = [
       {value: 'id', text: 'id'},
       {value: 'name', text: 'name'},
@@ -67,8 +67,39 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       });
     });
 
+    var newRow = function(params) {
+      var obj = {};
+      _.forEach(params, function(param) {
+        obj[param] = param + '_value';
+      });
+      return obj;
+    };
+
+    var buildDataset = function(caze) {
+      $scope.data = [];
+      var params = buildParamList(caze);
+      $scope.data.push(newRow(params));
+    };
+
     CaseService.get($scope.projectId, $scope.caseId, function (data, status) {
+
       $scope.case = data;
+      $scope.params = buildParamList(data);
+      if (!data.data_driven) {
+        buildDataset($scope.case);
+      } else {
+        $scope.data = JSON.parse(data.data_source);
+        $scope.data_name = data.data_name;
+      }
+      
+      _.forEach($scope.data, function (obj) {
+        _.forEach($scope.params, function (param) {
+          if (!obj[param]) obj[param] = param+'_value';
+        });
+      });
+
+      $scope.originData = angular.copy($scope.data);
+
       $scope.originCase = angular.copy($scope.case);
 
       if (!data.steps.length) {
@@ -141,6 +172,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     }
 
     $scope.cancel = function () {
+      console.log($scope.case);
       $scope.case = $scope.originCase;
       $scope.organizeMode = false;
       _.remove($scope.case.steps, function (step) {
@@ -154,7 +186,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     }
 
     $scope.clickToStep = function (ev, step, $index) {
-
+      $scope.originCase = angular.copy($scope.case);
       $scope.step = angular.copy(step);
       $scope.organizeMode = true;
       $scope.originStep = angular.copy($scope.step);
@@ -179,5 +211,80 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       })
     }
 
+    var buildParamList = function(caze) {
+      var params = [];
+      _.forEach(caze.steps, function(step) {
+        _.forEach(step.params, function(param) {
+          var val = step[param];
+          if (val instanceof Object) {
+            val = val.value;
+          }
+
+          var startIndex = val.indexOf('${');
+          var endIndex = val.lastIndexOf('}');
+          if (startIndex == 0 && endIndex == (val.length - 1)) {
+            var variable = val.substring(startIndex + 2, endIndex);
+            if (params.indexOf(variable) == -1) params.push(variable);
+          }
+        });
+      });
+      return params;
+    };
+
+    //data driven
+
+    $scope.editData = false;
+
+    $scope.changeData = function (){
+      $scope.editData = true;
+    }
+
+    $scope.addRow = function (ev) {
+      $scope.editData = true;
+      $scope.data.push(newRow($scope.params));
+    }
+
+    $scope.deleteRowDataDriven = function () {
+
+
+      var objTemp = $scope.data[0];
+      _.forEach($scope.selected, function (object) {
+        _.remove($scope.data, function (obj) {
+          return obj === object;
+        });
+      });
+      $scope.selected = [];
+      
+      $scope.editData = true;
+    }
+
+    $scope.cancelData = function () {
+      $scope.data = $scope.originData;
+      $scope.editData = false;
+    }
+
+    $scope.saveData = function (ev) {
+      if($scope.case.data_driven === null) {
+        DataService.create($scope.data_name.trim(), $scope.data, $scope.case._id, function(data, status) {
+          var obj = {_id : data._id};
+          $scope.case.data_driven = obj;
+          $mdToast.show($mdToast.simple().position('top right').textContent('Data has been created!'));
+        });
+      } else {
+        DataService.update($scope.data_name.trim(), $scope.data, $scope.case.data_driven._id, function (data, status) {
+          
+          switch (status) {
+            case 304: 
+              break;
+            case 200:
+              $mdToast.show($mdToast.simple().position('top right').textContent('Data has been updated!'));
+              $scope.editData = false;
+              break;
+            default:
+              break;
+          }
+        });
+      }
+    }
 	}]);
 })
