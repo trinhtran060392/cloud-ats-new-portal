@@ -15,13 +15,13 @@ define([
       views: {
         'sub-content@app.project': {
           templateUrl: 'app/project/views/performance/reports-overview.tpl.html',
-          controller: 'ReportOverviewPerfCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
               'services/performance-service',
-              'project/controllers/report-overview-perf-ctrl'
-
+              'services/script-service',
+              'project/controllers/report-overview-perf-ctrl',
+              'project/controllers/execution-perf-ctrl'
             ])
           }
         },

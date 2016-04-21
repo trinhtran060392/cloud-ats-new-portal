@@ -55,7 +55,7 @@ define(['project/module', 'lodash'], function (module, _) {
 
   	$scope.showExecutionFunctional = function(ev) {
       $mdDialog.show({
-        templateUrl: 'app/project/views/keyword/execution-function-dialog.tpl.html',
+        templateUrl: 'app/project/views/keyword/dialog-execution-function.tpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -115,13 +115,12 @@ define(['project/module', 'lodash'], function (module, _) {
     };
 
     SuiteService.list($scope.projectId, function(response) {
-        $scope.suites = response;
+        $scope.suites = response.suites;
       });
 
     $scope.nextStepExecution = function(ev){
     	if ($scope.currentStep ===1 ) {
     	$scope.suiteSelected = suiteSelected ;
-    	console.log($scope.suiteSelected);
     	} else if($scope.currentStep === 2){
 	        if($scope.project.browser === "firefox"){
               $scope.project.browserVersion = $scope.project.browserVersionFireFox ;
@@ -130,11 +129,6 @@ define(['project/module', 'lodash'], function (module, _) {
 	        } else if($scope.project.browser === "ie"){
               $scope.project.browserVersion = $scope.project.browserVersionIE ;
 	        }
-    	} else if($scope.currentStep === 3 ) {
-    		console.log($scope.project.seleniumVersion);
-    		console.log($scope.project); 
-    	} else if($scope.currentStep === 4 ) {
-    		
     	}
     	$scope.currentStep = $scope.currentStep + 1;
     };

@@ -1,4 +1,4 @@
-define(['performance/module'], function (module) {
+define(['project/module'], function (module) {
   'use strict';
 
   module.registerFactory('ScriptService', ['$http', '$cookies', '$window', function($http, $cookies, $window) {

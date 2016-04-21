@@ -1,4 +1,4 @@
-<div aria-label="Test Report" id="case" layout="column">
+<div aria-label="Test Report" id="case" layout="column" ng-controller="ReportOverviewPerfCtrl">
 	<div layout="row" class="breadcrumbs" layout-align="start center">
 	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
 	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
@@ -15,7 +15,7 @@
 	</div>
 
 	<div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
-		<div class="title">PROJECT NAME</div>
+		<div><h3>{{project.name}}</h3></div>
 		<div layout="row">
                 <div layout="column" flex="100">
                     <div>{{getWord('TEST SCRIPTS')}}</div>

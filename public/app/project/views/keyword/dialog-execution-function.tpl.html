@@ -1,7 +1,7 @@
-<md-dialog aria-label="Create Project"  ng-cloak ng-controller="ExecutionFuncCtrl">
+<md-dialog aria-label="Execution"  ng-cloak >
     <md-toolbar>
       <div class="md-toolbar-tools md-primary-bg">
-        <span flex="95" class="md-title text-nowrap">Execution Functional : Project Name</span>
+        <span flex="95" class="md-title text-nowrap">Execution Functional</span>
         <md-button ng-click="cancel()" aria-label="cancel">
           <md-icon md-font-icon="icon-cancel" flex="5" ></md-icon>
         </md-button>
@@ -48,14 +48,19 @@
                 
               </div>
             </div>
+            
             <div class="ms-stepper-steps" style="padding: 2px 2px;">
               <ms-stepper-step id="1" step-title="'Choose Suites'" class="ms-stepper-step" ng-show="currentStep === 1" >
                   <div class="md-padding">
                     <div layout="row" layout-wrap>
+                      <div class="search-box" layout="row" layout-align="start center" flex style="margin-bottom: 8px;">
+                        <md-icon md-font-icon="icon-magnify" class="icon s24 mh-16" aria-hidden="true"></md-icon>
+                        <input class="font-size-14" type="text" placeholder="Search for suite name" aria-invalid="false" flex> 
+                      </div>
                       <div layout="column">
                             <div layout="row" layout-wrap flex>
                               <div class="demo-select-all-checkboxes" flex="100" ng-repeat="suite in suites">
-                                <md-checkbox ng-click="selectSuite(suite._id);">
+                                <md-checkbox aria-label="selectSuite" ng-click="selectSuite(suite._id);">
                                  <span>{{ suite.name }}</span>
                                 </md-checkbox>
                               </div>
