@@ -23,7 +23,7 @@
           <div layout="column" ng-if="checked">
               <div layout="row" flex="100">
                 <label flex="40">Upload Script</label>
-                <input type="file" class="md-raised" accept=".jmx" ng-model="file" onchange="angular.element(this).scope().updateFile(this)">
+                <input type="file" class="md-raised" accept=".jmx" ng-model="file" onchange="angular.element(this).scope().updateFile(this)" required="" name="jmx_file">
               </div>
               <div layout="row" flex="100">
                 <label flex="40">Upload CSV</label>
@@ -36,9 +36,16 @@
     </md-dialog-content>
     <md-dialog-actions layout="row" >
        <div class="ms-stepper-controls layout-align-center-center layout-row" layout="row" layout-align="center center">
+            <div ng-if="!checked">
               <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Create" ng-disabled="createForm.$invalid || createForm.$pristine">
-                <span class="ng-scope" ng-click="create(csvFiles)">Create</span>
+                <span class="ng-scope" ng-click="createNewScript()">Create</span>
               </button>
+            </div>
+            <div ng-if="checked">
+              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Upload" ng-disabled="createForm.$invalid || createForm.$pristine">
+                <span class="ng-scope" ng-click="uploadNewScript(csvFiles)">Upload</span>
+              </button>
+            </div>
             </div>
     </md-dialog-actions>
 </md-dialog>

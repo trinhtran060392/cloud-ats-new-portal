@@ -280,9 +280,9 @@ a.action-icon:hover > * {
 a.btn-border-line {
   background-color: transparent;
   border-radius: 28px;
-  border: 1px solid #01B49F;
+  border: 1px solid rgb(3, 155, 229);;
   display: inline-block;
-  color: #01B49F;
+  color: rgb(3, 155, 229);;
 /*  font-size: 13px;
 */text-decoration: none;
   padding: 2px 15px;
@@ -315,7 +315,7 @@ a.btn-border-line {
   color: white;
 }
 .label-success {
-  background-color: #00b4a0 !important;
+  background-color: rgb(3, 155, 229) !important;
   font-size: 12px;
   text-transform: uppercase;
   color: white;

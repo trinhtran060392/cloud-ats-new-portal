@@ -1,4 +1,4 @@
-define(['project/module'], function (module) {
+define(['project/module','lodash'], function (module, _) {
   
   'use strict';
 
@@ -6,7 +6,6 @@ define(['project/module'], function (module) {
     function($scope, $rootScope, $mdDialog, $state, $stateParams, $templateRequest, $compile, ScriptService, Upload, $cookies) {
  	
  		$scope.projectId = $stateParams.id;
-    $scope.checkUpload = false ;
 
  		$scope.title = "TEST SCRIPTS";
     ScriptService.list($scope.projectId, function(response) {
@@ -16,13 +15,15 @@ define(['project/module'], function (module) {
 
     $scope.clickScript = function (ev, script) {
       if (script.raw) {
-        $state.go('app.project.performance-scripts.script-editor-detail', {id : $scope.projectId,scriptId : script._id});
+        console.log(script.raw);
+        $state.go('app.project.performance-scripts.editor', {id : $scope.projectId,scriptId : script._id});
       } else {
-        $state.go('app.project.performance-scripts.script-wizard-detail', {id : $scope.projectId,scriptId : script._id});
+        console.log(script.raw);
+        $state.go('app.project.performance-scripts.wizard', {id : $scope.projectId,scriptId : script._id});
       }
     };
 
-    $scope.create = function (ev) {
+    $scope.createDialog = function (ev) {
       $mdDialog.show({
         templateUrl: 'app/project/views/performance/dialog-create-script.tpl.html',
         parent: angular.element(document.body),
@@ -36,11 +37,9 @@ define(['project/module'], function (module) {
             $mdDialog.cancel();
           };
           $scope.updateFile = function(element) {
-            console.log(element.files[0]);
               $scope.file = element.files[0];
           }
-          $scope.create = function() {
-            if (!$scope.checked) {
+          $scope.createNewScript = function() {
               $scope.script.loops = "";
               $scope.script.ram_up = "";
               $scope.script.duration = "";
@@ -50,13 +49,16 @@ define(['project/module'], function (module) {
               ScriptService.createScript($scope.script, $scope.projectId, function(data, status){
                   if (status === 201) {
                   $mdDialog.hide();
-                  $state.go('app.project.performance-scripts.script-editor-detail', {id : $scope.projectId, scriptId : data._id});
+                  $state.go('app.project.performance-scripts.wizard', {id : $scope.projectId, scriptId : data._id});
                 }
               });
-            } else {
-              ScriptService.createScriptTestByUpload($scope.file, $scope.name, $stateParams.id , function (script,status) {
+          };
+          $scope.uploadNewScript = function(files){
+            ScriptService.createScriptTestByUpload($scope.file, $scope.script.name, $stateParams.id , function (script,status) {
                 if (script != null) {
+                  console.log(script);
                   $scope.scripts.push(script);
+                   console.log($scope.scripts);
                   $scope.totalScripts++;
 
                   $scope.file = undefined;
@@ -71,14 +73,15 @@ define(['project/module'], function (module) {
                         'X-SPACE': $cookies.get('space')
                       }
                     }).then(function (resp) {
-                      $mdDialog.hide();
-                      $state.go('app.project.performance-scripts.script-wizard-detail', {id : $scope.projectId, scriptId : data._id});
+                     
                     });
                   });
+
+                  $mdDialog.hide();
+                  $state.go('app.project.performance-scripts.editor', {id : $scope.projectId, scriptId : script._id});
                 }
               });
-            }
-          };
+          }
         }
       })
     }

@@ -107,11 +107,12 @@ define([
         requireLogin: true
       }
     })
-    .state('app.project.performance-scripts.script-editor-detail', {
-      url: '/script/:scriptId',
+    
+    .state('app.project.performance-scripts.wizard', {
+      url: '/wizard/:scriptId',
       views: {
         'sub-content@app.project': {
-          templateUrl: 'app/project/views/performance/script-editor-detail.tpl.html',
+          templateUrl: 'app/project/views/performance/script-wizard-detail.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
@@ -127,11 +128,11 @@ define([
         requireLogin: true
       }
     })
-    .state('app.project.performance-scripts.script-wizard-detail', {
-      url: '/script/:scriptId',
+    .state('app.project.performance-scripts.editor', {
+      url: '/editor/:scriptId',
       views: {
         'sub-content@app.project': {
-          templateUrl: 'app/project/views/performance/script-wizard-detail.tpl.html',
+          templateUrl: 'app/project/views/performance/script-editor-detail.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
