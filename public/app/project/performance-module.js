@@ -84,11 +84,17 @@ define([
     .state('app.project.performance-scripts', {
       url: '/project/:id/performance/scripts',
       views: {
+        'search-box@app': {
+          templateUrl: 'app/project/views/performance/scripts-search-box.tpl.html'
+        },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/performance/scripts.tpl.html',
+          controller: 'ScriptsPerfCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav'
+              'project/directives/project-nav',
+              'project/controllers/scripts-perf-ctrl',
+              'services/script-service',
             ])
           }
         },
@@ -101,6 +107,46 @@ define([
         requireLogin: true
       }
     })
+    .state('app.project.performance-scripts.script-editor-detail', {
+      url: '/script/:scriptId',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/performance/script-editor-detail.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+            ])
+          }
+        },
+        'header-box@app.project': {
+          templateUrl: 'app/project/views/performance/scripts-header-box.tpl.html'
+        }
+      },
+      data: {
+        title: 'Project Performance Script Detail',
+        requireLogin: true
+      }
+    })
+    .state('app.project.performance-scripts.script-wizard-detail', {
+      url: '/script/:scriptId',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/performance/script-wizard-detail.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+            ])
+          }
+        },
+        'header-box@app.project': {
+          templateUrl: 'app/project/views/performance/scripts-header-box.tpl.html'
+        }
+      },
+      data: {
+        title: 'Project Performance Script Detail',
+        requireLogin: true
+      }
+    })
     .state('app.project.performance-csv', {
       url: '/project/:id/performance/csv',
       views: {
@@ -108,7 +154,7 @@ define([
           templateUrl: 'app/project/views/performance/csv.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav'
+              'project/directives/project-nav',
             ])
           }
         },

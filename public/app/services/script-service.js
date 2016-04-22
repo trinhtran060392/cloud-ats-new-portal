@@ -49,7 +49,7 @@ define(['project/module'], function (module) {
           data: script
         }
         $http(request).success(function (data, status) {
-          callback(data);
+          callback(data, status);
         }).error(function (data, status) {
 
         });

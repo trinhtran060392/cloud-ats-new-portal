@@ -1,0 +1,70 @@
+<div layout="row" class="breadcrumbs" layout-align="start center">
+    <div class="pl-8" layout="row" layout-align="start center">
+      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
+      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Project</a>
+      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+      <a>Scripts</a>
+      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
+      <span>Script</span>      
+    </div>
+</div>
+
+<div ng-cloak>
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Infomation">
+        <md-content class="md-padding" style="margin: 40px; padding:40px;" layout="column" flex="100">
+        	<md-slider-container layout="row">
+		      <span flex="20">Test Script Name</span>
+		    </md-slider-container>
+		    <md-slider-container layout="row">
+		      <span flex="20">Users Concurrents</span>
+		    </md-slider-container>
+		    <md-slider-container layout="row">
+		      <span flex="20">Users Per Engine</span>
+		      <md-slider min="1" max="1000" aria-label="UsersPerEngine" flex="70" ng-model="UsersPerEngine" class="md-accent" md-discrete>
+		      </md-slider>
+		      <md-input-container flex>
+		        <input type="number" aria-label="UsersPerEngine" ng-model="UsersPerEngine">
+		      </md-input-container>
+		    </md-slider-container>
+		    <md-slider-container layout="row">
+		      <span flex="20">Number Of Engines</span>
+		      <md-slider min="1" max="5" aria-label="NumberOfEngines" flex="70" ng-model="NumberOfEngines" class="md-accent" md-discrete>
+		      </md-slider>
+		      <md-input-container flex>
+		        <input type="number" aria-label="NumberOfEngines" ng-model="NumberOfEngines">
+		      </md-input-container>
+		    </md-slider-container>
+		   	<md-slider-container layout="row">
+		      <span flex="20">Ram up</span>
+		      <md-slider min="1" max="100" aria-label="Ramup" flex="70" ng-model="Ramup" class="md-accent" md-discrete> 
+		      </md-slider>
+		      <md-input-container flex>
+		        <input type="number" aria-label="Ramup" ng-model="Ramup">
+		      </md-input-container>
+		    </md-slider-container>
+		    <md-slider-container layout="row">
+		      <span flex="20">Loops</span>
+		      <md-slider min="1" max="10" aria-label="Loops" flex="70" ng-model="Loops" class="md-accent" md-discrete>
+		      </md-slider>
+		      <md-input-container flex>
+		        <input type="number" aria-label="Loops" ng-model="Loops">
+		      </md-input-container>
+		    </md-slider-container>
+        </md-content>
+      </md-tab>
+      <md-tab label="CSV Data">
+        <md-content class="md-padding">
+         
+        </md-content>
+      </md-tab>
+      <md-tab label="Script Content">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Script Content</h1>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

@@ -1,0 +1,44 @@
+<md-dialog aria-label="Execution" ng-cloak >
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span flex="95" class="md-title text-nowrap">Create New Script Performance</span>
+        <md-button ng-click="cancel()" aria-label="cancel">
+          <md-icon md-font-icon="icon-cancel" flex="5" ></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content >
+      <div class="md-dialog-content" >
+        <form name="createForm" style="max-height: 650px;max-width: 550px;">
+          <md-input-container class="md-block">
+          <label>Script Name</label>
+          <input type="text" name="scriptName" required ng-model="script.name" md-autofocus>
+          <div ng-messages="createForm.scriptName.$error" role="alert" aria-live="assertive" >
+              <div ng-message="required">Script name is required</div>
+          </div>
+          </md-input-container>
+          <md-checkbox ng-model="checked" ng-init="checked=false" aria-label="uploadScript">
+               Using Upload Script
+          </md-checkbox>
+          <div layout="column" ng-if="checked">
+              <div layout="row" flex="100">
+                <label flex="40">Upload Script</label>
+                <input type="file" class="md-raised" accept=".jmx" ng-model="file" onchange="angular.element(this).scope().updateFile(this)">
+              </div>
+              <div layout="row" flex="100">
+                <label flex="40">Upload CSV</label>
+                <input type="file" class="md-raised" ng-model="csvFiles"
+                  ngf-multiple="true" ngf-allow-dir="true" accept=".csv,text/csv" ngf-pattern=".csv,text/csv">
+              </div>
+          </div>
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+       <div class="ms-stepper-controls layout-align-center-center layout-row" layout="row" layout-align="center center">
+              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Create" ng-disabled="createForm.$invalid || createForm.$pristine">
+                <span class="ng-scope" ng-click="create(csvFiles)">Create</span>
+              </button>
+            </div>
+    </md-dialog-actions>
+</md-dialog>
