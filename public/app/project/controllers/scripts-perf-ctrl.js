@@ -39,6 +39,11 @@ define(['project/module','lodash'], function (module, _) {
           $scope.updateFile = function(element) {
               $scope.file = element.files[0];
           }
+
+          $scope.updateCsvFile= function (element) {
+            $scope.csvFiles = element.files;
+          }
+
           $scope.createNewScript = function() {
               $scope.script.loops = "";
               $scope.script.ram_up = "";
@@ -53,12 +58,12 @@ define(['project/module','lodash'], function (module, _) {
                 }
               });
           };
-          $scope.uploadNewScript = function(files){
+          $scope.uploadNewScript = function(){
+            var files = $scope.csvFiles;
             ScriptService.createScriptTestByUpload($scope.file, $scope.script.name, $stateParams.id , function (script,status) {
                 if (script != null) {
-                  console.log(script);
+                  console.log(files);
                   $scope.scripts.push(script);
-                   console.log($scope.scripts);
                   $scope.totalScripts++;
 
                   $scope.file = undefined;

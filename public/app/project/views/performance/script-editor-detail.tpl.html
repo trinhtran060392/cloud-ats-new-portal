@@ -1,68 +1,275 @@
+<!-- Breadcrumbbs -->
 <div layout="row" class="breadcrumbs" layout-align="start center">
-    <div class="pl-8" layout="row" layout-align="start center">
-      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Project</a>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <a>Scripts</a>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <span>Script</span>      
+
+  <div layout="row" layout-align="start center">
+    <md-button aria-label="menu" class="md-icon-button" ng-click="toggleProjectNavLeft()">
+      <md-tooltip md-direction="right">Navigation Menu</md-tooltip>
+      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+    </md-button>
+  </div>
+
+  <div class="item" layout="row" layout-align="start center">
+    <a data-ui-sref="app.projects">Projects</a>
+    <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+  </div>
+  <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
+    <a class="text-nowrap-ellipsis" ng-if="!$last" ng-href="{{$state.href(item.state, item.data)}}">
+    {{item.name}}
+    </a>
+    <span ng-if="$last">{{item.name}}</span>
+    <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+  </div>
+
+  <span flex></span>
+
+  <md-button class="animate-slide-down" ng-click="update()">
+    <div layout="row" layout-align="start center" class="md-primary-fg">
+      <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg"></md-icon>
+      <span class="pl-8" flex>Update</span>
     </div>
+  </md-button>
+
+  <md-button class="animate-slide-down" ng-click="close()">
+    <div layout="row" layout-align="start center" class="grey-700-fg">
+      <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
+      <span class="pl-8" flex>Close</span>
+    </div>
+  </md-button>
+
+  <md-button ng-click="setting($event)">
+    <div layout="row" layout-align="start center" class="md-warn-fg md-hue-2">
+      <md-icon md-font-icon="icon-cog" aria-hidden="true" class="md-warn-fg md-hue-2"></md-icon>
+      <span class="pl-8" flex>Settings</span>          
+    </div>
+  </md-button>
 </div>
+<!-- End breadcrumbs -->
 
 <div ng-cloak>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Infomation">
-        <md-content class="md-padding" style="margin: 40px; padding:40px;" layout="column" flex="100">
-        	<md-slider-container layout="row">
-		      <span flex="20">Test Script Name</span>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Users Concurrents</span>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Users Per Engine</span>
-		      <md-slider min="1" max="1000" aria-label="UsersPerEngine" flex="70" ng-model="UsersPerEngine" class="md-accent" md-discrete>
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="UsersPerEngine" ng-model="UsersPerEngine">
-		      </md-input-container>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Number Of Engines</span>
-		      <md-slider min="1" max="5" aria-label="NumberOfEngines" flex="70" ng-model="NumberOfEngines" class="md-accent" md-discrete>
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="NumberOfEngines" ng-model="NumberOfEngines">
-		      </md-input-container>
-		    </md-slider-container>
-		   	<md-slider-container layout="row">
-		      <span flex="20">Ram up</span>
-		      <md-slider min="1" max="100" aria-label="Ramup" flex="70" ng-model="Ramup" class="md-accent" md-discrete> 
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="Ramup" ng-model="Ramup">
-		      </md-input-container>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Loops</span>
-		      <md-slider min="1" max="10" aria-label="Loops" flex="70" ng-model="Loops" class="md-accent" md-discrete>
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="Loops" ng-model="Loops">
-		      </md-input-container>
-		    </md-slider-container>
+        <md-content class="md-padding" style="margin: 16px; padding:16px" layout="column" flex="100">
+        	
+        	<md-input-container flex>
+        		<label>Script Name</label>
+        		<input type="text" flex="20" ng-model="script.name">
+        	</md-input-container>
+			    
+			    <div layout>
+			    	<div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Concurrent Users</span>
+			      </div>
+			    	<div flex="70" layout></div>
+			    	<span layout layout-align="start center" class="label label-success margin-left-10">{{script.number_threads * script.number_engines}}</span>
+			    </div>
+			    <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Users Per Engine</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider  min="1" max="1000" flex class="md-accent" md-discrete ng-model="script.number_threads" step="1" aria-label="users">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" aria-label="UsersPerEngine" ng-model="script.number_threads" class="text-center" flex>
+			      </md-input-container>
+			    </div>
+			     <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Number Of Engines</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider min="1" max="5" flex aria-label="engines" ng-model="script.number_engines" class="md-accent" md-discrete step="1">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" aria-label="engine" ng-model="script.number_engines"  class="text-center"  flex>
+			      </md-input-container>
+			    </div>
+			     <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Ram up</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider min="1" max="5" flex aria-label="NumberOfEngines" ng-model="script.ram_up" class="md-accent" md-discrete step="1">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" aria-label="ram up" ng-model="script.ram_up"  class="text-center"  flex>
+			      </md-input-container>
+			    </div>
+			     <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Loops</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider min="1" max="5" flex= aria-label="loop" ng-model="script.loops" class="md-accent" md-discrete step="1">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" aria-label="loops" ng-model="script.loops"  class="text-center"  flex>
+			      </md-input-container>
+			    </div>
         </md-content>
       </md-tab>
        <md-tab label="CSV Data">
         <md-content class="md-padding">
-         
+         	<section layout="row" flex ng-show="totalData.length > 0">
+              <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+                <md-toolbar>
+                  <div class="md-toolbar-tools">
+                    <md-button class="md-icon-button" ng-click="toggleFilter()" aria-label="Show/Close Filter">
+                    <md-tooltip md-autohide>Show/Close Filter</md-tooltip>
+                      <md-icon md-font-icon="icon-magnify" class="white-fg"></md-icon>
+                    </md-button>
+                    <h2>
+                      <span class="white-fg">CSV Data List</span>
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="addNewData($event)">
+                      <md-tooltip md-autohide>Upload New Data</md-tooltip>
+                      <md-icon md-font-icon="icon-upload" class="white-fg"></md-icon>
+                    </md-button>
+                    <input type="file" accept=".csv" ng-model="newFile" onchange="angular.element(this).scope().addNewFile(this)" multiple="true" style="display: none;">
+                  </div>
+                </md-toolbar>
+                <md-content style="height: 350px;">
+                  <section>
+                    <md-subheader class="md-primary" ng-show="filterIsShow">
+                      <div layout="row">
+                        <md-input-container flex style="margin: 0px;">
+                          <label>Filter by name</label>
+                          <input type="text" ng-model="searchTerms">
+                        </md-input-container>                        
+                        <md-button class="md-icon-button" ng-click="hideFilter()" aria-label="Hide Filter" style="margin-top: 8px;">
+                          <ng-md-icon icon="close"></ng-md-icon>
+                        </md-button>
+                      </div>
+                    </md-subheader>
+                    <md-list class="csv-list">
+                      <md-list-item ng-class="{'csv-selected':file._id == csvSelected._id}"
+                        ng-repeat="file in totalData"
+                        ng-click="selectCsv(file)">
+                        <p>{{file.name}}</p>
+                        <md-button ng-if="file._id == csvSelected._id" class="md-icon-button md-secondary" aria-label="Delete" ng-click="deleteCsv(file, $event)">
+                          <md-tooltip md-autohide>Delete</md-tooltip>
+                          <md-icon md-font-icon="icon-delete" class="md-warn-fg" style="fill:#FE5151"></md-icon>
+                        </md-button>
+                      </md-list-item>
+                    </md-list>  
+                  </section>
+                </md-content>
+              </md-sidenav>
+              <md-content flex layout-padding>
+                <div layout="column" layout-fill layout-align="top center">
+                  <md-content laout="column" style="width: 100%">
+                    <md-card id="csv-data-table">
+                    	<md-toolbar class="md-table-toolbar md-default">
+											  <div class="md-toolbar-tools">
+											    <ng-md-icon icon="search"></ng-md-icon>
+											    <form name="filter.form" flex="" flex>
+											      <input type="text" placeholder="search" ng-model-options="filter.options" ng-model="query.filter" aria-invalid="false">
+											    </form>
+											    <md-button class="md-icon-button" aria-label="More" ng-if="selected.length" ng-click="deleteCsvData()">
+											      <md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+											    </md-button>
+											    <md-menu md-offset="0 -7">
+											      <md-button aria-label="Open Actions" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+											        <md-icon md-font-icon="icon-menu" class="md-primary-fg">
+											          
+											        </md-icon>
+											      </md-button>
+											      <md-menu-content>
+											        <md-menu-item>
+											          <md-button ng-click="addRow($event)">
+											            <ng-md-icon icon="add_circle"></ng-md-icon> Add Row
+											          </md-button>
+											        </md-menu-item>
+											        <md-menu-item>
+											          <md-button ng-click="addColumn($event)">
+											            <ng-md-icon icon="add_circle"></ng-md-icon> Add Column
+											          </md-button>
+											        </md-menu-item>
+											        <md-menu-item>
+											          <md-button ng-click="removeColumn($event)">
+											            <ng-md-icon icon="remove_circle_outline"></ng-md-icon> Remove Column
+											          </md-button>
+											        </md-menu-item>
+											      </md-menu-content>
+											    </md-menu>
+											  </div>
+											</md-toolbar>
+											<md-table-container>
+											  <table md-table md-row-select ng-model="selected" md-progress="promise">
+											    <thead md-head>
+											      <tr md-row>
+											        <th md-column ng-repeat="param in params track by $index"><span>{{param}}</span></th>
+											      </tr>
+											    </thead>
+											    <tbody md-body>
+											      <tr md-row md-select="i" md-select-id="{{i.$index}}" ng-repeat="i in dataSelected track by $index">
+											        <td md-cell ng-repeat="(key, val) in i">
+											          <md-input-container style="margin: 0px;height: 42px;" class="data-table">
+											            <input value="{{val}}" aria-label="{{val}}" ng-model="i[key]"/>
+											          </md-input-container>
+											        </td>
+											      </tr>
+											    </tbody>
+											  </table>
+											</md-table-container>
+
+											<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{data.length}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+
+
+                    </md-card>
+                  </md-content>
+                </div>
+                <div flex></div>
+              </md-content>
+              <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+                <md-toolbar class="md-theme-light">
+                  <h1 class="md-toolbar-tools">Sidenav Right</h1>
+                </md-toolbar>
+                <md-content layout-padding>
+                  <form>
+                    <md-input-container>
+                      <label for="testInput">Test input</label>
+                      <input type="text" id="testInput"
+                             ng-model="data" md-autofocus>
+                    </md-input-container>
+                  </form>
+                  <md-button ng-click="close()" class="md-primary">
+                    Close Sidenav Right
+                  </md-button>
+                </md-content>
+              </md-sidenav>
+            </section>
+
+            <div ng-show="totalData.length === 0" layout="row" layout-align="center center" class="drop-box" 
+              ngf-drop ngf-select ng-model="files" ngf-drag-over-class="'dragover'" 
+              ngf-multiple="true" ngf-allow-dir="true" accept=".csv,text/csv" ngf-pattern=".csv,text/csv">
+              <div layout="column" layout-align="center center">
+                <p class="md-headline">Empty data</p>
+                <p class="md-headline">Drop CSV file here or click to upload</p>                
+              </div>
+            </div>
         </md-content>
       </md-tab>
       <md-tab label="Script Content">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Script Content</h1>
+        <md-content class="md-padding"  style="height: 400px; padding-bottom: 15px;">
+           <code>(*) Result output configuration is not effected in runtime</code>
+            <br>
+            <code>(*) ThreadGroup configuration effects only on information tab</code>
+            <div ui-ace="{
+                useWrapMode : true,
+                showGutter: true,
+                showInvisibles: true,
+                theme:'eclipse',
+                mode: 'xml',
+                onLoad: aceLoaded,
+                onChange: aceChanged
+              }" ng-model="script.raw_content" style="height: 100%;"></div>
         </md-content>
       </md-tab>
     </md-tabs>

@@ -2,11 +2,13 @@ define([
   'angular',
   'angular-couch-potato',
   'angular-ui-router',
-  'angular-messages'
+  'angular-messages',
+  'angular-ui-ace',
+  'ng-file-upload'
 ], function (ng, couchPotato) {
   'use strict';
 
-  var module = ng.module('app.project.performance', ['ui.router', 'ngMessages']);
+  var module = ng.module('app.project.performance', ['ui.router', 'ngMessages', 'ui.ace', 'ngFileUpload']);
 
   module.config(['$stateProvider', '$couchPotatoProvider', function ($stateProvider, $couchPotatoProvider) {
     $stateProvider
@@ -132,9 +134,11 @@ define([
       url: '/editor/:scriptId',
       views: {
         'sub-content@app.project': {
+          controller: 'ScriptEditorCtrl',
           templateUrl: 'app/project/views/performance/script-editor-detail.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
+              'project/controllers/script-editor-ctrl',
               'project/directives/project-nav',
             ])
           }

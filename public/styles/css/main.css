@@ -535,3 +535,7 @@ md-table-container.data-driven table thead tr th md-input-container input {
 .data-form md-input-container {
   margin-bottom: 0px !important;
 }
+.csv-selected {
+  background-color: rgba(0,0,0,0.15);
+  border-left: 5px solid #FF4F52;
+}

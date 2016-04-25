@@ -1,7 +1,7 @@
 define(['layout/module', 'highcharts', 'lodash'], function (module, highcharts, _) {
   'use strict';
 
-  module.registerController('DashboardCtrl', ['$scope', '$window', 'DashboardService', '$cookies', function($scope, $window, DashboardService, $cookies) {
+  module.registerController('DashboardCtrl', ['$state', '$scope', '$window', 'DashboardService', '$cookies', function($state, $scope, $window, DashboardService, $cookies) {
 
     var names = [];
     var passes = [];
@@ -21,7 +21,7 @@ define(['layout/module', 'highcharts', 'lodash'], function (module, highcharts, 
         names.push((++i) + '.' + data.x);
         passes.push(data.P);
         fails.push(data.F);
-        ids.push(data._id);
+        ids.push(data.mix_id);
       });
       draw(names, passes, fails, ids);
 
@@ -86,7 +86,8 @@ define(['layout/module', 'highcharts', 'lodash'], function (module, highcharts, 
                 click: function () {
                   var index = this.category.indexOf('.');
                   var id_index = this.category.substring(0,index);
-                  console.log(ids[id_index - 1]);
+                  var id = ids[id_index - 1];
+                  $state.go('app.project.overview', {id : id});
                 }
               }
             }
@@ -102,7 +103,7 @@ define(['layout/module', 'highcharts', 'lodash'], function (module, highcharts, 
     }
 
     $scope.goProject = function (project) {
-      console.log(project._id);
+      $state.go('app.project.overview', {id : project.mix_id});
     }
   	
   }]);
