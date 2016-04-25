@@ -15,7 +15,6 @@ define(['project/performance-module', 'lodash'], function (module, _) {
       
       var init = function () {
         ScriptService.get($scope.projectId, $scope.scriptId, function (data, status) {
-          console.log(data);
           $scope.script = data;
           if ($scope.script.csv_files === undefined) {
             $scope.script.csv_files = [];
@@ -425,7 +424,7 @@ define(['project/performance-module', 'lodash'], function (module, _) {
 
       $scope.deleteCsv = function (file, ev) {
         var confirm = $mdDialog.confirm()
-        .title('Would you like to delete your suite?')
+        .title('Would you like to delete this csv?')
         .targetEvent(ev)
         .clickOutsideToClose(true)
         .ok('Delete')
