@@ -2,4 +2,4 @@
 
 var appConfig = {};
 
-appConfig.RestEntry = "http:localhost:9000";
+appConfig.RestEntry = "http://localhost:9000";
