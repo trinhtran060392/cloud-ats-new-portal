@@ -144,7 +144,7 @@
               </div>
 
               <div layout="column" flex="100" class="steps-container">
-                <div class="border-bottom step" ng-repeat="group in customs"
+                <div class="border-bottom step" ng-repeat="group in customs | filter: queryText"
                   dnd-draggable="group"
                   dnd-effect-allowed="move">
                   <span>{{group.name}}</span>
@@ -167,18 +167,18 @@
               </div>
               <div layout="column" flex="100" class="steps-container">
                 <div class="border-bottom step" 
-                  ng-repeat="(key, value) in steps"
-                  ng-init="step = {}; step['type'] = key; step.params = []; step.isNew = true"
+                  ng-repeat="sel in getListSteps(cat) | filter: queryText"
+                  ng-init="step = {}; step['type'] = sel.type; step.params = []; step.isNew = true"
                   dnd-draggable="step"
                   dnd-effect-allowed="move" layout="column">
                   
                   <div layout="row" layout-align="start center" layout-wrap>
                     <span class="text-bold">
-                      <md-tooltip>{{value.description}}</md-tooltip>
-                      {{key}}
+                      <md-tooltip>{{sel.description}}</md-tooltip>
+                      {{sel.type}}
                     </span>
                     <span>(</span>
-                    <span ng-repeat="(key, value) in value.params" ng-init="step.params[$index] = key;">
+                    <span ng-repeat="(key, value) in sel.params" ng-init="step.params[$index] = key;">
                       <md-tooltip>{{value}}</md-tooltip>
                       {{key}}
                       <span ng-if="!$last">,</span>

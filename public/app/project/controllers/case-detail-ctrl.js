@@ -69,17 +69,16 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
     KeywordService.getKeywords(function(data) {
       $scope.keywords = data;
-      // var categories = [];
-      // $scope.keywordList = data;
-      // $scope.keywords = data;
-      // _.forEach(data, function(keywords, cat) {
-      //   categories.push(cat);
-      // });
-      // $scope.categories = categories;
-      // _.forEach(categories, function (cat) {
-      //    $scope.keywords[cat] = getKeywordsByCat(cat);
-      // });
     });
+
+    $scope.getListSteps = function(cat) {
+      var list = []; 
+      _.forEach($scope.keywords[cat], function(value, key) {
+        value.type = key;
+        list.push(value);
+      });
+      return list;
+    }
 
     var newRow = function(params) {
       var obj = {};
@@ -99,8 +98,6 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
       $scope.caze = data;
       $scope.params = buildParamList(data);
-      console.log($scope.caze);
-      console.log($scope.params);
 
       var overview = {
         name: $scope.caze.project,
@@ -211,7 +208,6 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     }
 
     $scope.cancel = function () {
-      console.log($scope.caze);
       $scope.caze = $scope.originCase;
       $scope.organizeMode = false;
       _.remove($scope.caze.steps, function (step) {
