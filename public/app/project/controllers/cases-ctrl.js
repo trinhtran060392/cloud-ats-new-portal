@@ -2,8 +2,8 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
 	module.registerController('CasesCtrl', [
-    '$mdMedia', '$mdSidenav', '$scope', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
-    function ($mdMedia, $mdSidenav, $scope, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
+    'SharedDataService', '$mdMedia', '$mdSidenav', '$scope', 'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 
+    function (SharedDataService, $mdMedia, $mdSidenav, $scope, CaseService, $state, $stateParams, $mdDialog, $mdToast) {
 
 		$scope.$parent.isSidenavOpen = true;
     $scope.$parent.isSidenavLockedOpen = $mdMedia('gt-md');
@@ -19,12 +19,24 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     };
 
     $scope.projectId = $stateParams.id;
+    $scope.sharedData = SharedDataService;
+    
+    $scope.parse = function (timestamp) {
+
+      var date = new Date(timestamp);
+      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+      var result = months[date.getMonth()] +" " + date.getDate() +" "+ date.getFullYear();
+
+      return result;
+    }
+
 		CaseService.list($scope.projectId, function (data, status) {
-			$scope.cases = data;
+      $scope.sharedData.project = data;
 		});
 
     $scope.clickCase = function (ev, id) {
-      $state.go('app.project.keyword-case', {id : $scope.projectId,caseId : id});
+      $state.go('app.project.keyword-cases.case', {id : $scope.projectId,caseId : id});
     }
     
 		$scope.delete = function (ev, id) {
@@ -38,7 +50,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 	    	CaseService.delete($scope.projectId, id, function (data, status) {
 	    		if (status === 200) {
 
-	    			_.remove($scope.cases, function (caze) {
+	    			_.remove($scope.sharedData.project.cases, function (caze) {
 	    				return caze._id === id;
 	    			});
 	    			$mdToast.show($mdToast.simple().position('top right').textContent('Delete The Case Success!'));
@@ -69,7 +81,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
             CaseService.clone($scope.projectId, id, $scope.data_name, function (data, status){
               if (status === 200) {
                
-                $scope.cases.push(data);
+                $scope.sharedData.project.cases.push(data);
                 $mdDialog.hide();
                 $mdToast.show($mdToast.simple().position('top right').textContent('The Case has been cloned!'));
               }
@@ -78,34 +90,5 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         }
       })
 		}
-
-    $scope.create = function (ev) {
-      $mdDialog.show({
-          
-        templateUrl: 'app/project/views/keyword/create-case-dialog.tpl.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        scope: $scope,
-        preserveScope: true,
-        controller: function() {
-
-          $scope.case = {};
-          $scope.cancel = function() {
-            $mdDialog.cancel();
-          };
-          $scope.submit = function() {
-            $scope.case.steps = [];
-            CaseService.create($scope.projectId, $scope.case, function (data, status){
-              console.log();
-              if (status === 201) {
-                $mdDialog.hide();
-                $state.go('app.project.keyword-case', {id : $scope.projectId, caseId : data._id});
-              }
-            });
-          };
-        }
-      })
-    }
 	}]);
 })

@@ -12,6 +12,7 @@ define([
   'projects/module',
   'project/module',
   'project/keyword-module',
+  'project/keyword-report-module',
   'project/performance-module',
   'auth/module'
 ], function() {

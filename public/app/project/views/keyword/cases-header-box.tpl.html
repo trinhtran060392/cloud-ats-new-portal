@@ -1,6 +1,6 @@
 <div class="header-logo" layout="row" layout-align="start end" flex>
   <md-icon md-font-icon="icon-bug"></md-icon>
-  <span class="pl-8 md-headline" flex>Keyword - Cases</span>
+  <span class="pl-8 md-title" flex>Keyword - Cases</span>
 </div>
 
 <div class="header-info" layout="column" layout-align="space-between start">
@@ -8,21 +8,21 @@
   <div class="pt-8" layout="row" layout-align="start center" flex>
     <span class="text-bold w-56">Project</span>
     <span class="text-nowrap-ellipsis">
-      CloudATS project test
+      {{sharedData.project.name}}
     </span>
   </div>
 
   <div class="pt-8" layout="row" layout-align="start center" flex>
     <span class="text-bold w-56">Case(s)</span>
     <span class="text-nowrap-ellipsis">
-      186 test case(s)
+      {{sharedData.project.cases.length}} test case(s)
     </span>
   </div>
 
 </div>
 
 <div class="header-action" layout="row" layout-align="start center">
-  <md-button class="md-raised md-primary white-fg" aria-label="Create New Test Case" flex>
+  <md-button ng-click="create()" class="md-raised md-primary white-fg" aria-label="Create New Test Case" flex>
     Create New Test Case
   </md-button> 
 </div>

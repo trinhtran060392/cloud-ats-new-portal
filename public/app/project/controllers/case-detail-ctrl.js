@@ -1,19 +1,25 @@
 define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
-	module.registerController('CaseDetailCtrl', ['DataService', '$scope', 'KeywordService', 
+	module.registerController('CaseDetailCtrl', ['$mdSidenav', 'DataService', '$scope', 'KeywordService', 
     'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 'CustomKeywordService',
-    function (DataService, $scope, KeywordService, CaseService, $state, $stateParams, $mdDialog, $mdToast, CustomKeywordService) {
+    function ($mdSidenav, DataService, $scope, KeywordService, CaseService, $state, $stateParams, $mdDialog, $mdToast, CustomKeywordService) {
 
     $scope.$parent.isSidenavOpen = false;
     $scope.$parent.isSidenavLockedOpen = false;
 
+    $scope.toggleProjectNavLeft = function() {
+      $mdSidenav('project-nav-left').toggle();
+    };
+
 		$scope.projectId = $stateParams.id;
-    $scope.caseId = $stateParams.caseId;
+    $scope.cazeId = $stateParams.caseId;
+
     $scope.organizeMode = false;
     $scope.filterIsShow = false;
     $scope.keywords = {};
     $scope.selected = [];
+
     $scope.types = [
       {value: 'id', text: 'id'},
       {value: 'name', text: 'name'},
@@ -21,6 +27,13 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       {value: 'css selector', text: 'css selector'},
       {value: 'xpath', text: 'xpath'}
     ]; 
+
+    $scope.toggleCategory = function(evt) {
+      var $currentTarget = $(evt.currentTarget);
+      var $stepsContainer = $currentTarget.next('.steps-container');
+      $currentTarget.toggleClass('expanded');
+      $stepsContainer.slideToggle(200);
+    }
 
     var getKeywordsByCat = function(cat) {
       var keywords = []
@@ -55,16 +68,17 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     });
 
     KeywordService.getKeywords(function(data) {
-      
-      var categories = [];
-      $scope.keywordList = data;
-      _.forEach(data, function(keywords, cat) {
-        categories.push(cat);
-      });
-      $scope.categories = categories;
-      _.forEach(categories, function (cat) {
-         $scope.keywords[cat] = getKeywordsByCat(cat);
-      });
+      $scope.keywords = data;
+      // var categories = [];
+      // $scope.keywordList = data;
+      // $scope.keywords = data;
+      // _.forEach(data, function(keywords, cat) {
+      //   categories.push(cat);
+      // });
+      // $scope.categories = categories;
+      // _.forEach(categories, function (cat) {
+      //    $scope.keywords[cat] = getKeywordsByCat(cat);
+      // });
     });
 
     var newRow = function(params) {
@@ -81,12 +95,34 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       $scope.data.push(newRow(params));
     };
 
-    CaseService.get($scope.projectId, $scope.caseId, function (data, status) {
+    CaseService.get($scope.projectId, $scope.cazeId, function (data, status) {
 
-      $scope.case = data;
+      $scope.caze = data;
       $scope.params = buildParamList(data);
-      if (!data.data_driven) {
-        buildDataset($scope.case);
+      console.log($scope.caze);
+      console.log($scope.params);
+
+      var overview = {
+        name: $scope.caze.project,
+        state: 'app.project.overview',
+        data: {
+          id: $scope.projectId
+        }
+      }
+      var cases = {
+        name: 'Cases',
+        state: 'app.project.keyword-cases',
+        data: {
+          id: $scope.projectId
+        }
+      }
+      var caze = {
+        name: $scope.caze.name
+      }
+      $scope.breadcrumbs = [overview, cases, caze];
+
+      /*if (!data.data_driven) {
+        buildDataset($scope.caze);
       } else {
         $scope.data = JSON.parse(data.data_source);
         $scope.data_name = data.data_name;
@@ -96,28 +132,28 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         _.forEach($scope.params, function (param) {
           if (!obj[param]) obj[param] = param+'_value';
         });
-      });
+      });*/
 
       $scope.originData = angular.copy($scope.data);
 
-      $scope.originCase = angular.copy($scope.case);
+      $scope.originCase = angular.copy($scope.caze);
 
       if (!data.steps.length) {
         $scope.organizeMode = true;
 
       }
-      _.forEach($scope.case.steps, function (step) {
+      _.forEach($scope.caze.steps, function (step) {
         step.inCurrentCase = true;
       });
     });
 
     $scope.save = function () {
-      CaseService.update($scope.case.project_id, $scope.case, function (data, status){
+      CaseService.update($scope.caze.project_id, $scope.caze, function (data, status){
         switch (status) {
           case 200: 
             $mdToast.show($mdToast.simple().position('top right').textContent('The case has been updated!'));
             $scope.organizeMode = false;
-            _.forEach($scope.case.steps, function (step) {
+            _.forEach($scope.caze.steps, function (step) {
               step.inCurrentCase = true;
             });
             break;
@@ -130,63 +166,65 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       });
     }
 
-    $scope.dropCallBack = function (event, index, item, type, external) {
-      if (item._id) {
-        _.forEach(item.steps, function (step) {
-          $scope.case.steps.splice(index, 0, step);
-          index ++;
-        });
-        _.remove($scope.case.steps, function (step) {
-          return !step.type;
-        });
+    $scope.dropCallBack = function (index, event, step) {
+      
+      if (step.isNew) {
+        $scope.clickToStep(event, step, $scope.caze.steps.length - 1);
+      }
+      // if (item._id) {
+      //   _.forEach(item.steps, function (step) {
+      //     $scope.caze.steps.splice(index, 0, step);
+      //     index ++;
+      //   });
+      //   _.remove($scope.caze.steps, function (step) {
+      //     return !step.type;
+      //   });
 
-        $scope.step = item.steps[0];
-      } else {
-        //$scope.case.steps.splice(index, 0, item);
-        $scope.step = item;
-      }
-      if ($scope.step.params.length) {
-        $mdDialog.show({
-          templateUrl: 'app/project/views/keyword/step-data-form-dialog.tpl.html',
-          parent: angular.element(document.body),
-          targetEvent: 'body',
-          scope: $scope,
-          preserveScope: true,
-          controller: function() {
-            $scope.cancelDialog = function() {
-              $scope.step = $scope.originStep;
-              $mdDialog.cancel();
-            };
-            $scope.submit = function() {
-              $mdDialog.cancel();
-            };
-          }
-        })
-      }
+      //   $scope.step = item.steps[0];
+      // } else {
+      //   //$scope.caze.steps.splice(index, 0, item);
+      //   $scope.step = item;
+      // }
+      // if ($scope.step.params.length) {
+      //   $mdDialog.show({
+      //     templateUrl: 'app/project/views/keyword/step-data-form-dialog.tpl.html',
+      //     parent: angular.element(document.body),
+      //     targetEvent: 'body',
+      //     scope: $scope,
+      //     preserveScope: true,
+      //     controller: function() {
+      //       $scope.cancelDialog = function() {
+      //         $scope.step = $scope.originStep;
+      //         $mdDialog.cancel();
+      //       };
+      //       $scope.submit = function() {
+      //         $mdDialog.cancel();
+      //       };
+      //     }
+      //   })
+      // }
     }
 
     $scope.edit = function () {
-
-      $scope.originCase = angular.copy($scope.case);
+      $scope.originCase = angular.copy($scope.caze);
       $scope.organizeMode = true;
     }
 
     $scope.cancel = function () {
-      console.log($scope.case);
-      $scope.case = $scope.originCase;
+      console.log($scope.caze);
+      $scope.caze = $scope.originCase;
       $scope.organizeMode = false;
-      _.remove($scope.case.steps, function (step) {
+      _.remove($scope.caze.steps, function (step) {
         return !step.inCurrentCase;
       });
     }
 
     $scope.removeStep = function (index) {
-      $scope.organizeMode = true;
-      $scope.case.steps.splice(index, 1)
+      $scope.caze.steps.splice(index, 1)
     }
 
     $scope.clickToStep = function (ev, step, $index) {
-      $scope.originCase = angular.copy($scope.case);
+      $scope.originCase = angular.copy($scope.caze);
       $scope.step = angular.copy(step);
       $scope.organizeMode = true;
       $scope.originStep = angular.copy($scope.step);
@@ -199,14 +237,21 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         preserveScope: true,
         controller: function() {
 
+          $scope.title = step.type + " [" + ($index + 1) + "]";
+
           $scope.cancelDialog = function() {
             $scope.step = $scope.originStep;
             $mdDialog.cancel();
           };
           $scope.submit = function() {
-            $scope.case.steps[$index] = $scope.step;
+            $scope.step.isNew = undefined;
+            $scope.caze.steps[$index] = $scope.step;
             $mdDialog.cancel();
           };
+          $scope.remove = function() {
+            $scope.caze.steps.splice($index, 1);
+            $mdDialog.cancel();
+          }
         }
       })
     }
@@ -264,14 +309,14 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     }
 
     $scope.saveData = function (ev) {
-      if($scope.case.data_driven === null) {
-        DataService.create($scope.data_name.trim(), $scope.data, $scope.case._id, function(data, status) {
+      if($scope.caze.data_driven === null) {
+        DataService.create($scope.data_name.trim(), $scope.data, $scope.caze._id, function(data, status) {
           var obj = {_id : data._id};
-          $scope.case.data_driven = obj;
+          $scope.caze.data_driven = obj;
           $mdToast.show($mdToast.simple().position('top right').textContent('Data has been created!'));
         });
       } else {
-        DataService.update($scope.data_name.trim(), $scope.data, $scope.case.data_driven._id, function (data, status) {
+        DataService.update($scope.data_name.trim(), $scope.data, $scope.caze.data_driven._id, function (data, status) {
           
           switch (status) {
             case 304: 

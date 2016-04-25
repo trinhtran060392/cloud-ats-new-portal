@@ -1,39 +1,52 @@
-<md-dialog aria-label="Step form"  ng-cloak>
+<md-dialog aria-label="step form"  ng-cloak style="max-width: 80%; width: 80%;">
   <md-toolbar>
     <div class="md-toolbar-tools md-primary-bg">
-      <span class="md-title text-nowrap">Fill data to step {{step.type}}</span>
+      <span class="md-title text-nowrap">{{title}}</span>
     </div>
   </md-toolbar>
   <md-dialog-content>
     <div class="md-dialog-content">
+      <form name="stepForm">
       <div ng-repeat="param in step.params">
         <md-input-container class="md-block"  ng-if="param !== 'locator' && param !== 'targetLocator'">
           <label>{{param}}</label>
-          <input type="text" ng-model="step[param]">
+          <input type="text" ng-model="step[param]" name="param{{$index}}" required>
+          <div ng-messages="stepForm['param' + $index].$error" role="alert" aria-live="assertive" >
+            <div ng-message="required"><span class="text-uppercase">{{param}}</span> is required</div>
+          </div>
         </md-input-container>
-        <div ng-if="param === 'locator' || param ==='targetLocator'">
-          <md-input-container class="md-block">
-            <label>{{param}} type</label>
-            <md-select ng-model="step[param].type">
-              <md-option ng-repeat="type in types" value="{{type.value}}">
-                {{type.value}}
-              </md-option>
-            </md-select>
-          </md-input-container>
-          <md-input-container class="md-block">
-            <label>{{param}} value</label>
-            <input type="text" ng-model="step[param].value">
-          </md-input-container>
-        </div>
+        <md-input-container class="md-block" ng-if="param === 'locator' || param ==='targetLocator'">
+          <label>{{param}} type</label>
+          <md-select ng-model="step[param].type" name="param{{$index}}" required>
+            <md-option ng-repeat="type in types" value="{{type.value}}">
+              {{type.value}}
+            </md-option>
+          </md-select>
+          <div ng-messages="stepForm['param' + $index].$error" role="alert" aria-live="assertive" >
+            <div ng-message="required"><span class="text-uppercase">{{param}}</span> is required</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" ng-if="param === 'locator' || param ==='targetLocator'">
+          <label>{{param}} value</label>
+          <input type="text" ng-model="step[param].value" name="param{{$index}}" required>
+          <div ng-messages="stepForm['param' + $index].$error" role="alert" aria-live="assertive" >
+            <div ng-message="required"><span class="text-uppercase">{{param}}</span> value is required</div>
+          </div>
+        </md-input-container>
       </div>
+      </form>
+    </div>
   </md-dialog-content>
   <md-dialog-actions layout="row" >
     <span flex></span>
-    <md-button ng-click="submit()" aria-label="fill">
-     Fill
+    <md-button class="md-raised md-primary white-fg" ng-click="submit()" aria-label="ok" ng-disabled="stepForm.$invalid">
+     OK
     </md-button>
-    <md-button ng-click="cancelDialog()" aria-label="cancel" style="margin-right:20px;">
+    <md-button class="md-raised ml-20" ng-click="cancelDialog()" aria-label="cancel" ng-if="!step.isNew">
       CANCEL
+    </md-button>
+    <md-button class="md-raised ml-20" ng-click="remove()" aria-label="cancel" ng-if="step.isNew">
+      REMOVE
     </md-button>
   </md-dialog-actions>
 </md-dialog>

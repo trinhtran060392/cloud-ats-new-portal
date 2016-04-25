@@ -13,95 +13,6 @@ define([
 
   module.config(['$stateProvider', '$couchPotatoProvider', function ($stateProvider, $couchPotatoProvider) {
     $stateProvider
-    .state('app.project.keyword-reports', {
-      url: '/project/:id/keyword/reports',
-      views: {
-        'sub-content@app.project': {
-          templateUrl: 'app/project/views/keyword/reports-overview.tpl.html',
-          resolve: {
-            deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav',
-              'project/controllers/execution-func-ctrl',
-              'project/controllers/report-overview-func-ctrl',
-              'services/suite-service',
-              'services/keyword-service'
-            ])
-          }
-        },
-        'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/reports-header-box.tpl.html'
-        }
-      },
-      data: {
-        title: 'Project Keyword Reports Overview',
-        requireLogin: true
-      }
-    })
-    .state('app.project.keyword-reports.reportJob', {
-      url: '/report/:jobId',
-      views: {
-        'sub-content@app.project': {
-          templateUrl: 'app/project/views/keyword/report-job-detail.tpl.html',
-          resolve: {
-            deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav',
-              'project/controllers/report-job-detail-ctrl'
-            ])
-          }
-        },
-        'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/reports-header-box.tpl.html'
-        }
-      },
-      data: {
-        title: 'Project Keyword Report Job',
-        requireLogin: true
-      }
-    })
-    .state('app.project.keyword-reports.reportJob.reportSuite', {
-      url: '/suite/:suiteId/:suiteReportId',
-      views: {
-        'sub-content@app.project': {
-          templateUrl: 'app/project/views/keyword/report-suite-detail.tpl.html',
-          controller: 'ReportSuiteDetailCtrl',
-          resolve: {
-            deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav',
-              'project/controllers/report-suite-detail-ctrl'
-            ])
-          }
-        },
-        'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/reports-header-box.tpl.html'
-        }
-      },
-      data: {
-        title: 'Project Keyword Report Suite',
-        requireLogin: true
-      }
-    })
-    .state('app.project.keyword-reports.reportJob.reportSuite.reportCase', {
-      url: '/testcase/:caseReportId',
-      views: {
-        'sub-content@app.project': {
-          templateUrl: 'app/project/views/keyword/report-case-detail.tpl.html',
-          controller: 'ReportCaseDetailCtrl',
-          resolve: {
-            deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav',
-              'project/controllers/report-case-detail-ctrl'
-            ])
-          }
-        },
-        'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/reports-header-box.tpl.html'
-        }
-      },
-      data: {
-        title: 'Project Keyword Report Case',
-        requireLogin: true
-      }
-    })
     .state('app.project.keyword-suites', {
       url: '/project/:id/keyword/suites',
       views: {
@@ -159,9 +70,6 @@ define([
               'services/case-service'
             ])
           }
-        },
-        'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/suites-header-box.tpl.html'
         }
       },
       data: {
@@ -173,7 +81,8 @@ define([
       url: '/project/:id/keyword/cases',
       views: {
         'search-box@app': {
-          templateUrl: 'app/project/views/keyword/cases-search-box.tpl.html'
+          templateUrl: 'app/project/views/keyword/cases-search-box.tpl.html',
+          controller: 'CasesActionCtrl'
         },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/cases.tpl.html',
@@ -182,12 +91,15 @@ define([
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
               'project/controllers/cases-ctrl',
+              'project/controllers/cases-action-ctrl',
+              'project/services/shared-data-service',
               'services/case-service'
             ])
           }
         },
         'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/cases-header-box.tpl.html'
+          templateUrl: 'app/project/views/keyword/cases-header-box.tpl.html',
+          controller: 'CasesActionCtrl'
         }
       },
       data: {
@@ -195,8 +107,8 @@ define([
         requireLogin: true
       }
     })
-    .state('app.project.keyword-case', {
-      url: '/project/:id/keyword/case/:caseId',
+    .state('app.project.keyword-cases.case', {
+      url: '/:caseId',
       views: {
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/case-detail.tpl.html',
@@ -204,7 +116,7 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
-              'project/controllers/case-detail-controller',
+              'project/controllers/case-detail-ctrl',
               'services/case-service',
               'services/keyword-service',
               'services/custom-keyword-service',
@@ -212,8 +124,8 @@ define([
             ])
           }
         },
-        'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/cases-header-box.tpl.html'
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/case-detail-search-box.tpl.html'
         }
       },
       data: {

@@ -237,7 +237,7 @@ a.action-icon:hover > * {
   opacity: 0.5;
 }
 
-.dndPlaceholder {
+#cases .dndPlaceholder {
   background-color: #ddd !important;
   display: block;
   border-radius: 2px;
@@ -247,6 +247,18 @@ a.action-icon:hover > * {
   min-height: 80px;
   max-height: 80px;
   height: 80px;
+}
+
+#case .dndPlaceholder {
+  background-color: #ddd !important;
+  display: block;
+  border-radius: 2px;
+  border: 3px dashed #2E62B1;
+  position: relative;
+  width: 20%;
+  min-height: 120px;
+  max-height: 120px;
+  height: 120px;
 }
 
 .test-case-list .md-subheader-inner {
@@ -381,12 +393,14 @@ table.simple tbody tr td.absorbing-column {
   max-height: 48px;
 }
 
-#cases .content-wrapper {
+#cases .content-wrapper,
+#case .content-wrapper {
   overflow: hidden;
   position: relative;
 }
 
-#cases .content-wrapper .cases-container {
+#cases .content-wrapper .cases-container,
+#case .content-wrapper .case-container {
   position: absolute;
   top: 0;
   right: 0;
@@ -401,8 +415,15 @@ table.simple tbody tr td.absorbing-column {
   height: 80px;
   padding: 0 8px 8px 4px !important;
 }
+#case .content-wrapper .case-container .step {
+  min-height: 120px;
+  max-height: 120px;
+  height: 120px;
+  padding: 0 8px 8px 4px !important;
+}
 
-#cases .content-wrapper .cases-container .case .ms-card-content-wrapper {
+#cases .content-wrapper .cases-container .case .ms-card-content-wrapper,
+#case .content-wrapper .case-container .step .ms-card-content-wrapper {
   border-left: 3px solid #2E62B1;
 }
 
@@ -420,7 +441,31 @@ table.simple tbody tr td.absorbing-column {
   left: 0;
 }
 
-#cases .list-cases .filter {
+#case .list-steps {
+  margin-left: 85%;
+  padding: 0px 4px 0 0 !important;
+  height: 100%; 
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#case .list-steps .category {
+  cursor: pointer;
+  border-bottom: 1px solid white; 
+  padding: 12px
+}
+#case .list-steps .category.expanded md-icon {
+  transform: rotate(90deg);
+}
+
+#cases .list-cases .filter,
+#case .list-steps .filter {
   height: 56px; 
   min-height: 56px; 
   max-height: 56px; 
@@ -430,15 +475,19 @@ table.simple tbody tr td.absorbing-column {
   margin-bottom: 4px;
 }
 
-#cases .list-cases .filter input {
+#cases .list-cases .filter input,
+#case .list-steps .filter input {
   border: none;     
   color: rgba(0, 0, 0, 0.54);
 }
 
-#cases .list-cases .case {
+#cases .list-cases .case,
+#case .list-steps .step {
   cursor: move;
+  padding: 12px;
 }
-#cases .list-cases .case:hover {
+#cases .list-cases .case:hover,
+#case .list-steps .step:hover {
   border-left: 3px solid #2E62B1;
 }
 
