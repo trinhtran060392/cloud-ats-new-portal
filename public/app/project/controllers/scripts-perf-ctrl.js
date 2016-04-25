@@ -15,10 +15,8 @@ define(['project/module','lodash'], function (module, _) {
 
     $scope.clickScript = function (ev, script) {
       if (script.raw) {
-        console.log(script.raw);
         $state.go('app.project.performance-scripts.editor', {id : $scope.projectId,scriptId : script._id});
       } else {
-        console.log(script.raw);
         $state.go('app.project.performance-scripts.wizard', {id : $scope.projectId,scriptId : script._id});
       }
     };

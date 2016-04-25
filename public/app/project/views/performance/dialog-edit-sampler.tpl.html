@@ -1,0 +1,77 @@
+<md-dialog aria-label="EditSampler" ng-cloak >
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span flex="95" class="md-title text-nowrap">Edit Sampler : {{selected.name}}</span>
+        <md-button ng-click="cancel()" aria-label="cancel">
+          <md-icon md-font-icon="icon-cancel" flex="5" ></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content >
+        <form name="createForm" style="min-width: 240px;">  
+          <div layout="row" flex="100">
+            <md-input-container class="md-block" flex>
+              <label>Sampler Name</label>
+              <input type="text" name="samplerName" required ng-model="selected.name" md-autofocus>
+              <div ng-messages="createForm.samplerName.$error" role="alert" aria-live="assertive" >
+                <div ng-message="required">Sampler name is required</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="row" flex="100">
+            <md-input-container class="md-block" flex="50">
+              <label>Sampler URL</label>
+              <input type="text" name="samplerURL" required ng-model="selected.url" md-autofocus>
+              <div ng-messages="createForm.samplerURL.$error" role="alert" aria-live="assertive" >
+                  <div ng-message="required">Sampler URL is required</div>
+              </div>
+            </md-input-container>
+            <md-input-container flex="50">
+              <label flex>Sampler Method</label>
+              <md-select ng-model="selected.method">
+                <md-option ng-repeat="method in methods" value="{{method}}">{{method}}</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div layout="row" flex="100">
+            <md-input-container class="md-block" flex="50">
+              <label>Assertion text</label>
+              <input type="text" name="samplerAssertion" ng-model="selected.assertion_text" md-autofocus>
+            </md-input-container>
+            <md-input-container class="md-block" flex="50">
+              <label>Constant time(s)</label>
+              <input type="number" name="samplerConstantTime" ng-model="selected.constant_time" md-autofocus>
+            </md-input-container>
+          </div>
+          <div layout="row" flex="100" ng-repeat="i in selected.arguments track by $index">
+            <md-input-container class="md-block" flex="40">
+              <label>Parameters Name</label>
+              <input type="text" name="parametersName" ng-model="i.paramName" md-autofocus>
+            </md-input-container>
+            <md-input-container class="md-block" flex="40">
+              <label>Parameters Value</label>
+              <input type="text" name="parametersValue" ng-model="i.paramValue" md-autofocus>
+            </md-input-container>
+            <md-button class="md-icon-button" aria-label="Add New Parameter"  ng-if="$index == selected.arguments.length -1" ng-click="addArgument($index)">
+              <md-tooltip>
+                Add New Parameter
+              </md-tooltip>
+              <md-icon md-font-icon="icon-plus-circle-outline" aria-hidden="true"></md-icon>
+            </md-button> 
+            <md-button class="md-icon-button" aria-label="Remove New Parameter" ng-if="selected.arguments.length > 1" ng-click="removeArgument($index)">
+              <md-tooltip>
+                Remove New Parameter
+              </md-tooltip>
+              <md-icon md-font-icon="icon-minus-circle-outline" aria-hidden="true"></md-icon>
+            </md-button>
+          </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+       <div class="ms-stepper-controls layout-align-center-center layout-row" layout="row" layout-align="center center">
+              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Save" ng-disabled="createForm.$invalid">
+                <span class="ng-scope" ng-click="updateSampler()">Save</span>
+              </button>
+            </div>
+    </md-dialog-actions>
+</md-dialog>

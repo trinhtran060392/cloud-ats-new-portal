@@ -115,9 +115,12 @@ define([
       views: {
         'sub-content@app.project': {
           templateUrl: 'app/project/views/performance/script-wizard-detail.tpl.html',
+          controller: 'ScriptsWizardCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
+              'project/controllers/scripts-wizard-ctrl',
+              'services/script-service'
             ])
           }
         },
@@ -126,7 +129,7 @@ define([
         }
       },
       data: {
-        title: 'Project Performance Script Detail',
+        title: 'Project Performance Script Wizard Detail',
         requireLogin: true
       }
     })
@@ -148,7 +151,7 @@ define([
         }
       },
       data: {
-        title: 'Project Performance Script Detail',
+        title: 'Project Performance Script Editor Detail',
         requireLogin: true
       }
     })

@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div ng-cloak>
+<div ng-cloak perfect-scrollbar>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Infomation">
@@ -39,7 +39,7 @@
 		    </md-slider-container>
 		   	<md-slider-container layout="row">
 		      <span flex="20">Ram up</span>
-		      <md-slider min="1" max="100" aria-label="Ramup" flex="70" ng-model="Ramup" class="md-accent" md-discrete> 
+		      <md-slider min="0" max="100" aria-label="Ramup" flex="70" ng-model="Ramup" class="md-accent" md-discrete> 
 		      </md-slider>
 		      <md-input-container flex>
 		        <input type="number" aria-label="Ramup" ng-model="Ramup">
@@ -57,9 +57,59 @@
       </md-tab>
      
       <md-tab label="Sampler">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Sampler</h1>
-        </md-content>
+        <md-content class="md-hue-1" >
+        	<div layout="row" flex="100">
+		        <div flex ="50">
+		        	<md-button class="md-raised md-accent" ng-click="showCreateNewSampler($event)">Create New Sampler</md-button>
+		        </div>
+		        <div layout="row" layout-wrap flex ="20">
+			        <md-checkbox ng-model="organizationMode" aria-label="Organization Mode">
+		            Organization Mode
+		        	</md-checkbox>
+			    </div>
+		        <div flex ="30" class="search-box" layout="row" layout-align="start center" flex>
+					<md-icon md-font-icon="icon-magnify" class="icon s24 mh-16" aria-hidden="true"></md-icon>
+					<input class="font-size-14" type="text" placeholder="Search for Sampler" aria-invalid="false" flex> 
+				</div>
+        	</div>
+		    <div class="sampler-container" layout="row" flex="100" layout-wrap>
+		      <div ng-repeat="sampler in script.samplers track by $index" layout="row" flex="25" class="project ms-card"> 
+		        <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
+
+		          <div class="text-nowrap-ellipsis h2 p-16">
+		            <a href="javascript:void(0)" ng-click="showSamplerInfomation($event, sampler)"class="md-primary-fg">
+		              <md-tooltip>{{sampler.name}}</md-tooltip>
+		              {{sampler.name}}
+		            </a>
+		          </div>
+
+		          <div class="creator ph-16 pb-16" layout="row" layout-align="start center">
+		            <img class="avatar mr-16" ng-src="styles/img/avatars/male.png">
+		            <div layout="column" flex>
+		              <div class="title" layout="row" layout-align="start center">
+		                <a href="javascript:void(0)" class="text-nowrap-ellipsis" flex>
+		                  <md-tooltip>haint@cloudats.net</md-tooltip>
+		                  haint@cloudats.net
+		                </a>
+		                <span class="text" flex>created on</span>
+		              </div>
+		              <div class="subtitle secondary-text">Apr 13 2016</div>
+		            </div>
+		          </div>
+
+		          <md-divider></md-divider>
+
+		          <div layout="row" layout-align="start center">
+		            <md-button class="md-icon-button" aria-label="Delete this sampler" ng-click="deleteSampler($event, sampler)">
+		              <md-tooltip>Delete</md-tooltip>
+		              <md-icon class="s16 md-warn-fg" md-font-icon="icon-delete" aria-hidden="true"></md-icon>
+		            </md-button>
+		          </div>
+		          
+		        </div>
+		      </div>
+		    </div>
+		  </md-content>
       </md-tab>
     </md-tabs>
   </md-content>
