@@ -144,7 +144,7 @@
               </div>
 
               <div layout="column" flex="100" class="steps-container">
-                <div class="border-bottom step" ng-repeat="group in customs | filter: queryText"
+                <div class="border-bottom step" ng-repeat="group in customs | filter: {'name': queryText}"
                   dnd-draggable="group"
                   dnd-effect-allowed="move">
                   <span>{{group.name}}</span>
@@ -167,7 +167,7 @@
               </div>
               <div layout="column" flex="100" class="steps-container">
                 <div class="border-bottom step" 
-                  ng-repeat="sel in getListSteps(cat) | filter: queryText"
+                  ng-repeat="sel in getListSteps(cat) | filter: {'type': queryText}"
                   ng-init="step = {}; step['type'] = sel.type; step.params = []; step.isNew = true"
                   dnd-draggable="step"
                   dnd-effect-allowed="move" layout="column">
