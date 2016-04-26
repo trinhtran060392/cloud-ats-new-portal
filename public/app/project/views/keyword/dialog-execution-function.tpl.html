@@ -1,4 +1,4 @@
-<md-dialog aria-label="Execution"  ng-cloak >
+<md-dialog aria-label="Execution" style="width: 45%; min-width: 45%"  ng-cloak >
     <md-toolbar>
       <div class="md-toolbar-tools md-primary-bg">
         <span flex="95" class="md-title text-nowrap">Execution Functional</span>
@@ -9,64 +9,65 @@
     </md-toolbar>
     <md-dialog-content style="padding: 0px;">
       <div class="md-dialog-content" style="padding: 3px;">
-        <form name="stepper" class="ms-stepper ng-untouched" style="max-height: 650px;max-width: 550px;">
+        <form name="stepper" class="ms-stepper" style="max-height: 650px;max-width: 550px;">
           <div class="ms-stepper-horizontal">
             <div class="ms-stepper-navigation-wrapper">
-              <div class="ms-stepper-navigation layout-row" layout="row" layout-align="center center" style="max-height: 36px; min-height: 36px;">
-                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="1 Choose Suites">
+              <div class="ms-stepper-navigation" layout="row" layout-align="center center">
+                <md-button class="ms-stepper-navigation-item exe-step" layout="row" layout-align="start center" aria-label="1 Choose Suites">
                   <div class="step md-accent-bg" layout="row" layout-align="center center">
                     <span>1</span>
                   </div>
-                  <div layout="column" layout-align="start start" class="layout-column">
+                  <div layout="column" layout-align="start start">
                     <div>Suites</div>
                   </div>
-                </button>
-                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="2 Choose Browsers">
+                </md-button>
+                <md-button class="ms-stepper-navigation-item exe-step" layout="row" layout-align="start center" aria-label="2 Choose Browsers">
                   <div class="step md-accent-bg" layout="row" layout-align="center center">
                     <span>2</span>
                   </div>
-                  <div layout="column" layout-align="start start" class="layout-column">
+                  <div layout="column" layout-align="start start">
                     <div>Browsers</div>
                   </div>
-                </button>
-                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="3 Selenium Version">
+                </md-button>
+                <md-button class="ms-stepper-navigation-item exe-step" layout="row" layout-align="start center" aria-label="3 Selenium Version">
                   <div class="step md-accent-bg" layout="row" layout-align="center center">
                     <span>3</span>
                   </div>
-                  <div layout="column" layout-align="start start" class="layout-column">
+                  <div layout="column" layout-align="start start">
                     <div>Selenium</div>
                   </div>
-                </button>
-                <button class="ms-stepper-navigation-item md-button" type="button" layout="row" layout-align="start center" aria-label="4 Choose OS">
+                </md-button>
+                <md-button class="ms-stepper-navigation-item exe-step" layout="row" layout-align="start center" aria-label="4 Choose OS">
                   <div class="step md-accent-bg" layout="row" layout-align="center center">
                     <span>4</span>
                   </div>
-                  <div layout="column" layout-align="start start" class="layout-column">
+                  <div layout="column" layout-align="start start">
                     <div>OS</div>
                   </div>
-                </button>
+                </md-button>
                 
               </div>
             </div>
             
             <div class="ms-stepper-steps" style="padding: 2px 2px;">
               <ms-stepper-step id="1" step-title="'Choose Suites'" class="ms-stepper-step" ng-show="currentStep === 1" >
-                  <div class="md-padding">
-                    <div layout="row" layout-wrap>
-                      <div class="search-box" layout="row" layout-align="start center" flex style="margin-bottom: 8px;">
-                        <md-icon md-font-icon="icon-magnify" class="icon s24 mh-16" aria-hidden="true"></md-icon>
-                        <input class="font-size-14" type="text" placeholder="Search for suite name" aria-invalid="false" flex> 
+                  <div class="md-padding" layout="column">
+                      <div layout="row" flex=>
+                        <div class="search-box" layout="row" layout-align="start center" flex style="margin-bottom: 16px;">
+                          <md-icon md-font-icon="icon-magnify" class="icon s24 margin-left-0" aria-hidden="true"></md-icon>
+                          <input class="font-size-14" type="text" placeholder="Search for suite name" aria-invalid="false" flex ng-model="searchTerms"> 
+                          <a href-void ng-show="searchTerms" ng-click="searchTerms = undefined;"><md-icon md-font-icon="icon-close"></md-icon></a>  
+                        </div>
                       </div>
                       <div layout="column">
                             <div layout="row" layout-wrap flex>
-                              <div class="demo-select-all-checkboxes" flex="100" ng-repeat="suite in suites">
+                              <div class="demo-select-all-checkboxes" flex="100" ng-repeat="suite in suites | filter : searchTerms">
                                 <md-checkbox aria-label="selectSuite" ng-click="selectSuite(suite._id);">
                                  <span>{{ suite.name }}</span>
                                 </md-checkbox>
                               </div>
                             </div>
                       </div>
-                    </div>
                   </div>
               </ms-stepper-step>
 
