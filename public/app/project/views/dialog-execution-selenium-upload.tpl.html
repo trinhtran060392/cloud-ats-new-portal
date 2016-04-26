@@ -1,0 +1,45 @@
+<md-dialog aria-label="Execution Selenium" ng-cloak >
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span flex="95" class="md-title text-nowrap">Execution Selenium Upload</span>
+        <md-button ng-click="cancel()" aria-label="cancel">
+          <md-icon md-font-icon="icon-cancel" flex="5" ></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content >
+        <form name="executionForm">  
+          <div layout="column">
+              <div layout="row">
+                <div layout='row'layout-padding layout-align="start center" >
+                <md-checkbox ng-disabled="true" ng-model="firefox" ng-init="firefox=true" aria-label="firefox">
+                  <img ng-src="/styles/img/browsers/firefox.jpg" width="30" height="30">
+                </md-checkbox>
+                </div>
+                <div layout='row' >
+                  <div layout="row" layout-align="start center">
+                    <md-select ng-model="browserVersionFireFox" aria-label="firefoxVersion">
+                      <md-option selected="selected">v1.0</md-option>
+                    </md-select>
+                  </div>
+                </div>
+              </div>
+              <div layout="row">
+                <div layout='row'layout-padding layout-align="start center">
+                <md-checkbox ng-model="os" aria-label="os" ng-disabled="true" ng-init="os=true">
+                  <img ng-src="/styles/img/ubuntu.png" width="30" height="30">
+                </md-checkbox>
+                <span>Ubuntu 14.04 64bit</span>
+                </div>
+              </div>
+          </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+       <div class="ms-stepper-controls layout-align-center-center layout-row" layout="row" layout-align="center center">
+              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="Run" >
+                <span class="ng-scope" ng-click="run()">Run</span>
+              </button>
+            </div>
+    </md-dialog-actions>
+</md-dialog>

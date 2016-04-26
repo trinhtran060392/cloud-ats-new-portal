@@ -5,13 +5,21 @@ define(['project/module','lodash'], function (module, _) {
   module.registerController('ScriptsWizardCtrl', ['$scope', '$rootScope', '$state','$stateParams', '$timeout',
     'ScriptService', 'uuid', '$mdDialog', '$mdToast',
     function($scope, $rootScope, $state, $stateParams, $timeout, ScriptService, uuid, $mdDialog, $mdToast) {
+        $scope.$parent.isSidenavOpen = false;
+        $scope.$parent.isSidenavLockedOpen = false;
+
         $scope.projectId = $stateParams.id;
-        $scope.UsersPerEngine = 0;
-        $scope.NumberOfEngines = 0;
-        $scope.Ramup = 0;
-        $scope.Loops = 0;
         $scope.scriptId = $stateParams.scriptId;
         $scope.methods = ['GET','POST','PUT','DELETE'];
+        $scope.checkTabSampler = false ;
+
+        $scope.$watch('selectedIndex', function(current, old) {
+          if (current == 1) {
+            $scope.checkTabSampler = true ;
+          } else {
+            $scope.checkTabSampler = false ;
+          }
+        });
 
         ScriptService.get($scope.projectId, $scope.scriptId, function (data, status) {
           $scope.script = data;
@@ -27,6 +35,25 @@ define(['project/module','lodash'], function (module, _) {
               "paramValue": ""
             });
           });
+          var overview = {
+            name: $scope.script.projectName,
+            state: 'app.project.overview',
+            data: {
+              id: $scope.projectId
+            }
+          }
+          var scripts = {
+            name: 'Scripts',
+            state: 'app.project.performance-scripts',
+            data: {
+              id: $scope.projectId
+            }
+          }
+          var script = {
+            name: $scope.script.name
+          }
+          $scope.breadcrumbs = [overview, scripts, script];
+
         });
         $scope.showCreateNewSampler= function(ev) {
           var sampler = {
@@ -58,17 +85,8 @@ define(['project/module','lodash'], function (module, _) {
                 };
                 
                 $scope.createNewSampler = function (index) {
+                  $mdDialog.hide();
                   $scope.script.samplers.push($scope.selected);
-                  ScriptService.update($scope.projectId, $scope.script, function (data, status) {
-                    if(status == 202){
-                      $mdDialog.hide();
-                      $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has created'));
-                    } else {
-                      $mdDialog.hide();
-                      $mdToast.show($mdToast.simple().position('top right').textContent('Error create a new Sampler'));
-                    }
-
-                  });
                 };
               }
           }).then(function () {
@@ -100,24 +118,36 @@ define(['project/module','lodash'], function (module, _) {
                   $mdDialog.cancel();
                 };
                 $scope.updateSampler = function() {
-                  ScriptService.update($scope.projectId, $scope.script, function (data, status) {
-                    if(status == 202){
-                      $mdDialog.hide();
-                      $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has updated'));
-                    } else if(status == 204) {
-                      $mdDialog.hide();
-                      $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has nothing to update'));
-                    } else if(status == 400) {
-                      $mdDialog.hide();
-                      $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler is not exist'));
-                    }
-
-                  });
+                  $mdDialog.hide();
                 };
               }
           }).then(function () {
           });
         };
+
+        $scope.updateScript = function(){
+          ScriptService.update($scope.projectId, $scope.script, function (data, status) {
+            if(status == 202){
+              $mdDialog.hide();
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has updated'));
+            } else if(status == 204) {
+              $mdDialog.hide();
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has nothing to update'));
+            } else if(status == 400) {
+              $mdDialog.hide();
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler is not exist'));
+            }
+
+          });
+        };
+
+        $scope.deleteSampler = function (ev, sampler) {
+          console.log(sampler);
+          _.remove($scope.script.samplers, function(sel) {
+                return sel._id === sampler._id;
+              });
+          $scope.selected = undefined;
+        }
 
   }]);
 });

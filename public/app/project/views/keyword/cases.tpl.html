@@ -41,8 +41,11 @@
                 </a>
               </div>
               <div layout="row" layout-align="start center">
-                <span class="text-bold pr-8">Created Date:</span>
-                <span class="subtitle secondary-text">{{parse(case.created_date)}}</span>
+                <span class="text-bold pr-8 text-nowrap-ellipsis">Created Date:</span>
+                <span class="subtitle secondary-text text-nowrap-ellipsis">
+                <md-tooltip>{{parse(case.created_date)}}</md-tooltip>
+                {{parse(case.created_date)}}
+                </span>
               </div>
               <div>
                 <span class="text-bold pr-8">Total Step(s):</span> 

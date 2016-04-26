@@ -48,9 +48,12 @@ define([
       views: {
         'sub-content@app.project': {
           templateUrl: 'app/project/views/selenium-upload.tpl.html',
+          controller : 'SeleniumUploadCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'project/directives/project-nav'
+              'project/directives/project-nav',
+              'project/controllers/selenium-upload-ctrl',
+              'services/selenium-upload-service'
             ])
           }
         },

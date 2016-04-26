@@ -1,111 +1,153 @@
+<!-- Breadcrumbbs -->
 <div layout="row" class="breadcrumbs" layout-align="start center">
-    <div class="pl-8" layout="row" layout-align="start center">
-      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Project</a>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <a>Scripts</a>
-      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-      <span>Script</span>      
-    </div>
-</div>
 
-<div ng-cloak perfect-scrollbar>
+  <div layout="row" layout-align="start center">
+    <md-button aria-label="menu" class="md-icon-button" ng-click="toggleProjectNavLeft()">
+      <md-tooltip md-direction="right">Navigation Menu</md-tooltip>
+      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+    </md-button>
+  </div>
+
+  <div class="item" layout="row" layout-align="start center">
+    <a data-ui-sref="app.projects">Projects</a>
+    <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+  </div>
+  <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
+    <a class="text-nowrap-ellipsis" ng-if="!$last" ng-href="{{$state.href(item.state, item.data)}}">
+    {{item.name}}
+    </a>
+    <span ng-if="$last">{{item.name}}</span>
+    <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+  </div>
+
+  <span flex></span>
+
+  <div class="search-box" layout="row" ng-if="checkTabSampler" layout-align="start center" flex>
+		<md-icon md-font-icon="icon-magnify" class="icon s24 mh-16" aria-hidden="true"></md-icon>
+		<input class="font-size-14" type="text" placeholder="Search for Sampler" aria-invalid="false" flex> 
+ </div>
+
+  <md-button class="animate-slide-down" ng-if="checkTabSampler" ng-click="showCreateNewSampler($event)">
+    <div layout="row" layout-align="start center" class="md-primary-fg">
+      <md-icon md-font-icon="icon-loupe" aria-hidden="true" class="md-primary-fg"></md-icon>
+      <span class="pl-8" flex>New Sampler</span>
+    </div>
+  </md-button>
+
+  <md-button class="animate-slide-down" ng-click="updateScript()">
+    <div layout="row" layout-align="start center" class="md-primary-fg">
+      <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg"></md-icon>
+      <span class="pl-8" flex>Update</span>
+    </div>
+  </md-button>
+
+  <md-button class="animate-slide-down" ng-click="close()">
+    <div layout="row" layout-align="start center" class="grey-700-fg">
+      <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
+      <span class="pl-8" flex>Close</span>
+    </div>
+  </md-button>
+
+</div>
+<!-- End breadcrumbs -->
+
+<div ng-cloak>
   <md-content>
-    <md-tabs md-dynamic-height md-border-bottom>
+    <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
       <md-tab label="Infomation">
-        <md-content class="md-padding" style="margin: 40px; padding:40px;" layout="column" flex="100">
-        	<md-slider-container layout="row">
-		      <span flex="20">Test Script Name</span>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Users Concurrents</span>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Users Per Engine</span>
-		      <md-slider min="1" max="1000" aria-label="UsersPerEngine" flex="70" ng-model="UsersPerEngine" class="md-accent" md-discrete>
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="UsersPerEngine" ng-model="UsersPerEngine">
-		      </md-input-container>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Number Of Engines</span>
-		      <md-slider min="1" max="5" aria-label="NumberOfEngines" flex="70" ng-model="NumberOfEngines" class="md-accent" md-discrete>
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="NumberOfEngines" ng-model="NumberOfEngines">
-		      </md-input-container>
-		    </md-slider-container>
-		   	<md-slider-container layout="row">
-		      <span flex="20">Ram up</span>
-		      <md-slider min="0" max="100" aria-label="Ramup" flex="70" ng-model="Ramup" class="md-accent" md-discrete> 
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="Ramup" ng-model="Ramup">
-		      </md-input-container>
-		    </md-slider-container>
-		    <md-slider-container layout="row">
-		      <span flex="20">Loops</span>
-		      <md-slider min="1" max="10" aria-label="Loops" flex="70" ng-model="Loops" class="md-accent" md-discrete>
-		      </md-slider>
-		      <md-input-container flex>
-		        <input type="number" aria-label="Loops" ng-model="Loops">
-		      </md-input-container>
-		    </md-slider-container>
+        <md-content class="md-padding" style="margin: 16px; padding:16px" layout="column" flex="100">
+        	
+        	<md-input-container flex>
+        		<label>Script Name</label>
+        		<input type="text" flex="20" ng-model="script.name">
+        	</md-input-container>
+			    
+			    <div layout>
+			    	<div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Concurrent Users</span>
+			      </div>
+			    	<div flex="70" layout></div>
+			    	<span layout layout-align="start center" class="label label-success margin-left-10">{{script.number_threads * script.number_engines}}</span>
+			    </div>
+			    <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Users Per Engine</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider  min="1" max="1000" flex class="md-accent" md-discrete ng-model="script.number_threads" step="1" aria-label="users">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" min="1" max="1000" aria-label="UsersPerEngine" ng-model="script.number_threads" class="text-center" flex>
+			      </md-input-container>
+			    </div>
+			     <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Number Of Engines</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider min="1" max="5" flex aria-label="engines" ng-model="script.number_engines" class="md-accent" md-discrete step="1">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" min="1" max="5" aria-label="engine" ng-model="script.number_engines"  class="text-center"  flex>
+			      </md-input-container>
+			    </div>
+			     <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Ram up</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider min="0" max="100" flex aria-label="NumberOfEngines" ng-model="script.ram_up" class="md-accent" md-discrete step="1">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" min="0" max="100" aria-label="ram up" ng-model="script.ram_up"  class="text-center"  flex>
+			      </md-input-container>
+			    </div>
+			     <div layout>
+			      <div flex="20" layout layout-align="start center">
+			        <span class="md-body-1">Loops</span>
+			      </div>
+			      <div flex="70" layout layout-align="center center">
+			      	<md-slider min="1" max="10" flex aria-label="loop" ng-model="script.loops" class="md-accent" md-discrete step="1">
+			      </md-slider>
+			      </div>
+			      <md-input-container>
+			        <input type="number" min="1" max="10" aria-label="loops" ng-model="script.loops"  class="text-center"  flex>
+			      </md-input-container>
+			    </div>
         </md-content>
       </md-tab>
-     
       <md-tab label="Sampler">
         <md-content class="md-hue-1" >
-        	<div layout="row" flex="100">
-		        <div flex ="50">
-		        	<md-button class="md-raised md-accent" ng-click="showCreateNewSampler($event)">Create New Sampler</md-button>
-		        </div>
-		        <div layout="row" layout-wrap flex ="20">
-			        <md-checkbox ng-model="organizationMode" aria-label="Organization Mode">
-		            Organization Mode
-		        	</md-checkbox>
-			    </div>
-		        <div flex ="30" class="search-box" layout="row" layout-align="start center" flex>
-					<md-icon md-font-icon="icon-magnify" class="icon s24 mh-16" aria-hidden="true"></md-icon>
-					<input class="font-size-14" type="text" placeholder="Search for Sampler" aria-invalid="false" flex> 
-				</div>
-        	</div>
 		    <div class="sampler-container" layout="row" flex="100" layout-wrap>
 		      <div ng-repeat="sampler in script.samplers track by $index" layout="row" flex="25" class="project ms-card"> 
-		        <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
-
-		          <div class="text-nowrap-ellipsis h2 p-16">
-		            <a href="javascript:void(0)" ng-click="showSamplerInfomation($event, sampler)"class="md-primary-fg">
-		              <md-tooltip>{{sampler.name}}</md-tooltip>
+		      	<div class="ms-card-content-wrapper" layout="column" >
+		          <div layout="row" class="p-8">
+		            <a href-void ng-click="showSamplerInfomation($event, sampler)" class="md-primary-fg text-nowrap-ellipsis">
 		              {{sampler.name}}
-		            </a>
+		            </a>  
 		          </div>
-
-		          <div class="creator ph-16 pb-16" layout="row" layout-align="start center">
-		            <img class="avatar mr-16" ng-src="styles/img/avatars/male.png">
-		            <div layout="column" flex>
-		              <div class="title" layout="row" layout-align="start center">
-		                <a href="javascript:void(0)" class="text-nowrap-ellipsis" flex>
-		                  <md-tooltip>haint@cloudats.net</md-tooltip>
-		                  haint@cloudats.net
-		                </a>
-		                <span class="text" flex>created on</span>
+		          <div layout="row" layout-wrap layout-align="start center" flex>
+		            <div class="pl-8 pb-8" layout="row" flex="100" layout-align="start center">
+		              <div layout="row">
+		                <span class="text-bold pr-8">Sampler URL : </span>
+		                <span class="text-nowrap-ellipsis">
+		                  <md-tooltip>{{sampler.url}}</md-tooltip>
+		                  {{sampler.url}}
+		                </span>                
 		              </div>
-		              <div class="subtitle secondary-text">Apr 13 2016</div>
 		            </div>
 		          </div>
-
-		          <md-divider></md-divider>
-
-		          <div layout="row" layout-align="start center">
-		            <md-button class="md-icon-button" aria-label="Delete this sampler" ng-click="deleteSampler($event, sampler)">
+		          <div layout="row" class="p-8 border-top">
+		            <span class="badge-order white-fg green-400-bg width-24 text-center">{{$index+1}}</span>
+		            <span flex></span>
+		            <a href-void ng-click="deleteSampler($event, sampler)">
 		              <md-tooltip>Delete</md-tooltip>
-		              <md-icon class="s16 md-warn-fg" md-font-icon="icon-delete" aria-hidden="true"></md-icon>
-		            </md-button>
+		              <md-icon md-font-icon="s16 icon-close" class="md-warn-fg"></md-icon>
+		            </a>
 		          </div>
-		          
 		        </div>
 		      </div>
 		    </div>

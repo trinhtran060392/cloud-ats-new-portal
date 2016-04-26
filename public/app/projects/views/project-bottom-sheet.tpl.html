@@ -3,7 +3,7 @@
     <span class="md-title p-16">{{projectName}}</span>
   </div>
   <div layout="row" layout-align="start" flex>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="12">
       <md-button class="action-icon" aria-label="Project Overview" ui-sref="app.project.overview({id: currentId})">
         <md-icon class="s38" md-font-icon="icon-chart-line" aria-hidden="true"></md-icon>
       </md-button>
@@ -11,7 +11,7 @@
         <a ui-sref="app.project.overview({id: currentId})" class="md-primary-fg">Project Overview</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Keyword - Reports" ui-sref="app.project.keyword-reports({id: currentId})">
         <md-icon class="s38 actionIcon" md-font-icon="icon-chart-bar" aria-hidden="true"></md-icon>
       </md-button>
@@ -19,7 +19,7 @@
       <a ui-sref="app.project.keyword-reports({id: currentId})" class="md-primary-fg" >Keyword - Reports</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Keyword - Suites" ui-sref="app.project.keyword-suites({id: currentId})">
         <md-icon class="s38 actionIcon" md-font-icon="icon-folder-multiple-outline" aria-hidden="true"></md-icon>
       </md-button>
@@ -27,7 +27,7 @@
       <a ui-sref="app.project.keyword-suites({id: currentId})" class="md-primary-fg">Keyword - Suites</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Keyword - Cases" ui-sref="app.project.keyword-cases({id: currentId})">
         <md-icon class="s38 actionIcon" md-font-icon="icon-bug" aria-hidden="true"></md-icon>
       </md-button>
@@ -35,7 +35,7 @@
       <a ui-sref="app.project.keyword-cases({id: currentId})" class="md-primary-fg">Keyword - Cases</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Keyword - Data" ui-sref="app.project.keyword-data({id: currentId})">
         <md-icon class="s38 actionIcon" md-font-icon="icon-format-list-numbers" aria-hidden="true"></md-icon>
       </md-button>
@@ -43,7 +43,7 @@
       <a ui-sref="app.project.keyword-data({id: currentId})" class="md-primary-fg">Keyword - Data</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Performance - Reports" ui-sref="app.project.performance-reports({id: currentId})">
         <md-icon class="s38 actionIcon" md-font-icon="icon-chart-pie" aria-hidden="true"></md-icon>
       </md-button>
@@ -51,7 +51,7 @@
       <a ui-sref="app.project.performance-reports({id: currentId})" class="md-primary-fg">Performance - Reports</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Performance - Scripts" ui-sref="app.project.performance-scripts({id: currentId})" >
         <md-icon class="s38 actionIcon" md-font-icon="icon-clock-fast" aria-hidden="true"></md-icon>
       </md-button>
@@ -59,23 +59,15 @@
       <a ui-sref="app.project.performance-scripts({id: currentId})" class="md-primary-fg" >Performance - Scripts</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
-      <md-button class="action-icon" aria-label="Performance - CSV" ui-sref="app.project.performance-csv({id: currentId})">
-        <md-icon class="s38 actionIcon" md-font-icon="icon-file-excel" aria-hidden="true"></md-icon>
-      </md-button>
-      <div class="text-center">
-      <a ui-sref="app.project.performance-csv({id: currentId})" class="md-primary-fg">Performance - CSV</a>          
-      </div>
-    </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Selenium Upload">
         <md-icon class="s38 actionIcon" md-font-icon="icon-cloud-upload" aria-hidden="true"></md-icon>
       </md-button>
       <div class="text-center">
-      <a class="md-primary-fg">Selenium Upload</a>          
+      <a class="md-primary-fg" ui-sref="app.project.selenium-upload({id: currentId})">Selenium Upload</a>          
       </div>
     </div>
-    <div class="column p-16" layout-align="start center" flex="10">
+    <div class="column p-16" layout-align="start center" flex="11">
       <md-button class="action-icon" aria-label="Destroy" ng-click="showDeleteProject($event)">
         <md-icon class="s38 md-warn-fg" md-font-icon="icon-delete" aria-hidden="true"></md-icon>
       </md-button>
