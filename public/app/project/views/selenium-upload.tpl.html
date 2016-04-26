@@ -1,23 +1,5 @@
 <div aria-label="Selenium Upload" id="case" layout="column" perfect-scrollbar>
 
-	<div layout="row" layout-align="start center" style="height: 45px;">
-		<div layout="row" flex="20">Tudh2_UploadProject</div>
-		<div layout="row" flex="20">
-            <div layout="row">
-                <div>{{getWord('Last Running : ')}}</div>
-                <div>{{project.lastRunning === undefine ? 'N/A' : project.lastRunning}}</div>
-            </div>
-        </div>
-        <div layout="row" flex="55">
-	        <md-button class="animate-slide-down" ng-click="save()" ng-show="hasChanged">
-		      <div layout="row" layout-align="start center" class="md-primary-fg">
-		        <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg"></md-icon>
-		        <span class="pl-8" flex>Upload</span>
-		      </div>
-		    </md-button>
-        </div>
-	</div>
-
 	<div class="simple-table-container md-whiteframe-4dp" >
 		<div layout="row" flex="100" layout-align="start center">
 			<div class="md-title mb-32" flex="40">Test Result</div>
@@ -31,24 +13,24 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Title Log</th>
-						<th>Project Result</th>
-						<th>Created Date</th>
-						<th>Create By</th>
-						<th>Download Result</th>
+				        <th>{{getWord('Title Log')}}</th>
+				        <th>{{getWord('Project Result')}}</th>
+				        <th>{{getWord('Created Date')}}</th>
+				        <th>{{getWord('Create By')}}</th>
+				        <th>{{getWord('Download Result')}}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr >
-						<td>1</td>
-	            		<td class="test-report"><a>	Log-9b2681b5-76f55332</a>
+					<tr ng-repeat="log in listLogs track by $index">
+						<td>{{$index+1}}</td>
+	            		<td class="test-report" ng-click="showLogJobId($event, log.jobId)"><a>	Log-{{log.jobId}}</a>
 	            		</td>
-	            		<td><span ng-class="{'label label-error': 'Pass' === 'Fail',
-	            		'label label-success': 'Pass' === 'Pass'}">Pass</span></td>
-	            		<td>26/04/2016 03:45</td>
-	            		<td>tudh2@fsoft.com.vn</td>
+	            		<td><span ng-class="{'label label-error': log.result === 'Fail',
+	            		'label label-success': log.result === 'Pass'}">{{getWord(log.result)}}</span></td>
+	            		<td>{{log.created_date}}</td>
+	            		<td>{{project.creator._id}}</td>
 	            		<td><a class = 'btn-border-line' 
-	            		download='final-result.tar.gz' ng-click="downloadResult(project._id,rep.jobId)">{{getWord('Click Here')}}</a></td>
+	            		download='final-result.tar.gz' ng-click="downloadResult(project._id,log.jobId)">{{getWord('Click Here')}}</a></td>
 	          		</tr>
 				</tbody>
 			</table>
