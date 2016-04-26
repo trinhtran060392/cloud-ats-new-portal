@@ -66,19 +66,19 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           name: $scope.suite.name
         }
         $scope.breadcrumbs = [overview, suites, suite];
+
+        $scope.$watch('suite.cases', function(newCases, oldCases) {
+          if (newCases !== oldCases && detectChanged(newCases, $scope.suite.originCases)) {
+            $scope.hasChanged = true;
+          } else {
+            $scope.hasChanged = false;
+          }
+        }, true);
       });
     }
 
     initData();
     
-    $scope.$watch('suite.cases', function(newCases, oldCases) {
-      if (newCases !== oldCases && detectChanged(newCases, $scope.suite.originCases)) {
-        $scope.hasChanged = true;
-      } else {
-        $scope.hasChanged = false;
-      }
-    }, true);
-
     $scope.save = function () {
       var suite = {};
       suite._id = $scope.suite._id;

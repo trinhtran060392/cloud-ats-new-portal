@@ -14,11 +14,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
 		$scope.projectId = $stateParams.id;
     $scope.cazeId = $stateParams.caseId;
-
-    $scope.organizeMode = false;
-    $scope.filterIsShow = false;
-    $scope.keywords = {};
-    $scope.selected = [];
+    $scope.hasChanged = false;
 
     $scope.types = [
       {value: 'id', text: 'id'},
@@ -35,41 +31,33 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       $stepsContainer.slideToggle(200);
     }
 
-    var getKeywordsByCat = function(cat) {
-      var keywords = []
-      var keywordList = $scope.keywordList;
+    // var getKeywordsByCat = function(cat) {
+    //   var keywords = []
+    //   var keywordList = $scope.keywordList;
 
-      _.forEach(keywordList[cat], function(content, keyword) {
-        var keyword = { "type": keyword, "description": content.description };
-        var paramsList = content.params;
-        var params = [];
-        _.forEach(paramsList, function(desc, param) {
-          if (param === 'locator') {
-            var locator = { "type" : "id", "value": "" };
-            keyword.locator = locator;
-          } else if (param === 'targetLocator') {
-            var locator = { "type": "id", "value": ""};
-            keyword.targetLocator = locator;
-          } else {
-            keyword[param] = "";  
-          }
+    //   _.forEach(keywordList[cat], function(content, keyword) {
+    //     var keyword = { "type": keyword, "description": content.description };
+    //     var paramsList = content.params;
+    //     var params = [];
+    //     _.forEach(paramsList, function(desc, param) {
+    //       if (param === 'locator') {
+    //         var locator = { "type" : "id", "value": "" };
+    //         keyword.locator = locator;
+    //       } else if (param === 'targetLocator') {
+    //         var locator = { "type": "id", "value": ""};
+    //         keyword.targetLocator = locator;
+    //       } else {
+    //         keyword[param] = "";  
+    //       }
           
-          params.push(param);
-        })
-        keyword.params = params;
-        keywords.push(keyword);
-      });
+    //       params.push(param);
+    //     })
+    //     keyword.params = params;
+    //     keywords.push(keyword);
+    //   });
       
-      return keywords;
-    };
-
-    CustomKeywordService.list($scope.projectId, function(response) {
-      $scope.customs = response;
-    });
-
-    KeywordService.getKeywords(function(data) {
-      $scope.keywords = data;
-    });
+    //   return keywords;
+    // };
 
     $scope.getListSteps = function(cat) {
       var list = []; 
@@ -80,43 +68,63 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       return list;
     }
 
-    var newRow = function(params) {
-      var obj = {};
-      _.forEach(params, function(param) {
-        obj[param] = param + '_value';
-      });
-      return obj;
-    };
+    // var newRow = function(params) {
+    //   var obj = {};
+    //   _.forEach(params, function(param) {
+    //     obj[param] = param + '_value';
+    //   });
+    //   return obj;
+    // };
 
-    var buildDataset = function(caze) {
-      $scope.data = [];
-      var params = buildParamList(caze);
-      $scope.data.push(newRow(params));
-    };
+    // var buildDataset = function(caze) {
+    //   $scope.data = [];
+    //   var params = buildParamList(caze);
+    //   $scope.data.push(newRow(params));
+    // };
 
-    CaseService.get($scope.projectId, $scope.cazeId, function (data, status) {
+    var initData = function() {
+      CaseService.get($scope.projectId, $scope.cazeId, function (data, status) {
+        $scope.caze = data;
+        $scope.caze.originSteps = angular.copy($scope.caze.steps);
+        $scope.params = buildParamList(data);
 
-      $scope.caze = data;
-      $scope.params = buildParamList(data);
-
-      var overview = {
-        name: $scope.caze.project,
-        state: 'app.project.overview',
-        data: {
-          id: $scope.projectId
+        var overview = {
+          name: $scope.caze.project,
+          state: 'app.project.overview',
+          data: {
+            id: $scope.projectId
+          }
         }
-      }
-      var cases = {
-        name: 'Cases',
-        state: 'app.project.keyword-cases',
-        data: {
-          id: $scope.projectId
+        var cases = {
+          name: 'Cases',
+          state: 'app.project.keyword-cases',
+          data: {
+            id: $scope.projectId
+          }
         }
-      }
-      var caze = {
-        name: $scope.caze.name
-      }
-      $scope.breadcrumbs = [overview, cases, caze];
+        var caze = {
+          name: $scope.caze.name
+        }
+        $scope.breadcrumbs = [overview, cases, caze];
+
+        $scope.$watch('caze.steps', function(newSteps, oldSteps) {
+          if (newSteps !== oldSteps) {
+            if (detectChanged(newSteps, $scope.caze.originSteps)) {
+              $scope.hasChanged = true;
+            } else {
+              $scope.hasChanged = false;
+            }
+          }
+        }, true);
+
+        $scope.$watch('params', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+          }
+        });
+
+        CustomKeywordService.list($scope.projectId, function(response) {
+          $scope.customs = response;
+        });
 
       /*if (!data.data_driven) {
         buildDataset($scope.caze);
@@ -131,42 +139,66 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         });
       });*/
 
-      $scope.originData = angular.copy($scope.data);
+      // $scope.originData = angular.copy($scope.data);
 
-      $scope.originCase = angular.copy($scope.caze);
+      // $scope.originCase = angular.copy($scope.caze);
 
-      if (!data.steps.length) {
-        $scope.organizeMode = true;
+      // if (!data.steps.length) {
+      //   $scope.organizeMode = true;
 
-      }
-      _.forEach($scope.caze.steps, function (step) {
-        step.inCurrentCase = true;
+      // }
+      // _.forEach($scope.caze.steps, function (step) {
+      //   step.inCurrentCase = true;
+      // });
+
+        
       });
+    }
+
+    initData();
+
+    KeywordService.getKeywords(function(data) {
+      $scope.keywords = data;
     });
 
-    $scope.save = function () {
-      CaseService.update($scope.caze.project_id, $scope.caze, function (data, status){
-        switch (status) {
-          case 200: 
-            $mdToast.show($mdToast.simple().position('top right').textContent('The case has been updated!'));
-            $scope.organizeMode = false;
-            _.forEach($scope.caze.steps, function (step) {
-              step.inCurrentCase = true;
+    var detectChanged = function(newSteps, oldSteps) {
+      var changed = false;
+      if(newSteps.length !== oldSteps.length) changed = true;
+      else {
+        for(var i = 0; i < newSteps.length; i++) {
+          if (newSteps[i].type !== oldSteps[i].type) {
+            changed = true;
+            break;
+          } else {
+            _.forEach(newSteps[i].params, function(param) {
+              if (param !== 'locator' && param !== 'targetLocator') {
+                if (newSteps[i][param] !== oldSteps[i][param]) {
+                  changed = true;
+                  return;
+                }
+              } else if (newSteps[i][param].type !== oldSteps[i][param].type || newSteps[i][param].value !== oldSteps[i][param].value){
+                changed = true;
+                return;
+              }
             });
-            break;
-          case 204:
-            $mdToast.show($mdToast.simple().position('top right').textContent('There is nothing to update!'));
-            $scope.organizeMode = false;
-            break;
-          default: break; 
+            if (changed) return true;
+          }
         }
-      });
+      }
+      return changed;
     }
 
     $scope.dropCallBack = function (index, event, step) {
       
       if (step.isNew) {
         $scope.clickToStep(event, step, $scope.caze.steps.length - 1);
+      }
+      if (step.steps) {
+        var steps = step.steps;        
+        $scope.caze.steps.splice($scope.caze.steps.length - 1);
+        _.forEach(steps, function(sel) {
+          $scope.caze.steps.push(sel);
+        });
       }
       // if (item._id) {
       //   _.forEach(item.steps, function (step) {
@@ -202,21 +234,37 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       // }
     }
 
-    $scope.edit = function () {
-      $scope.originCase = angular.copy($scope.caze);
-      $scope.organizeMode = true;
+    $scope.cancel = function () {
+      $scope.caze.steps = angular.copy($scope.caze.originSteps);
     }
 
-    $scope.cancel = function () {
-      $scope.caze = $scope.originCase;
-      $scope.organizeMode = false;
-      _.remove($scope.caze.steps, function (step) {
-        return !step.inCurrentCase;
+    $scope.save = function () {
+      var caze = {
+        _id: $scope.caze._id,
+        name: $scope.caze.name,
+        steps: $scope.caze.steps,
+        data_driven: $scope.caze.data_driven
+      };
+
+      CaseService.update($scope.caze.project_id, caze, function (data, status){
+        switch (status) {
+          case 200: 
+            $mdToast.show($mdToast.simple().position('top right').textContent('The case has been updated!'));
+            $scope.hasChanged = false;
+            initData();
+            break;
+          case 204:
+            $mdToast.show($mdToast.simple().position('top right').textContent('There is nothing to update!'));
+            $scope.hasChanged = false;
+            break;
+          default: break; 
+        }
       });
     }
 
     $scope.removeStep = function (index) {
-      $scope.caze.steps.splice(index, 1)
+      $scope.caze.steps.splice(index, 1);
+      $scope.params = buildParamList($scope.caze);
     }
 
     $scope.clickToStep = function (ev, step, $index) {
@@ -242,10 +290,12 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           $scope.submit = function() {
             $scope.step.isNew = undefined;
             $scope.caze.steps[$index] = $scope.step;
+            $scope.params = buildParamList($scope.caze);
             $mdDialog.cancel();
           };
           $scope.remove = function() {
             $scope.caze.steps.splice($index, 1);
+            $scope.params = buildParamList($scope.caze);
             $mdDialog.cancel();
           }
         }
@@ -274,58 +324,58 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 
     //data driven
 
-    $scope.editData = false;
+    // $scope.editData = false;
 
-    $scope.changeData = function (){
-      $scope.editData = true;
-    }
+    // $scope.changeData = function (){
+    //   $scope.editData = true;
+    // }
 
-    $scope.addRow = function (ev) {
-      $scope.editData = true;
-      $scope.data.push(newRow($scope.params));
-    }
+    // $scope.addRow = function (ev) {
+    //   $scope.editData = true;
+    //   $scope.data.push(newRow($scope.params));
+    // }
 
-    $scope.deleteRowDataDriven = function () {
+    // $scope.deleteRowDataDriven = function () {
 
 
-      var objTemp = $scope.data[0];
-      _.forEach($scope.selected, function (object) {
-        _.remove($scope.data, function (obj) {
-          return obj === object;
-        });
-      });
-      $scope.selected = [];
+    //   var objTemp = $scope.data[0];
+    //   _.forEach($scope.selected, function (object) {
+    //     _.remove($scope.data, function (obj) {
+    //       return obj === object;
+    //     });
+    //   });
+    //   $scope.selected = [];
       
-      $scope.editData = true;
-    }
+    //   $scope.editData = true;
+    // }
 
-    $scope.cancelData = function () {
-      $scope.data = $scope.originData;
-      $scope.editData = false;
-    }
+    // $scope.cancelData = function () {
+    //   $scope.data = $scope.originData;
+    //   $scope.editData = false;
+    // }
 
-    $scope.saveData = function (ev) {
-      if($scope.caze.data_driven === null) {
-        DataService.create($scope.data_name.trim(), $scope.data, $scope.caze._id, function(data, status) {
-          var obj = {_id : data._id};
-          $scope.caze.data_driven = obj;
-          $mdToast.show($mdToast.simple().position('top right').textContent('Data has been created!'));
-        });
-      } else {
-        DataService.update($scope.data_name.trim(), $scope.data, $scope.caze.data_driven._id, function (data, status) {
+    // $scope.saveData = function (ev) {
+    //   if($scope.caze.data_driven === null) {
+    //     DataService.create($scope.data_name.trim(), $scope.data, $scope.caze._id, function(data, status) {
+    //       var obj = {_id : data._id};
+    //       $scope.caze.data_driven = obj;
+    //       $mdToast.show($mdToast.simple().position('top right').textContent('Data has been created!'));
+    //     });
+    //   } else {
+    //     DataService.update($scope.data_name.trim(), $scope.data, $scope.caze.data_driven._id, function (data, status) {
           
-          switch (status) {
-            case 304: 
-              break;
-            case 200:
-              $mdToast.show($mdToast.simple().position('top right').textContent('Data has been updated!'));
-              $scope.editData = false;
-              break;
-            default:
-              break;
-          }
-        });
-      }
-    }
+    //       switch (status) {
+    //         case 304: 
+    //           break;
+    //         case 200:
+    //           $mdToast.show($mdToast.simple().position('top right').textContent('Data has been updated!'));
+    //           $scope.editData = false;
+    //           break;
+    //         default:
+    //           break;
+    //       }
+    //     });
+    //   }
+    // }
 	}]);
 })

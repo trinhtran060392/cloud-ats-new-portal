@@ -77,7 +77,7 @@ define([
         'hue-3': '300'
       });
 
-    $mdIconProvider.defaultIconSet('styles/img/mdi.svg');
+    // $mdIconProvider.defaultIconSet('styles/img/mdi.svg');
   }]);
 
   app.run(['$couchPotato', '$rootScope', '$state', '$stateParams',
