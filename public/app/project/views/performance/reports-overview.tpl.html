@@ -1,4 +1,4 @@
-<div aria-label="Test Report" id="case" layout="column" ng-controller="ReportOverviewPerfCtrl">
+<div aria-label="Test Report" layout="column" ng-controller="ReportOverviewPerfCtrl">
 	<div layout="row" class="breadcrumbs" layout-align="start center">
 	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
 	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
@@ -14,20 +14,17 @@
 
 	</div>
 
-	<div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
-		<div><h3>{{project.name}}</h3></div>
-		<div layout="row">
-                <div layout="column" flex="100">
-                    <div>{{getWord('TEST SCRIPTS')}}</div>
-                    <div>{{project.totalScripts}}</div>
-                </div>
-                <div layout="column">
-                    <div>{{getWord('Last Running')}}</div>
-                    <div>{{project.last_running === undefine ? 'N/A' : project.last_running}}</div>
-                </div>
-           </div>
-	</div>
-
+ <div class="title padding-left-20 margin-top-20">{{project.name}}</div>
+	<div layout="row" flex layout-align="start center" class="padding-left-20 margin-top-5 margin-bottom-16">
+    <div layout="column" layout flex="10">
+        <div>{{getWord('Test Scripts')}}</div>
+        <div>{{project.totalScripts ? project.totalScripts : 0}}</div>
+    </div>
+    <div layout="column" layout flex="10">
+        <div>{{getWord('Last Running')}}</div>
+        <div>{{project.lastRunning === undefined ? 'N/A' : project.lastRunning}}</div>
+    </div>
+  </div>
 	<div class="simple-table-container md-whiteframe-4dp" perfect-scrollbar>
 		<div class="table-title">Performance Report</div>
 		<div class="ms-responsive-table-wrapper">

@@ -300,6 +300,10 @@ a.btn-border-line {
   padding: 2px 15px;
     cursor:pointer;
 }
+a.btn-border-line.btn-danger {
+  border: 1px solid red;
+  color: red;
+}
 .btn-primary {
     background-color: #01B49F;
     font-size: 13px;

@@ -155,5 +155,9 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       })
     }
 
+    $scope.clickToCase = function (ev, caseId) {
+      $state.go('app.project.keyword-cases.case', {id : $scope.projectId, caseId : caseId});
+    }
+
 	}]);
 })

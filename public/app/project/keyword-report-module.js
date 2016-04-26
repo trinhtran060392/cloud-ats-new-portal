@@ -21,7 +21,8 @@ define([
               'project/controllers/execution-func-ctrl',
               'project/controllers/report-overview-func-ctrl',
               'services/suite-service',
-              'services/keyword-service'
+              'services/keyword-service',
+              'services/event-service'
             ])
           }
         },

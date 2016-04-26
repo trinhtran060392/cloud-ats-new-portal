@@ -8,6 +8,7 @@ define([
   'services/authentication-service',
   'services/project-service',
   'services/uuid-service',
+  'services/event-service',
 
   'dashboard/module',
   'projects/module',

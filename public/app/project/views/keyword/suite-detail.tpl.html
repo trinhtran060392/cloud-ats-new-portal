@@ -64,10 +64,14 @@
         <div class="ms-card-content-wrapper" layout="column">
 
           <div layout="row" class="p-8" flex>
-            <a href-void ng-click="clickProject($event, project._id)" class="md-primary-fg text-nowrap-ellipsis">
+            <a ng-if="!hasChanged" ng-click="clickToCase($event, case._id)" class="md-primary-fg text-nowrap-ellipsis">
               <md-tooltip>{{case.name}}</md-tooltip>
               {{case.name}}
-            </a>  
+            </a>
+            <a ng-if="hasChanged" class="md-primary-fg text-nowrap-ellipsis">
+              <md-tooltip>{{case.name}}</md-tooltip>
+              {{case.name}}
+            </a> 
           </div>
           <div layout="row" class="p-8">
             <span class="badge-order white-fg green-400-bg width-24 text-center">{{$index+1}}</span>

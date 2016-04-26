@@ -1,4 +1,4 @@
-<div aria-label="Test Report" ng-controller="ReportFuncCtrl" id="case" layout="column">
+<div aria-label="Test Report" ng-controller="ReportFuncCtrl" layout="column">
 	<div layout="row" class="breadcrumbs" layout-align="start center">
 	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
 	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
@@ -14,23 +14,34 @@
 
 	</div>
 
-	<div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
-		<div class="title">PROJECT NAME</div>
-		<div layout="row">
-                <div layout="column" flex="100">
-                    <div>{{getWord('Test Suites')}}</div>
-                    <div>{{project.totalSuites}}</div>
-                </div>
-                <div layout="column" flex="100">
-                    <div>{{getWord('Test Cases')}}</div>
-                    <div>{{project.totalCases}}</div>
-                </div>
-                <div layout="column">
-                    <div>{{getWord('Last Running')}}</div>
-                    <div>{{project.lastRunning === undefine ? 'N/A' : project.lastRunning}}</div>
-                </div>
-           </div>
-	</div>
+	<div class="title padding-left-20 margin-top-20">{{project.name}}</div>
+	<div layout="row" flex layout-align="start center" class="padding-left-20 margin-top-5 margin-bottom-16">
+    <div layout="column" layout flex="10">
+        <div>{{getWord('Test Suites')}}</div>
+        <div>{{project.totalSuites}}</div>
+    </div>
+    <div layout="column" layout flex="10">
+        <div>{{getWord('Test Cases')}}</div>
+        <div>{{project.totalCases}}</div>
+    </div>
+    <div layout="column" layout flex="10" class="margin-right-30">
+        <div>{{getWord('Last Running')}}</div>
+        <div>{{project.lastRunning === undefine ? 'N/A' : project.lastRunning}}</div>
+    </div>
+    <div layout="column" layout layout-align="center center" flex="10" ng-if="project.log">
+       <a class='btn-border-line' 
+  		 ng-click="viewLog($event)">{{getWord('View Log')}}</a>
+    </div>
+    
+		<div layout="column" layout flex="10" layout-align="center center" ng-if="project.status==='READY' && project.lastSuites && project.totalSuites">
+      <a class='btn-border-line' 
+		 	ng-click="viewLog()">{{getWord('Run')}}</a>
+		</div>
+	 	<div layout="column" layout layout-align="center center" flex="10" ng-if="project.isBuilding">
+	    <a class='btn-border-line btn-danger' 
+		 	ng-click="viewLog()">{{getWord('Stop')}}</a>
+	  </div>
+  </div>
 
 	<div class="simple-table-container md-whiteframe-4dp" perfect-scrollbar>
 		<div class="table-title">Functional Report</div>
@@ -66,6 +77,7 @@
 			</table>
 		</div>
 	</div>
+	<md-table-pagination md-limit="10" md-page="query.current" md-total="{{query.total}}" md-on-paginate="onPaginate" md-page-select md-options="[10]"></md-table-pagination>
 </div>	
 
 

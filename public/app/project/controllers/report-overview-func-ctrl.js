@@ -1,8 +1,8 @@
 define(['project/module', 'lodash'], function (module, _) {
   'use strict';
   module.registerController('ReportFuncCtrl', 
-    ['$scope', '$rootScope', '$state', '$stateParams', '$templateRequest', '$compile', '$cookies', 'KeywordService',
-    function($scope, $rootScope, $state, $stateParams, $templateRequest, $compile, $cookies, KeywordService) {
+    ['$mdDialog', '$scope', '$rootScope', '$state', '$stateParams', '$templateRequest', '$compile', '$cookies', 'KeywordService',
+    function($mdDialog, $scope, $rootScope, $state, $stateParams, $templateRequest, $compile, $cookies, KeywordService) {
 
       $scope.projectId = $stateParams.id;
 
@@ -27,7 +27,15 @@ define(['project/module', 'lodash'], function (module, _) {
         if($scope.project.lastJobId) {
           getListReport($scope.project._id, 1);
         }
+        console.log($scope.project);
       });
+
+      $scope.$watch('query.current', function (newPage, oldPage) {
+        if($scope.project) {
+          getListReport($scope.project._id, newPage);
+        }
+      });
+
       $scope.redirectTo = function(jobId) {
         $state.go('app.project.keyword-reports.reportJob', {id: $scope.projectId, jobId: jobId });
       }
@@ -58,5 +66,27 @@ define(['project/module', 'lodash'], function (module, _) {
         });
       }
 
+      $scope.viewLog = function(ev) {
+        console.log(ev);
+        console.log($scope.project);
+        KeywordService.log($scope.project._id, function (data, status) {
+          console.log(data);
+          if (status == 200) {
+            $scope.project.log = data;
+            $mdDialog.show({
+            templateUrl: 'app/project/views/keyword/dialog-file-log.tpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            scope: $scope,
+            preserveScope: true,
+            controller: function() {
+              
+            }
+            }).then(function () {
+            });
+          }
+        });
+    }
   }]);
 });
