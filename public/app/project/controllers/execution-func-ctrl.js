@@ -9,23 +9,6 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
     $scope.currentStep = 1;
     $scope.checkSuiteSelected = true;
 
-    var checkProjectStatus = function() {
-        if ($scope.project.status == 'RUNNING') {
-          $.SmartMessageBox({
-            title: $rootScope.getWord('Project Execution Alert') +'!',
-            content: $rootScope.getWord('Your project has been already running. Please back to overview tab to track project progress'),
-            buttons: '['+$rootScope.getWord('Go to report')+']'
-          }, function (ButtonPressed) {
-            if (ButtonPressed === $rootScope.getWord('Go to overview')) {
-              $state.go('app.project.keyword-reports', {id: $scope.projectId});
-            }
-          });
-          return false;
-        }
-
-        return true;
-      };
-
     KeywordService.get($scope.projectId, function(project) {
         $scope.project = project;
         $scope.project.browser = "firefox";
@@ -50,7 +33,6 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
           }
         });
 
-        checkProjectStatus();
       });
     
   	$scope.showExecutionFunctional = function(ev) {
@@ -127,55 +109,6 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
       if (suiteSelected.length > 0) $scope.checkSuiteSelected = false ;
       else $scope.checkSuiteSelected = true;
     };
-    var updateStatus = function(msg) {
-      $scope.$apply(function() {
-        var job = JSON.parse(msg.data);
-        console.log(job);
-        if (job.project_id === $scope.projectId) {
-          $scope.project.status = job.project_status;
-          $scope.project.watchUrl = job.watch_url;
-          $scope.project.log = job.log;
-          $scope.project.isBuilding = job.isBuilding;
-          if (job.project_status === 'READY') {
-
-            var report = { 
-                created_date : undefined,  
-                job_id: undefined,
-                numberPassedSuite : 0,
-                numberFailedSuite : 0,
-                duration: 0 
-            };
-            KeywordService.updateStatus($scope.projectId, job._id, function (data, status) {
-              if(status === 404) return;
-              $scope.project.log = data.log;
-              $scope.project.lastRunning = data.created_date;
-              report.created_date = data.created_date;
-              report.jobId = data.jobId;
-              report.duration = data.duration;
-              report.stt = 1;
-              report.numberPassedSuite = data.numberPassedSuite;
-              report.numberFailedSuite = data.numberFailedSuite;
-
-              if (report.numberFailedSuite) {
-                report.test_result = 'Fail';
-              } else report.test_result = 'Pass';
-
-              if ($scope.listReports.length === 10) {
-                $scope.listReports.pop();
-              }
-              
-              _.forEach($scope.listReports, function (iter) {
-                iter.stt = iter.stt + 1;
-              });
-
-              $scope.listReports.unshift(report);
-            });
-
-            }
-          }
-        })
-      }
-
-      EventService.feed(updateStatus);
+    
   }]);
 })
