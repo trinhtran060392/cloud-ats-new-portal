@@ -11,14 +11,14 @@
         <form name="uploadForm">  
           <div layout="row" flex="100">
               <label flex="40">Upload Code</label>
-              <input type="file" onchange="angular.element(this).scope().uploadFile(this)">
+              <input type="file" accept=".zip" ng-model="file" onchange="angular.element(this).scope().uploadFile(this)">
           </div>
         </form>
     </md-dialog-content>
     <md-dialog-actions layout="row" >
        <div class="ms-stepper-controls layout-align-center-center layout-row" layout="row" layout-align="center center">
-              <button class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="upload" >
-                <span class="ng-scope" ng-click="run()">Upload</span>
+              <button id="upload" class="md-accent md-raised md-button ng-scope md-ink-ripple md-default-theme" type="button" aria-label="upload">
+                <span class="ng-scope" ng-click="uploadSelenium()">Upload</span>
               </button>
             </div>
     </md-dialog-actions>
