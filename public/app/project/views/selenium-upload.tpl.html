@@ -5,8 +5,8 @@
 			<div class="md-title mb-32" flex="40">Test Result</div>
 			<div flex="60" layout-align="center">
 				<a class="btn-border-line btnViewLog" ng-click="showlogJob()">{{getWord('View Log')}}</a>
-				<a class="btn-border-line btnViewLog">{{getWord('Watch')}}</a>
-				<a class="btn-border-line btnViewLog" ng-click="stopProject(project._id)">{{getWord('Stop')}}</a>
+				<a class="btn-border-line btnViewLog" ng-if="project.watchUrl && project.status === 'RUNNING'" href="{{project.watchUrl}}">{{getWord('Watch')}}</a>
+				<a class="btn-border-line btnViewLog" ng-if="project.status === 'RUNNING' && project.isBuilding" ng-click="stopProject(project._id)">{{getWord('Stop')}}</a>
 			</div> 
 		</div>
 		<div class="ms-responsive-table-wrapper">

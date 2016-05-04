@@ -2,9 +2,18 @@ define(['project/module', 'lodash'], function (module, _) {
 	'use strict';
 
 	module.registerController('SeleniumUploadCtrl', [
-    '$scope', '$rootScope', '$state', '$stateParams', '$templateRequest', '$compile', '$cookies','SeleniumUploadService', '$mdDialog','$mdToast',
-    function ($scope, $rootScope, $state, $stateParams, $templateRequest, $compile, $cookies, SeleniumUploadService, $mdDialog, $mdToast) {
+    '$scope', '$rootScope', '$state', '$stateParams', '$templateRequest', '$compile', '$cookies','SeleniumUploadService', '$mdDialog','$mdToast', 'EventService',
+    function ($scope, $rootScope, $state, $stateParams, $templateRequest, $compile, $cookies, SeleniumUploadService, $mdDialog, $mdToast, EventService) {
       $scope.projectId = $stateParams.id;
+
+      var checkProjectStatus = function() {
+        if ($scope.project.status == 'RUNNING') {
+          $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Your project has been already running')));
+          return false;
+        }
+
+        return true;
+      }
 
       SeleniumUploadService.get($scope.projectId, function (data,status) {
         if(status === 404)
@@ -38,6 +47,7 @@ define(['project/module', 'lodash'], function (module, _) {
               };
               $scope.run = function() {
                 $mdDialog.hide();
+                if (checkProjectStatus())
                 $scope.project.status = "RUNNING";
                 $scope.project.log = undefined;
                 $scope.project.watchUrl = undefined
@@ -163,7 +173,40 @@ define(['project/module', 'lodash'], function (module, _) {
           }
 
         });
-      }
+      };
+
+      var updateStatus = function(msg) {
+        $scope.$apply(function() {
+          var job = JSON.parse(msg.data);
+          if (job.project_id === $scope.projectId) {
+            $scope.project.status = job.project_status;
+            $scope.project.watchUrl = job.watch_url;
+            $scope.project.log = job.log;
+            $scope.project.isBuilding = job.isBuilding;
+            if(job.project_status === 'READY') {
+              var log = {
+                created_date : undefined,  
+                jobId: undefined,
+                log: undefined,
+                result: undefined
+              };
+              SeleniumUploadService.getReport($scope.projectId, job._id, function (data, status) {
+                if(status === 404) return;
+                console.log(data);
+                $scope.project.lastRunning = data.created_date;
+                log.created_date = data.created_date;
+                log.jobId = data.jobId;
+                log.log = data.log;
+                log.result = data.result;
+                $scope.listLogs.unshift(log);
+                $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('The job ') + job._id + $rootScope.getWord(' has completed.')));
+              });
+            }
+          }
+        })
+      };
+
+      EventService.feed(updateStatus);
 
 	}]);
 })

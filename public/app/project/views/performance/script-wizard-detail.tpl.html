@@ -34,20 +34,12 @@
     </div>
   </md-button>
 
-  <md-button class="animate-slide-down" ng-click="updateScript()">
+  <md-button class="animate-slide-down" ng-click="updateScript()" ng-show="hasChanged">
     <div layout="row" layout-align="start center" class="md-primary-fg">
       <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg"></md-icon>
       <span class="pl-8" flex>Update</span>
     </div>
   </md-button>
-
-  <md-button class="animate-slide-down" ng-click="close()">
-    <div layout="row" layout-align="start center" class="grey-700-fg">
-      <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
-      <span class="pl-8" flex>Close</span>
-    </div>
-  </md-button>
-
 </div>
 <!-- End breadcrumbs -->
 
@@ -121,8 +113,10 @@
       </md-tab>
       <md-tab label="Sampler">
         <md-content class="md-hue-1" >
-		    <div class="sampler-container" layout="row" flex="100" layout-wrap>
-		      <div ng-repeat="sampler in script.samplers track by $index" layout="row" flex="25" class="project ms-card"> 
+		    <div class="samplers-container" layout="row" layout-align="start start" flex="100" layout-wrap dnd-list="script.samplers" dnd-horizontal-list="true">
+		      <div ng-repeat="sampler in script.samplers" layout="row"  flex="20" class="case ms-card animate-slide-left" dnd-draggable="sampler"  
+		        dnd-type="'containerType'" dnd-effect-allowed="move" 
+		        dnd-moved="script.samplers.splice($index, 1)"> 
 		      	<div class="ms-card-content-wrapper" layout="column" >
 		          <div layout="row" class="p-8">
 		            <a href-void ng-click="showSamplerInfomation($event, sampler)" class="md-primary-fg text-nowrap-ellipsis">
@@ -151,7 +145,7 @@
 		        </div>
 		      </div>
 		    </div>
-		  </md-content>
+		 </md-content>
       </md-tab>
     </md-tabs>
   </md-content>

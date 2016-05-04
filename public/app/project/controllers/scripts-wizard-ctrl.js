@@ -12,6 +12,7 @@ define(['project/module','lodash'], function (module, _) {
         $scope.scriptId = $stateParams.scriptId;
         $scope.methods = ['GET','POST','PUT','DELETE'];
         $scope.checkTabSampler = false ;
+        $scope.hasChanged = false;
 
         $scope.$watch('selectedIndex', function(current, old) {
           if (current == 1) {
@@ -21,40 +22,66 @@ define(['project/module','lodash'], function (module, _) {
           }
         });
 
-        ScriptService.get($scope.projectId, $scope.scriptId, function (data, status) {
-          $scope.script = data;
-          $scope.UsersPerEngine = $scope.script.number_threads;
-          $scope.NumberOfEngines = $scope.script.number_engines;
-          $scope.Ramup = $scope.script.ram_up;
-          $scope.Loops = $scope.script.loops;
+        var initData = function() {
+          ScriptService.get($scope.projectId, $scope.scriptId, function (data, status) {
+            $scope.script = data;
+            $scope.script.originSamplers = angular.copy($scope.script.samplers);
+            $scope.UsersPerEngine = $scope.script.number_threads;
+            $scope.NumberOfEngines = $scope.script.number_engines;
+            $scope.Ramup = $scope.script.ram_up;
+            $scope.Loops = $scope.script.loops;
 
-          _.forEach($scope.script.samplers, function(sampler, key){
-            sampler._id = uuid.new();
-            sampler.arguments.push({
-              "paramName": "",
-              "paramValue": ""
+            _.forEach($scope.script.samplers, function(sampler, key){
+              sampler._id = uuid.new();
+              sampler.arguments.push({
+                "paramName": "",
+                "paramValue": ""
+              });
             });
-          });
-          var overview = {
-            name: $scope.script.projectName,
-            state: 'app.project.overview',
-            data: {
-              id: $scope.projectId
+            var overview = {
+              name: $scope.script.projectName,
+              state: 'app.project.overview',
+              data: {
+                id: $scope.projectId
+              }
             }
-          }
-          var scripts = {
-            name: 'Scripts',
-            state: 'app.project.performance-scripts',
-            data: {
-              id: $scope.projectId
+            var scripts = {
+              name: 'Scripts',
+              state: 'app.project.performance-scripts',
+              data: {
+                id: $scope.projectId
+              }
             }
-          }
-          var script = {
-            name: $scope.script.name
-          }
-          $scope.breadcrumbs = [overview, scripts, script];
+            var script = {
+              name: $scope.script.name
+            }
+            $scope.breadcrumbs = [overview, scripts, script];
 
-        });
+            $scope.$watch('script.samplers', function(newSamplers, oldSamplers) {
+              if (newSamplers !== oldSamplers && detectChanged(newSamplers, $scope.script.originSamplers)) {
+                $scope.hasChanged = true;
+              } else {
+                $scope.hasChanged = false;
+              }
+            }, true);
+
+          })
+        };
+        var detectChanged = function(newSamplers, oldSamplers) {
+          var changed = false;
+          if(newSamplers.length !== oldSamplers.length) changed = true;
+          else {
+            for(var i = 0; i < newSamplers.length; i++) {
+              if (newSamplers[i].name !== oldSamplers[i].name) {
+                changed = true;
+                break;
+              }
+            }
+          }
+          return changed;
+        }
+        initData();
+
         $scope.showCreateNewSampler= function(ev) {
           var sampler = {
             _id: uuid.new(),
@@ -77,7 +104,7 @@ define(['project/module','lodash'], function (module, _) {
             scope: $scope,
             preserveScope: true,
             controller: function () {
-                $scope.hide = function() {
+                 $scope.hide = function() {
                   $mdDialog.hide();
                 };
                 $scope.cancel = function() {
@@ -103,6 +130,7 @@ define(['project/module','lodash'], function (module, _) {
 
         $scope.showSamplerInfomation= function(ev, sampler) {
           $scope.selected = sampler;
+          var originSampler = angular.copy(sampler);
           $mdDialog.show({
             templateUrl: 'app/project/views/performance/dialog-edit-sampler.tpl.html',
             parent: angular.element(document.body),
@@ -119,6 +147,9 @@ define(['project/module','lodash'], function (module, _) {
                 };
                 $scope.updateSampler = function() {
                   $mdDialog.hide();
+                  if (originSampler != $scope.selected) {
+                    $scope.hasChanged = true;
+                  }
                 };
               }
           }).then(function () {
@@ -142,7 +173,6 @@ define(['project/module','lodash'], function (module, _) {
         };
 
         $scope.deleteSampler = function (ev, sampler) {
-          console.log(sampler);
           _.remove($scope.script.samplers, function(sel) {
                 return sel._id === sampler._id;
               });

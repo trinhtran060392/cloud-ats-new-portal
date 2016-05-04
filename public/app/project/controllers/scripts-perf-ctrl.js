@@ -9,7 +9,6 @@ define(['project/module','lodash'], function (module, _) {
 
  		$scope.title = "TEST SCRIPTS";
     ScriptService.list($scope.projectId, function(response) {
-      console.log(response);
       $scope.scripts = response;
       $scope.totalScripts = response.length;
     });

@@ -53,7 +53,8 @@ define([
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
               'project/controllers/selenium-upload-ctrl',
-              'services/selenium-upload-service'
+              'services/selenium-upload-service',
+              'services/event-service'
             ])
           }
         },
