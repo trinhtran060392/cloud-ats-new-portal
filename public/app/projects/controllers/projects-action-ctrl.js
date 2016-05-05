@@ -17,7 +17,7 @@ define(['projects/module'], function (module) {
         return result;
       };
 
-      $scope.projects = [];
+      $scope.sharedData.projects = [];
 
       $scope.showCreateNewProject = function(ev) {
         $mdDialog.show({
@@ -39,7 +39,7 @@ define(['projects/module'], function (module) {
                 ProjectService.create($scope.newProject, function(data, status){
                    if (status) {
                     data.created_date = parse(data.created_date);
-                    $scope.projects.push(data);
+                    $scope.sharedData.projects.push(data);
                     $mdDialog.hide();
                     $mdToast.show($mdToast.simple().position('top right').textContent('Create New Project Success!'));
                    }

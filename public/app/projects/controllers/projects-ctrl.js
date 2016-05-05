@@ -24,7 +24,7 @@ define(['projects/module','lodash'], function (module, _) {
         project.created_date = parse(project.created_date);
       });
 
-      $scope.projects = data;
+      $scope.sharedData.projects = data;
     });
 
     $scope.clickProject = function ($event, _id) {
@@ -72,7 +72,7 @@ define(['projects/module','lodash'], function (module, _) {
           $scope.submit = function() {
             ProjectService.delete($scope.currentId, $scope.form.projectName, $scope.form.password, function (data, status){
               if (status === 200) {
-                _.remove($scope.projects, function (project) {
+                _.remove($scope.sharedData.projects, function (project) {
                   return project._id === $scope.currentId;
                 });
                 $mdDialog.hide();
@@ -109,7 +109,7 @@ define(['projects/module','lodash'], function (module, _) {
             ProjectService.clone(id, $scope.data_name, function (data, status){
               if (status === 200) {
                 data.created_date = parse(data.created_date);
-                $scope.projects.push(data);
+                $scope.sharedData.projects.push(data);
                 $mdDialog.hide();
                 $mdToast.show($mdToast.simple().position('top right').textContent('The project has been cloned!'));
               }
