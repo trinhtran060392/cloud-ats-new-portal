@@ -19,6 +19,7 @@ define(['project/module', 'lodash'], function (module, _) {
         if(status === 404)
           $state.go('app.project.selenium-upload');
         $scope.project = data;
+        console.log(data);
         if($scope.project.lastJobId) {
           getListReport($scope.project._id);
         }
@@ -53,7 +54,6 @@ define(['project/module', 'lodash'], function (module, _) {
                 $scope.project.watchUrl = undefined
 
                 SeleniumUploadService.run($scope.projectId, function (data, status) {
-                  console.log(data);
                   switch (status) {
                     case 201:
                       $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('You have submitted project job')));
@@ -178,7 +178,8 @@ define(['project/module', 'lodash'], function (module, _) {
       var updateStatus = function(msg) {
         $scope.$apply(function() {
           var job = JSON.parse(msg.data);
-          if (job.project_id === $scope.projectId) {
+          console.log(job);
+          if (job.project_id === $scope.project._id) {
             $scope.project.status = job.project_status;
             $scope.project.watchUrl = job.watch_url;
             $scope.project.log = job.log;
@@ -192,7 +193,6 @@ define(['project/module', 'lodash'], function (module, _) {
               };
               SeleniumUploadService.getReport($scope.projectId, job._id, function (data, status) {
                 if(status === 404) return;
-                console.log(data);
                 $scope.project.lastRunning = data.created_date;
                 log.created_date = data.created_date;
                 log.jobId = data.jobId;

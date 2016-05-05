@@ -111,6 +111,17 @@ define(['project/module', 'lodash'], function (module, _) {
         });
       }
 
+      $scope.stopProject = function (projectId) {
+        KeywordService.stop(projectId, function (data, status) {
+          if (status == 200) {
+            $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Your project has been stopped')));
+            $scope.project.status = 'READY';
+            $scope.project.isBuilding = false;
+          }
+
+        });
+      }
+
       var updateStatus = function(msg) {
         $scope.$apply(function() {
           var job = JSON.parse(msg.data);
@@ -128,7 +139,7 @@ define(['project/module', 'lodash'], function (module, _) {
                   numberFailedSuite : 0,
                   duration: 0 
               };
-              KeywordService.updateStatus($scope.projectId, job._id, function (data, status) {
+              KeywordService.updateStatus($scope.project._id, job._id, function (data, status) {
                 if(status === 404) return;
                 $scope.project.log = data.log;
                 $scope.project.lastRunning = data.created_date;

@@ -43,7 +43,7 @@
 		</div>
 	 	<div layout="column" layout layout-align="center center" flex="10" ng-if="project.isBuilding">
 	    <a class='btn-border-line btn-danger' 
-		 	ng-click="viewLog()">{{getWord('Stop')}}</a>
+		 	ng-click="stopProject(project._id)">{{getWord('Stop')}}</a>
 	  </div>
   </div>
 

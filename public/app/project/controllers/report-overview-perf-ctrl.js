@@ -41,6 +41,15 @@ define(['project/module', 'lodash'], function (module, _) {
         });
       }
 
+      $scope.stopProject = function (projectId) {
+        PerformanceService.stop(projectId, function (data, status) {
+          if (status == 200) {
+            $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Your project has been stopped')));
+            $scope.project.isBuilding = false;
+          }
+        });
+      }
+
       $scope.downloadJTL = function(projectId,jobId) {
         PerformanceService.download(projectId, jobId ,function (data,status) {
           var file = new Blob([data], {type: 'application/x-zip'});
