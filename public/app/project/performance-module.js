@@ -116,6 +116,9 @@ define([
     .state('app.project.performance-scripts.wizard', {
       url: '/wizard/:scriptId',
       views: {
+        'search-box@app': {
+          templateUrl: undefined
+        },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/performance/script-wizard-detail.tpl.html',
           controller: 'ScriptsWizardCtrl',
@@ -139,6 +142,9 @@ define([
     .state('app.project.performance-scripts.editor', {
       url: '/editor/:scriptId',
       views: {
+        'search-box@app': {
+          templateUrl: undefined
+        },
         'sub-content@app.project': {
           controller: 'ScriptEditorCtrl',
           templateUrl: 'app/project/views/performance/script-editor-detail.tpl.html',

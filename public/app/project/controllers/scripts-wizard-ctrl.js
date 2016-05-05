@@ -26,11 +26,16 @@ define(['project/module','lodash'], function (module, _) {
           ScriptService.get($scope.projectId, $scope.scriptId, function (data, status) {
             $scope.script = data;
             $scope.script.originSamplers = angular.copy($scope.script.samplers);
-            $scope.UsersPerEngine = $scope.script.number_threads;
-            $scope.NumberOfEngines = $scope.script.number_engines;
-            $scope.Ramup = $scope.script.ram_up;
-            $scope.Loops = $scope.script.loops;
 
+            $scope.script.info = {
+              name: $scope.script.name,
+              number_threads: $scope.script.number_threads,
+              number_engines: $scope.script.number_engines,
+              ram_up: $scope.script.ram_up,
+              loops: $scope.script.loops
+            };
+
+            $scope.script.originInfo = angular.copy($scope.script.info);
             _.forEach($scope.script.samplers, function(sampler, key){
               sampler._id = uuid.new();
               sampler.arguments.push({
@@ -63,6 +68,12 @@ define(['project/module','lodash'], function (module, _) {
               } else {
                 $scope.hasChanged = false;
               }
+            }, true);
+
+            $scope.$watch('script.info', function(newInfo, oldInfo) {
+              if (JSON.stringify(newInfo) !== JSON.stringify($scope.script.originInfo)) {
+                $scope.hasChanged = true;
+              } else $scope.hasChanged = false;
             }, true);
 
           })
@@ -160,6 +171,7 @@ define(['project/module','lodash'], function (module, _) {
           ScriptService.update($scope.projectId, $scope.script, function (data, status) {
             if(status == 202){
               $mdDialog.hide();
+              $scope.script.originSamplers = $scope.script.samplers ;
               $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has updated'));
             } else if(status == 204) {
               $mdDialog.hide();

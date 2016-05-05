@@ -28,7 +28,7 @@
             </md-input-container>
             <md-input-container flex="50">
               <label flex>Sampler method</label>
-              <md-select ng-model="selected.method">
+              <md-select ng-model="selected.method" ng-init="selected.method = 'GET'">
                 <md-option ng-repeat="method in methods" value="{{method}}">{{method}}</md-option>
               </md-select>
             </md-input-container>
