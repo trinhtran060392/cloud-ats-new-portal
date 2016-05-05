@@ -28,8 +28,10 @@ define([
               'project/directives/project-nav',
               'project/controllers/suites-ctrl',
               'project/controllers/suites-action-ctrl',
+              'project/controllers/execution-func-ctrl',
               'project/services/shared-data-service',
               'services/suite-service',
+              'services/keyword-service'
             ])
           }
         },
@@ -92,8 +94,11 @@ define([
               'project/directives/project-nav',
               'project/controllers/cases-ctrl',
               'project/controllers/cases-action-ctrl',
+              'project/controllers/execution-func-ctrl',
               'project/services/shared-data-service',
-              'services/case-service'
+              'services/suite-service',
+              'services/case-service',
+              'services/keyword-service'
             ])
           }
         },

@@ -2,8 +2,8 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
   'use strict';
 
   module.registerController('ExecutionFuncCtrl',
-   ['$mdToast', 'EventService', '$rootScope','$scope', '$mdDialog', '$timeout','SuiteService', 'KeywordService','$stateParams',
-   function ($mdToast, EventService, $rootScope, $scope, $mdDialog, $timeout, SuiteService, KeywordService, $stateParams) {
+   ['$state', '$mdToast', 'EventService', '$rootScope','$scope', '$mdDialog', '$timeout','SuiteService', 'KeywordService','$stateParams',
+   function ($state, $mdToast, EventService, $rootScope, $scope, $mdDialog, $timeout, SuiteService, KeywordService, $stateParams) {
    	$scope.projectId = $stateParams.id;
     var suiteSelected = [];
     $scope.currentStep = 1;
@@ -57,12 +57,13 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
   		          browser_version: $scope.project.browserVersion,
   		          selenium_version : $scope.project.seleniumVersion
   		        };
+              $state.go('app.project.keyword-reports', {id : $scope.projectId});
   		        KeywordService.run($scope.projectId, suiteSelected, options, function (data, status) {
                 $mdDialog.hide();
   		          switch (status) {
   		            case 201:
                     $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('You have submitted project job')));
-  		              break;
+                    break;
   		            case 204:
                     $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Your project has been already running')));
   		              break;
