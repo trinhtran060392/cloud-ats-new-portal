@@ -18,6 +18,8 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'projects/controllers/projects-ctrl',
+              'projects/controllers/projects-action-ctrl',
+              'project/services/shared-data-service',
               'services/keyword-service',
               'services/selenium-upload-service',
               'services/performance-service'
@@ -25,7 +27,8 @@ define([
           }
         },
         'search-box@app': {
-          templateUrl: 'app/projects/views/projects-search-box.tpl.html'
+          templateUrl: 'app/projects/views/projects-search-box.tpl.html',
+          controller: 'ProjectsActionCtrl'
         }
       },
       data: {

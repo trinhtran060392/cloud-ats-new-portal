@@ -2,10 +2,12 @@ define(['project/module','lodash'], function (module, _) {
   
   'use strict';
 
-  module.registerController('ScriptsPerfCtrl', ['$mdToast', '$scope', '$rootScope', '$mdDialog', '$state','$stateParams', '$templateRequest', '$compile', 'ScriptService', 'Upload', '$cookies',
-    function($mdToast, $scope, $rootScope, $mdDialog, $state, $stateParams, $templateRequest, $compile, ScriptService, Upload, $cookies) {
+  module.registerController('ScriptsPerfCtrl', ['SharedDataService', '$mdToast', '$scope', '$rootScope', '$mdDialog', '$state','$stateParams', '$templateRequest', '$compile', 'ScriptService',
+    function(SharedDataService, $mdToast, $scope, $rootScope, $mdDialog, $state, $stateParams, $templateRequest, $compile, ScriptService) {
  	
  		$scope.projectId = $stateParams.id;
+    $scope.sharedData = SharedDataService;
+
 
  		$scope.title = "TEST SCRIPTS";
 
@@ -35,72 +37,6 @@ define(['project/module','lodash'], function (module, _) {
       }
     };
 
-    $scope.createDialog = function (ev) {
-      $mdDialog.show({
-        templateUrl: 'app/project/views/performance/dialog-create-script.tpl.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        scope: $scope,
-        preserveScope: true,
-        controller: function() {
-          $scope.script = {};
-          $scope.cancel = function() {
-            $mdDialog.cancel();
-          };
-          $scope.updateFile = function(element) {
-              $scope.file = element.files[0];
-          }
-
-          $scope.updateCsvFile= function (element) {
-            $scope.csvFiles = element.files;
-          }
-
-          $scope.createNewScript = function() {
-              $scope.script.loops = 1;
-              $scope.script.ram_up = 5;
-              $scope.script.duration = "";
-              $scope.script.number_threads = 200;
-              $scope.script.number_engines = 1;
-              $scope.script.samplers = "";
-              ScriptService.createScript($scope.script, $scope.projectId, function(data, status){
-                  if (status === 201) {
-                  $mdDialog.hide();
-                  $state.go('app.project.performance-scripts.wizard', {id : $scope.projectId, scriptId : data._id});
-                }
-              });
-          };
-          $scope.uploadNewScript = function(){
-            var files = $scope.csvFiles;
-            ScriptService.createScriptTestByUpload($scope.file, $scope.script.name, $stateParams.id , function (script,status) {
-                if (script != null) {
-                  $scope.scripts.push(script);
-                  $scope.totalScripts++;
-
-                  $scope.file = undefined;
-                  $scope.name = undefined;
-
-                  _.forEach(files, function (file) {
-                    Upload.upload({
-                      url: appConfig.RestEntry + '/api/v1/project/performance/' + script._id + '/csv/upload',
-                      data: {file: file},
-                      headers: {
-                        'X-AUTH-TOKEN': $cookies.get('authToken'),
-                        'X-SPACE': $cookies.get('space')
-                      }
-                    }).then(function (resp) {
-                     
-                    });
-                  });
-
-                  $mdDialog.hide();
-                  $state.go('app.project.performance-scripts.editor', {id : $scope.projectId, scriptId : script._id});
-                }
-              });
-          }
-        }
-      })
-    }
 
     $scope.delete = function (ev, id) {
       var confirm = $mdDialog.confirm()

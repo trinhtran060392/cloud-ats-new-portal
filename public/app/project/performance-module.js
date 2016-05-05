@@ -87,7 +87,8 @@ define([
       url: '/project/:id/performance/scripts',
       views: {
         'search-box@app': {
-          templateUrl: 'app/project/views/performance/scripts-search-box.tpl.html'
+          templateUrl: 'app/project/views/performance/scripts-search-box.tpl.html',
+          controller: 'ScriptsPerfActionCtrl'
         },
         'sub-content@app.project': {
           templateUrl: 'app/project/views/performance/scripts.tpl.html',
@@ -96,7 +97,9 @@ define([
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
               'project/controllers/scripts-perf-ctrl',
+              'project/controllers/scripts-perf-action-ctrl',
               'services/script-service',
+              'project/services/shared-data-service'
             ])
           }
         },

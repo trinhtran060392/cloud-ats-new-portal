@@ -21,7 +21,7 @@
 
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
-      <div ng-repeat="case in sharedData.project.cases track by $index" layout="row" flex="20" class="project ms-card"> 
+      <div ng-repeat="case in sharedData.project.cases | filter: sharedData.searchCases" layout="row" flex="20" class="project ms-card"> 
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
           <div class="text-nowrap-ellipsis h2 p-16">
