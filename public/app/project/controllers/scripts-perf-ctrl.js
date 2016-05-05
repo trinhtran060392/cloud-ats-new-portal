@@ -57,11 +57,11 @@ define(['project/module','lodash'], function (module, _) {
           }
 
           $scope.createNewScript = function() {
-              $scope.script.loops = "";
-              $scope.script.ram_up = "";
+              $scope.script.loops = 1;
+              $scope.script.ram_up = 5;
               $scope.script.duration = "";
-              $scope.script.number_threads = "";
-              $scope.script.number_engines = "";
+              $scope.script.number_threads = 200;
+              $scope.script.number_engines = 1;
               $scope.script.samplers = "";
               ScriptService.createScript($scope.script, $scope.projectId, function(data, status){
                   if (status === 201) {
