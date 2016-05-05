@@ -8,7 +8,21 @@ define(['project/module','lodash'], function (module, _) {
  		$scope.projectId = $stateParams.id;
 
  		$scope.title = "TEST SCRIPTS";
+
+    var parse = function (timestamp) {
+
+      var date = new Date(timestamp);
+      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+      var result = months[date.getMonth()] +" " + date.getDate() +" "+ date.getFullYear();
+
+      return result;
+    }
+
     ScriptService.list($scope.projectId, function(response) {
+      _.forEach(response, function (script) {
+        script.created_date = parse(script.created_date);
+      });
       $scope.scripts = response;
       $scope.totalScripts = response.length;
     });
@@ -106,16 +120,6 @@ define(['project/module','lodash'], function (module, _) {
          });
         }, function() {
       });
-    }
-
-    var parse = function (timestamp) {
-
-      var date = new Date(timestamp);
-      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-      var result = months[date.getMonth()] +" " + date.getDate() +" "+ date.getFullYear();
-
-      return result;
     }
 
     $scope.clone = function (ev, id, name) {

@@ -302,7 +302,20 @@ define(['project/performance-module', 'lodash'], function (module, _) {
       }
 
       var updateScriptContent = function () {
-        ScriptService.update($scope.projectId, $scope.script,  function (data, status) {
+
+        var script = {};
+        script.csv_files = $scope.script.csv_files;
+        script.loops = $scope.script.loops;
+        script._id = $scope.script._id;
+        script.name = $scope.script.name;
+        script.number_engines = $scope.script.number_engines;
+        script.ram_up = $scope.script.ram_up;
+        script.raw = $scope.script.raw;
+        script.raw_content = $scope.script.raw_content;
+        script.number_threads = $scope.script.number_threads;
+        script.projectName = $scope.script.projectName;
+        script.project_id = $scope.script.project_id;
+        ScriptService.update($scope.projectId, script,  function (data, status) {
           switch (status) {
             case 202 : 
               $mdToast.show($mdToast.simple().position('top right').textContent('The script has been updated!'));

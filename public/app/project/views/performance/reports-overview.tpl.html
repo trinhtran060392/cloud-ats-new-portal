@@ -22,8 +22,21 @@
     </div>
     <div layout="column" layout flex="10">
         <div>{{getWord('Last Running')}}</div>
-        <div>{{project.lastRunning === undefined ? 'N/A' : project.lastRunning}}</div>
+        <div>{{project.last_running === undefined ? 'N/A' : project.last_running}}</div>
     </div>
+     <div layout="column" layout layout-align="center center" flex="10" ng-if="project.log">
+       <a class='btn-border-line' 
+  		 ng-click="viewLog($event)">{{getWord('View Log')}}</a>
+    </div>
+
+		<div layout="column" layout flex="10" layout-align="center center" ng-if="project.status==='READY' && project.lastScripts && project.totalScripts">
+      <a class='btn-border-line' 
+		 	ng-click="runLastScripts()">{{getWord('Run')}}</a>
+		</div>
+	 	<div layout="column" layout layout-align="center center" flex="10" ng-if="project.isBuilding">
+	    <a class='btn-border-line btn-danger' 
+		 	ng-click="viewLog()">{{getWord('Stop')}}</a>
+	  </div>
   </div>
 	<div class="simple-table-container md-whiteframe-4dp" perfect-scrollbar>
 		<div class="table-title">Performance Report</div>

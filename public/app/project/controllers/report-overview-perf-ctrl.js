@@ -2,8 +2,8 @@ define(['project/module', 'lodash'], function (module, _) {
   'use strict';
 
   module.registerController('ReportOverviewPerfCtrl', 
-    ['$window', '$scope', '$rootScope', '$stateParams', '$state', 'PerformanceService',
-    function($window,$scope, $rootScope, $stateParams, $state, PerformanceService) {
+    ['$mdToast', '$mdDialog', 'EventService', '$window', '$scope', '$rootScope', '$stateParams', '$state', 'PerformanceService',
+    function($mdToast, $mdDialog, EventService, $window, $scope, $rootScope, $stateParams, $state, PerformanceService) {
 
       $scope.projectId = $stateParams.id;
       $scope.title = 'Performance Report Overview'
@@ -17,6 +17,28 @@ define(['project/module', 'lodash'], function (module, _) {
 
       $scope.openJobReport = function (jobId) {
         $state.go('app.project.performance-reports.job', {jobId : jobId});
+      }
+
+      $scope.viewLog = function(ev) {
+        PerformanceService.log($scope.project._id, function (data, status) {
+          if (status == 200) {
+            $scope.project.log = data;
+            $mdDialog.show({
+            templateUrl: 'app/project/views/keyword/dialog-file-log.tpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            scope: $scope,
+            preserveScope: true,
+            controller: function() {
+              $scope.cancel = function () {
+                $mdDialog.hide();
+              }
+            }
+            }).then(function () {
+            });
+          }
+        });
       }
 
       $scope.downloadJTL = function(projectId,jobId) {
@@ -43,6 +65,53 @@ define(['project/module', 'lodash'], function (module, _) {
           }
         });
       }
+
+      $scope.runLastScripts = function() {
+
+        var selected = [];
+        _.forEach($scope.project.lastScripts, function(sel) {
+          selected.push(sel._id);
+        });
+
+        PerformanceService.run($scope.projectId, selected, function (data, status) {
+          switch (status) {
+            case 200:
+              $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('You have submitted project job')));
+              $scope.project.status = "RUNNING";
+              $scope.project.log = undefined;
+              break;
+            case 204:
+              $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Your project has been already running')));
+              break;
+            default:
+          }
+        });
+      }
+
+      var updateStatus = function(msg) {
+        $scope.$apply(function() {
+          var job = JSON.parse(msg.data);
+          if (job.project_id === $scope.project._id) {
+
+            $scope.project.last_running = job.runningTime;
+            $scope.project.status = job.project_status;
+            $scope.project.log = job.log;
+            $scope.project.isBuilding = job.isBuilding;
+
+            if ($scope.project.status === 'READY') {
+              $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Completed')));
+              job.scripts = job.scripts.length;
+              job.created_date = job.runningTime;
+              if (job.report && job.report.length > 0) {
+                $scope.project.jobs.unshift(job);
+              }
+              
+            }
+          }
+        })
+      }
+
+      EventService.feed(updateStatus);
 
     }]);
 });

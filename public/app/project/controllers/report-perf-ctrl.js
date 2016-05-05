@@ -8,7 +8,6 @@ define(['project/module'], function (module) {
     $scope.jobId = $stateParams.jobId;
     
     ReportService.report($scope.projectId, $scope.jobId, function (data, status) {
-      
       if (status === 200) {
         $scope.reports = data;
       } else { 

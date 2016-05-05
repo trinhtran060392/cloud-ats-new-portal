@@ -58,6 +58,7 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
   		          selenium_version : $scope.project.seleniumVersion
   		        };
   		        KeywordService.run($scope.projectId, suiteSelected, options, function (data, status) {
+                $mdDialog.hide();
   		          switch (status) {
   		            case 201:
                     $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('You have submitted project job')));
