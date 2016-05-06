@@ -18,7 +18,13 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
         $scope.project.browserVersionIE = "11";
         $scope.project.seleniumVersion = "2.48.2";
         $scope.project.os = "ubuntu";
-        
+
+        if($scope.project.value_delay == null){
+          $scope.checkDelayTime = false;
+        } else {
+          $scope.checkDelayTime = true;
+        }
+
         $scope.$watch('project.browser', function(newValue, oldValue, scope) {
           if (newValue === 'ie') scope.project.os = "windows";
           else scope.project.os = "ubuntu";
@@ -92,7 +98,23 @@ define(['project/keyword-report-module', 'lodash'], function (module, _) {
 	        } else if($scope.project.browser === "ie"){
               $scope.project.browserVersion = $scope.project.browserVersionIE ;
 	        }
-    	}
+    	} else if($scope.currentStep === 3){
+        if($scope.checkDelayTime == true){
+          KeywordService.update($scope.projectId, $scope.project.name, $scope.project.value_delay, function (data, status) {
+          switch (status) {
+            case 304:
+            $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Delay Time does not change')));
+              break;
+            case 202:
+            $mdToast.show($mdToast.simple().position('top right').textContent($rootScope.getWord('Delay Time has been updated')));
+              break;
+            default:
+              break;
+          }
+        });
+        }
+      }
+      
     	$scope.currentStep = $scope.currentStep + 1;
     };
 

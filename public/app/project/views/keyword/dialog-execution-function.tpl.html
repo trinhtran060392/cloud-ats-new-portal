@@ -130,22 +130,34 @@
                       <div layout="column">
                         <div layout="row">
                           <div layout='row'layout-padding layout-align="start center" >
-                            <img ng-src="/styles/img/selenium.png" width="40" height="40">
+                            <md-checkbox ng-model="selenium" aria-label="selenium" ng-disabled="true" ng-init="selenium=true">
+                              <img ng-src="/styles/img/selenium.png" width="30" height="30">
+                            </md-checkbox>
                           </div>
-                        <div layout='row' >
-                          <div layout="row" layout-align="start center">
-                            <md-select ng-model="project.seleniumVersion" aria-label="seleniumVersion">
-                              <md-option selected="selected">2.48.2</md-option>
-                              <md-option>2.47.1</md-option>
-                              <md-option>2.46.0</md-option>
-                              <md-option>2.45.0</md-option>
-                              <md-option>2.44.0</md-option>
-                              <md-option>2.43.1</md-option>
-                              <md-option>2.42.0</md-option>
-                              <md-option>2.41.0</md-option>
-                            </md-select>
-                         </div>
+                          <div layout='row' >
+                            <div layout="row" layout-align="start center">
+                              <md-select ng-model="project.seleniumVersion" aria-label="seleniumVersion">
+                                <md-option selected="selected">2.48.2</md-option>
+                                <md-option>2.47.1</md-option>
+                                <md-option>2.46.0</md-option>
+                                <md-option>2.45.0</md-option>
+                                <md-option>2.44.0</md-option>
+                                <md-option>2.43.1</md-option>
+                                <md-option>2.42.0</md-option>
+                                <md-option>2.41.0</md-option>
+                              </md-select>
+                            </div>
+                          </div>
                         </div>
+                        <div layout="row">
+                          <div layout='row'layout-padding layout-align="start center">
+                            <md-checkbox aria-label="delayTime" ng-model="checkDelayTime">
+                              <span>Delay Time (s)</span>
+                            </md-checkbox>
+                            <md-input-container ng-if="checkDelayTime">
+                              <input type="number" min="1" max="100" aria-label="time" class="text-center" ng-model="project.value_delay">
+                            </md-input-container>
+                          </div>
                         </div>
                       </div>
                   </div>
