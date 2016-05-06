@@ -39,16 +39,25 @@ define(['project/module', 'highcharts', 'lodash'], function (module, highcharts,
             if (!index) {
               $scope.case_reports.push(caze);
             }
-          } else $scope.case_reports.push(obj);
+          } else {
+            $scope.case_reports.push(obj);
+          }
         });
+        var numberOfPassedCase = 0;
+        var numberOfFailedCase = 0;
+        for (var i = 0; i < $scope.case_reports.length; i++) {
+          if ($scope.case_reports[i].isPass == true) {
+            numberOfPassedCase ++  ;
+          } else if ($scope.case_reports[i].isPass == false) {
+            numberOfFailedCase ++  ;
+          }
+        }
+        draw(numberOfPassedCase,numberOfFailedCase);
       });
     }
 
     KeywordService.lastestJobs($scope.projectId, $scope.jobId, $scope.suiteId, $scope.suiteReportId, function (data, status) {
       $scope.suites = JSON.parse(data.suites);
-      var numberOfPassedCase = data.numberOfPassedCase;
-      var numberOfFailedCase = data.numberOfFailedCase;
-      draw(numberOfPassedCase,numberOfFailedCase);
     });
 
     getReport();
@@ -71,7 +80,7 @@ define(['project/module', 'highcharts', 'lodash'], function (module, highcharts,
         },
         colors: ['#039BE5', '#F44336'],
         title: {
-            text: 'Lastest running of the project'
+            text: ''
         },
         tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
