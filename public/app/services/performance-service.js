@@ -93,7 +93,7 @@ define(['layout/module'], function (module) {
           callback(data, status);
         });
       },
-      run: function (projectId, suiteIds, callback) {
+      run: function (projectId, scriptIds, callback) {
       	 var request = {
           method: 'POST',
           url: appConfig.RestEntry + '/api/v1/project/performance/run/'+projectId,
@@ -101,7 +101,7 @@ define(['layout/module'], function (module) {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
           },
-          data: suiteIds 
+          data: scriptIds 
         };
 
         $http(request).success(function(data, status) {

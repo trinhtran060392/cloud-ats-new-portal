@@ -6,7 +6,6 @@ define(['project/keyword-module'], function (module) {
 
       $scope.projectId = $stateParams.id;
       $scope.sharedData = SharedDataService;
-
       $scope.create = function (ev) {
         $scope.title = 'Create New Suite';
         $mdDialog.show({

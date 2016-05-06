@@ -8,11 +8,6 @@ define(['project/module'], function (module) {
       $scope.sharedData = SharedDataService;
 
       $scope.title = "TEST SCRIPTS";
-      ScriptService.list($scope.projectId, function(response) {
-        $scope.scripts = response;
-        $scope.totalScripts = response.length;
-      });
-
       $scope.createDialog = function (ev) {
       $mdDialog.show({
         templateUrl: 'app/project/views/performance/dialog-create-script.tpl.html',

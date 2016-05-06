@@ -98,13 +98,16 @@ define([
               'project/directives/project-nav',
               'project/controllers/scripts-perf-ctrl',
               'project/controllers/scripts-perf-action-ctrl',
+              'project/controllers/execution-perf-ctrl',
               'services/script-service',
+              'services/performance-service',
               'project/services/shared-data-service'
             ])
           }
         },
         'header-box@app.project': {
-          templateUrl: 'app/project/views/performance/scripts-header-box.tpl.html'
+          templateUrl: 'app/project/views/performance/scripts-header-box.tpl.html',
+          controller: 'ScriptsPerfActionCtrl'
         }
       },
       data: {

@@ -22,10 +22,10 @@ define(['project/module','lodash'], function (module, _) {
     }
 
     ScriptService.list($scope.projectId, function(response) {
-      _.forEach(response, function (script) {
+      _.forEach(response.scripts, function (script) {
         script.created_date = parse(script.created_date);
       });
-      $scope.scripts = response;
+      $scope.sharedData.project = response;
       $scope.totalScripts = response.length;
     });
 
@@ -48,7 +48,7 @@ define(['project/module','lodash'], function (module, _) {
       $mdDialog.show(confirm).then(function() {
          ScriptService.delete($scope.projectId, id, function (data, status) {
           if (status === 202) {
-            _.remove($scope.scripts, function (script) {
+            _.remove($scope.sharedData.project.scripts, function (script) {
               return script._id === id;
             });
             $mdToast.show($mdToast.simple().position('top right').textContent('The script has been deleted!'));
@@ -80,7 +80,7 @@ define(['project/module','lodash'], function (module, _) {
             ScriptService.clone($scope.projectId, id, $scope.data_name, function (data, status){
               if (status === 200) {
                 data.created_date = parse(data.created_date);
-                $scope.scripts.push(data);
+                $scope.sharedData.project.scripts.push(data);
                 $mdDialog.hide();
                 $mdToast.show($mdToast.simple().position('top right').textContent('The script has been cloned!'));
               }

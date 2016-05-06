@@ -17,11 +17,11 @@ define(['project/module', 'lodash'], function (module, _) {
 
     ScriptService.list($scope.projectId, function(response) {
 
-      _.forEach(response, function (script) {
+      _.forEach(response.scripts, function (script) {
         script.showInfo = false;        
       });
-      $scope.scripts = response;
-      $scope.totalScripts = response.totalScripts;
+      $scope.scripts = response.scripts;
+      $scope.totalScripts = response.scripts.totalScripts;
     });
 
     PerformanceService.get($scope.projectId, function (response) {
@@ -48,7 +48,7 @@ define(['project/module', 'lodash'], function (module, _) {
       else $scope.checkSscriptSelected = true;
     };
  
-    $scope.showExecutionFunctional = function(ev) {
+    $scope.showExecutionPerformance = function(ev) {
       $mdDialog.show({
         templateUrl: 'app/project/views/performance/dialog-execution-performance.tpl.html',
         parent: angular.element(document.body),
@@ -64,7 +64,6 @@ define(['project/module', 'lodash'], function (module, _) {
               $mdDialog.cancel();
             };
             $scope.run = function() {
-              console.log('run');
               $scope.runPerformanceTest();
             };
           }
@@ -75,6 +74,7 @@ define(['project/module', 'lodash'], function (module, _) {
     //run project with projectid and list scripts
     $scope.runPerformanceTest = function () {
       if (checkProjectStatus())
+      $state.go('app.project.performance-reports', {id : $scope.projectId});
       PerformanceService.run($scope.projectId, selected, function(data, status) {
         $mdDialog.hide();
         switch (status) {

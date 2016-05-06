@@ -2,3 +2,31 @@
   <md-icon md-font-icon="icon-clock-fast"></md-icon>
   <span class="pl-8 md-subhead" flex>Performance - Script</span>
 </div>
+<div class="header-info" layout="column" layout-align="space-between start">
+
+  <div class="pt-8" layout="row" layout-align="start center" flex>
+    <span class="text-bold w-56">Project</span>
+    <span class="text-nowrap-ellipsis">
+      {{sharedData.project.name}}
+    </span>
+  </div>
+
+  <div class="pt-8" layout="row" layout-align="start center" flex>
+    <span class="text-bold w-56">Script(s)</span>
+    <span class="text-nowrap-ellipsis">
+      {{sharedData.project.scripts.length}} Test Script(s)
+    </span>
+  </div>
+
+</div>
+
+<div class="header-action" layout="row" layout-align="start center">
+  <md-button class="md-raised md-primary white-fg" aria-label="Create New Test Script" ng-click="createDialog($event)" flex>
+    Create New Test Script
+  </md-button> 
+</div>
+<div class="header-action" layout="row" layout-align="start center" ng-controller="ExecutionPerfCtrl">
+  <md-button class="md-raised md-accent" aria-label="Execute New Job" flex ng-click="showExecutionPerformance($event)">
+    Execute New Job
+  </md-button>      
+</div>      

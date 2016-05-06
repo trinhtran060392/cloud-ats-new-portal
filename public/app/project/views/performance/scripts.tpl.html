@@ -21,7 +21,7 @@
 
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
-      <div ng-repeat="script in scripts | filter:sharedData.searchScripts" layout="row" flex="25" class="project ms-card"> 
+      <div ng-repeat="script in sharedData.project.scripts | filter:sharedData.searchScripts" layout="row" flex="25" class="project ms-card"> 
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
 
           <div class="text-nowrap-ellipsis h2 p-16">
