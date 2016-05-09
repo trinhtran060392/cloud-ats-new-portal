@@ -73,7 +73,9 @@ define(['project/module','lodash'], function (module, _) {
             $scope.$watch('script.info', function(newInfo, oldInfo) {
               if (JSON.stringify(newInfo) !== JSON.stringify($scope.script.originInfo)) {
                 $scope.hasChanged = true;
-              } else $scope.hasChanged = false;
+              } else {
+                $scope.hasChanged = false;
+              }
             }, true);
 
           })
@@ -168,17 +170,24 @@ define(['project/module','lodash'], function (module, _) {
         };
 
         $scope.updateScript = function(){
+          $scope.script.name = $scope.script.info.name;
+          $scope.script.number_threads = $scope.script.info.number_threads;
+          $scope.script.number_engines = $scope.script.info.number_engines;
+          $scope.script.ram_up = $scope.script.info.ram_up;
+          $scope.script.loops = $scope.script.info.loops;
           ScriptService.update($scope.projectId, $scope.script, function (data, status) {
+            console.log(status);
             if(status == 202){
               $mdDialog.hide();
               $scope.script.originSamplers = $scope.script.samplers ;
-              $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has updated'));
+              // $scope.script.originInfo = $scope.script.Info ;
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Script has updated'));
             } else if(status == 204) {
               $mdDialog.hide();
-              $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler has nothing to update'));
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Script has nothing to update'));
             } else if(status == 400) {
               $mdDialog.hide();
-              $mdToast.show($mdToast.simple().position('top right').textContent('The Sampler is not exist'));
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Script is not exist'));
             }
 
           });

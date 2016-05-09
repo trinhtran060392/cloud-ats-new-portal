@@ -186,10 +186,10 @@
               <th><span class="text-bold">Error rate(%)</span></th>
             </thead>
             <tbody>
-              <tr ng-repeat="project in persProjects">
+              <tr ng-repeat="project in persProjects" ng-click="goProject(project)">
                 <td><span class="text-bold blue-900-fg">{{$index+1}}</span></td>
                 <td>
-                  <span ng-click="goProject(project)">{{project.projectName}}</span>
+                  <span>{{project.projectName}}</span>
                 </td>
                 <td><span >{{project.samples}}</span></td>
                 <td><span >{{project.number_engines}}</span></td>

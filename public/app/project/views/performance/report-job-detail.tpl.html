@@ -1,5 +1,5 @@
 <div aria-label="Job Report" id="case" layout="column" perfect-scrollbar>
-	<div layout="row" class="breadcrumbs" layout-align="start center">
+<!-- 	<div layout="row" class="breadcrumbs" layout-align="start center">
 	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
 	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
 	    </md-button>
@@ -13,8 +13,8 @@
 	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
 	      <a>Job</a>
 	    </div>
-
-	</div>
+	</div> -->
+	
     <div id="all-chart" ng-repeat="report in reports">
         <performance-report data-reports="report" data-bind-to="report[0].script_id.substring(0,8)"></performance-report>
     </div>

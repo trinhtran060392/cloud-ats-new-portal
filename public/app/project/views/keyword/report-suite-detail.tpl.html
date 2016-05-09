@@ -1,21 +1,28 @@
 <div aria-label="Suite Report" id="case" layout="column" perfect-scrollbar >
-	<div layout="row" class="breadcrumbs" layout-align="start center">
-	    <md-button aria-label="menu" hide-gt-md class="md-icon-button">
-	      <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
-	    </md-button>
 
-	    <div class="pl-8" layout="row" layout-align="start center">
-	      <md-icon md-font-icon="icon-home" class="s24"></md-icon>
-	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-	      <a class="text-nowrap-ellipsis">CloudATS v1.1 Portal Test Report</a>
-	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-	      <a>Reports</a>
-	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-	      <a>JobId</a>
-	      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>
-	      <a>Suite</a>
-	    </div>
-	</div>
+	<!-- <div layout="row" class="breadcrumbs" layout-align="start center">
+      <div layout="row" layout-align="start center">
+        <md-button aria-label="breadcrumbs" class="md-icon-button" >
+          <md-tooltip md-direction="right">Bread Crumbs</md-tooltip>
+          <md-icon md-font-icon="icon-keyboard-return" aria-hidden="true"></md-icon>
+        </md-button>
+      </div>
+
+      <div class="item" layout="row" layout-align="start center">
+        <a data-ui-sref="app.projects">Job Title</a>
+        <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+      </div>
+      <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
+        <a class="text-nowrap-ellipsis" ng-if="!$last" ng-href="{{$state.href(item.state, item.data)}}">
+        {{item.name}}
+        </a>
+        <span ng-if="$last">{{item.name}}</span>
+        <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+      </div>
+
+      <span flex></span>
+  </div> -->
+
 	<div layout="row" flex class="simple-table-container md-whiteframe-4dp" style="max-height: 40%">
     <div  flex="55">
       <div class="table-title">{{getWord('5 Lastest reports of the suite')}}</div>

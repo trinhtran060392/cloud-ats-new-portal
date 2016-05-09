@@ -41,6 +41,7 @@ define([
       views: {
         'sub-content@app.project': {
           templateUrl: 'app/project/views/keyword/report-job-detail.tpl.html',
+          controller:'ReportJobDetailCtrl',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
