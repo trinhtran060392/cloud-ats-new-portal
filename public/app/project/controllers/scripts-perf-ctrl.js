@@ -4,10 +4,12 @@ define(['project/module','lodash'], function (module, _) {
 
   module.registerController('ScriptsPerfCtrl', ['SharedDataService', '$mdToast', '$scope', '$rootScope', '$mdDialog', '$state','$stateParams', '$templateRequest', '$compile', 'ScriptService',
     function(SharedDataService, $mdToast, $scope, $rootScope, $mdDialog, $state, $stateParams, $templateRequest, $compile, ScriptService) {
- 	
+
+    $scope.$parent.isSidenavOpen = true;
+    $scope.$parent.isSidenavLockedOpen = true;
+
  		$scope.projectId = $stateParams.id;
     $scope.sharedData = SharedDataService;
-
 
  		$scope.title = "TEST SCRIPTS";
 

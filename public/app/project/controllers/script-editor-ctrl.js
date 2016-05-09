@@ -3,12 +3,16 @@ define(['project/performance-module', 'lodash'], function (module, _) {
   'use strict';
 
   module.registerController('ScriptEditorCtrl', 
-    ['$scope', '$compile', '$rootScope', '$state','$stateParams', '$cookies', 'Upload', 'ScriptService', 
+    ['$mdSidenav', '$scope', '$compile', '$rootScope', '$state','$stateParams', '$cookies', 'Upload', 'ScriptService', 
      '$mdToast', '$templateRequest', '$filter', '$mdDialog',
-     function($scope, $compile, $rootScope, $state, $stateParams, $cookies, Upload, ScriptService, $mdToast, $templateRequest, $filter, $mdDialog) {
+     function($mdSidenav, $scope, $compile, $rootScope, $state, $stateParams, $cookies, Upload, ScriptService, $mdToast, $templateRequest, $filter, $mdDialog) {
       
       $scope.$parent.isSidenavOpen = false;
       $scope.$parent.isSidenavLockedOpen = false;
+
+      $scope.toggleProjectNavLeft = function() {
+        $mdSidenav('project-nav-left').toggle();
+      };
 
       $scope.projectId = $stateParams.id;
       $scope.scriptId = $stateParams.scriptId;

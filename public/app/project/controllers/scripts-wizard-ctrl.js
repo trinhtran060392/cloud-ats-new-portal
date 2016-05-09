@@ -2,11 +2,16 @@ define(['project/module','lodash'], function (module, _) {
   
   'use strict';
 
-  module.registerController('ScriptsWizardCtrl', ['$scope', '$rootScope', '$state','$stateParams', '$timeout',
+  module.registerController('ScriptsWizardCtrl', ['$mdSidenav', '$scope', '$rootScope', '$state','$stateParams', '$timeout',
     'ScriptService', 'uuid', '$mdDialog', '$mdToast',
-    function($scope, $rootScope, $state, $stateParams, $timeout, ScriptService, uuid, $mdDialog, $mdToast) {
+    function($mdSidenav, $scope, $rootScope, $state, $stateParams, $timeout, ScriptService, uuid, $mdDialog, $mdToast) {
+        
         $scope.$parent.isSidenavOpen = false;
         $scope.$parent.isSidenavLockedOpen = false;
+
+        $scope.toggleProjectNavLeft = function() {
+          $mdSidenav('project-nav-left').toggle();
+        };
 
         $scope.projectId = $stateParams.id;
         $scope.scriptId = $stateParams.scriptId;

@@ -47,7 +47,6 @@ define(['project/module'], function (module) {
             var files = $scope.csvFiles;
             ScriptService.createScriptTestByUpload($scope.file, $scope.script.name, $stateParams.id , function (script,status) {
                 if (script != null) {
-                  $scope.scripts.push(script);
                   $scope.totalScripts++;
 
                   $scope.file = undefined;
