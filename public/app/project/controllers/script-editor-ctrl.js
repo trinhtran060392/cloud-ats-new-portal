@@ -322,14 +322,14 @@ define(['project/performance-module', 'lodash'], function (module, _) {
         ScriptService.update($scope.projectId, script,  function (data, status) {
           switch (status) {
             case 202 : 
-              $mdToast.show($mdToast.simple().position('top right').textContent('The script has been updated!'));
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Script has been updated!'));
               $state.go('app.project.performance-scripts', { id: $scope.projectId });
               break;
             case 204 :
-              $mdToast.show($mdToast.simple().position('top right').textContent('The script has nothing to update!'));
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Script has nothing to update!'));
               break;
             case 400 :
-              $mdToast.show($mdToast.simple().position('top right').textContent('The script does not exist!'));
+              $mdToast.show($mdToast.simple().position('top right').textContent('The Script does not exist!'));
               break;
             default:
               break;

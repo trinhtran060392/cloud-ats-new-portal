@@ -73,7 +73,13 @@
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon md-font-icon="icon-cog" class="md-warn md-hue-2"></md-icon>
-                <md-button>Settings</md-button>
+                <md-menu>
+                  <md-button ng-click="$mdOpenMenu()">Settings</md-button>
+                  <md-menu-content width="3">
+                    <md-menu-item><md-button>Tenants</md-button></md-menu-item>
+                    <md-menu-item><md-button>Spaces</md-button></md-menu-item>
+                  </md-menu-content>
+                </md-menu>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon md-font-icon="icon-account-multiple-outline" style="color: green;"></md-icon>
