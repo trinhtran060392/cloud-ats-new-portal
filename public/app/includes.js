@@ -3,6 +3,8 @@ define([
   'layout/directives/perfect-scrollbar',
   'layout/directives/href-void',
   'layout/directives/smart-context',
+  'layout/directives/auto-width',
+  'layout/directives/auto-hide-label',
 
   'services/user-service',
   'services/authentication-service',

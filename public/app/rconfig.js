@@ -20,7 +20,7 @@ var require = {
     'c3':'../plugin/c3/c3.min',
     'd3':'../plugin/d3/d3.min',
     'highcharts':'../plugin/highcharts/highcharts',
-    'lodash': '../plugin/lodash/lodash.min',
+    'lodash': '../plugin/lodash/dist/lodash.min',
     'angular-drag-and-drop-lists': '../plugin/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min',
     'angular-material-data-table': '../plugin/angular-material-data-table/dist/md-data-table.min',
     'ng-file-upload': '../plugin/ng-file-upload/ng-file-upload-all.min',

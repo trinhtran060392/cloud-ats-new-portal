@@ -20,10 +20,10 @@ define(['project/keyword-module'], function(module) {
             callback(data, status);
           })
         },
-        create: function(name, dataset, caseId, callback) {
+        create: function(name, dataset, projectId, caseId, callback) {
           var request = {
             method: 'POST',
-            url: appConfig.RestEntry + '/api/v1/data',
+            url: appConfig.RestEntry + '/api/v1/data/' + projectId,
             headers: {
               'X-AUTH-TOKEN': $cookies.get('authToken'),
               'X-SPACE': $cookies.get('space'),

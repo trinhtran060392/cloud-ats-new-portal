@@ -2,8 +2,8 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
 	'use strict';
 
 	module.registerController('CaseDetailCtrl', ['$mdSidenav', 'DataService', '$scope', 'KeywordService', 
-    'CaseService', '$state', '$stateParams', '$mdDialog', '$mdToast', 'CustomKeywordService',
-    function ($mdSidenav, DataService, $scope, KeywordService, CaseService, $state, $stateParams, $mdDialog, $mdToast, CustomKeywordService) {
+    'CaseService', '$state', '$stateParams', '$timeout','$mdDialog', '$mdToast', 'CustomKeywordService',
+    function ($mdSidenav, DataService, $scope, KeywordService, CaseService, $state, $stateParams, $timeout ,$mdDialog, $mdToast, CustomKeywordService) {
 
     $scope.$parent.isSidenavOpen = false;
     $scope.$parent.isSidenavLockedOpen = false;
@@ -105,7 +105,34 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         var caze = {
           name: $scope.caze.name
         }
+
         $scope.breadcrumbs = [overview, cases, caze];
+
+        if ($scope.caze.data_driven) {
+          var dataDriven = {
+            name: '[Data Driven] ' + $scope.caze.data_driven.name,
+            state: 'app.project.keyword-cases.case.data',
+            data: {
+              id: $scope.projectId,
+              caseId: $scope.cazeId,
+              params: _.join($scope.params, ',')
+            }
+          }
+          $scope.breadcrumbs.push(dataDriven);
+        } else if (buildParamList($scope.caze).length){
+          var dataDriven = {
+            name: '[Data Driven] Empty',
+            state: 'app.project.keyword-cases.case.data',
+            data: {
+              id: $scope.projectId,
+              projectName: $scope.caze.project,
+              caseId: $scope.cazeId,
+              caseName: $scope.caze.name,
+              params: _.join($scope.params, ',')
+            }
+          }
+          $scope.breadcrumbs.push(dataDriven);
+        }
 
         $scope.$watch('caze.steps', function(newSteps, oldSteps) {
           if (newSteps !== oldSteps) {
@@ -191,7 +218,13 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     $scope.dropCallBack = function (index, event, step) {
       
       if (step.isNew) {
-        $scope.clickToStep(event, step, $scope.caze.steps.length - 1);
+        if (index >= $scope.caze.steps.length - 1) {
+          $scope.clickToStep(event, step, $scope.caze.steps.length - 1);
+        } else {
+          $scope.caze.steps.splice(index, 1);
+          $scope.caze.steps.push(step);
+          $scope.clickToStep(event, step, $scope.caze.steps.length - 1);
+        }
       }
       if (step.steps) {
         var steps = step.steps;        
@@ -242,8 +275,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
       var caze = {
         _id: $scope.caze._id,
         name: $scope.caze.name,
-        steps: $scope.caze.steps,
-        data_driven: $scope.caze.data_driven
+        steps: $scope.caze.steps
       };
 
       CaseService.update($scope.caze.project_id, caze, function (data, status){
@@ -279,6 +311,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
         targetEvent: ev,
         scope: $scope,
         preserveScope: true,
+        escapeToClose: false,
         controller: function() {
 
           $scope.title = step.type + " [" + ($index + 1) + "]";
@@ -290,13 +323,13 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           $scope.submit = function() {
             $scope.step.isNew = undefined;
             $scope.caze.steps[$index] = $scope.step;
-            $scope.params = buildParamList($scope.caze);
             $mdDialog.cancel();
+            $scope.params = buildParamList($scope.caze);
           };
           $scope.remove = function() {
             $scope.caze.steps.splice($index, 1);
-            $scope.params = buildParamList($scope.caze);
             $mdDialog.cancel();
+            $scope.params = buildParamList($scope.caze);
           }
         }
       })

@@ -15,10 +15,10 @@
       <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
     </div>
     <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
-      <a class="text-nowrap-ellipsis" ng-if="!$last" ng-href="{{$state.href(item.state, item.data)}}">
+      <a class="text-nowrap-ellipsis" ng-if="item.state" ng-href="{{$state.href(item.state, item.data)}}">
       {{item.name}}
       </a>
-      <span ng-if="$last">{{item.name}}</span>
+      <span ng-if="!item.state">{{item.name}}</span>
       <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
     </div>
 
@@ -40,8 +40,8 @@
 
     <md-button ng-click="setting($event)">
       <div layout="row" layout-align="start center" class="md-warn-fg md-hue-2">
-        <md-icon md-font-icon="icon-cog" aria-hidden="true" class="md-warn-fg md-hue-2"></md-icon>
-        <span class="pl-8" flex>Settings</span>          
+        <md-icon md-font-icon="icon-pencil" aria-hidden="true" class="md-warn-fg md-hue-2"></md-icon>
+        <span class="pl-8" flex>Rename</span>          
       </div>
     </md-button>
   </div>

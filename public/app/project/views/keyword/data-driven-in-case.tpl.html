@@ -1,0 +1,185 @@
+<div id="case" layout="column" flex>
+
+  <!-- Breadcrumbbs -->
+  <div layout="row" class="breadcrumbs" layout-align="start center">
+
+    <div layout="row" layout-align="start center">
+      <md-button aria-label="menu" class="md-icon-button" ng-click="toggleProjectNavLeft()">
+        <md-tooltip md-direction="right">Navigation Menu</md-tooltip>
+        <md-icon md-font-icon="icon-menu" aria-hidden="true"></md-icon>
+      </md-button>
+    </div>
+
+    <div class="item" layout="row" layout-align="start center">
+      <a data-ui-sref="app.projects">Projects</a>
+      <md-icon md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+    </div>
+    <div class="item" layout="row" layout-align="start center" ng-repeat="item in breadcrumbs">
+      <a class="text-nowrap-ellipsis" ng-if="item.state" ng-href="{{$state.href(item.state, item.data)}}">
+      {{item.name}}
+      </a>
+      <span ng-if="!item.state">{{item.name}}</span>
+      <md-icon ng-if="!$last" md-font-icon="icon-chevron-right" class="s24 mh-8"></md-icon>      
+    </div>
+
+    <span flex></span>
+
+    <md-button class="animate-slide-down md-primary" ng-click="save()" ng-show="sharedData.hasChanged " ng-disabled="!validated">
+      <div layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-floppy" aria-hidden="true"></md-icon>
+        <span class="pl-8" flex>Save</span>
+      </div>
+    </md-button>
+
+    <md-button class="animate-slide-down" ng-click="cancel()" ng-show="sharedData.hasChanged">
+      <div layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-cancel" aria-hidden="true"></md-icon>
+        <span class="pl-8" flex>Cancel</span>
+      </div>
+    </md-button>
+
+    <div class="border-left" layout="row" layout-align="start center">
+      <md-button class="md-primary" ng-click="addRow()" ng-disabled="sharedData.dataQueryText">
+        <div layout="row" layout-align="start center">
+          <span class="pl-8" flex>Add Row</span>          
+        </div>
+      </md-button>
+      <md-button class="md-warn" ng-click="deleteRow()" ng-if="selected.length">
+        <div layout="row" layout-align="start center">
+          <span class="pl-8" flex>Delete Row</span>        
+        </div>
+      </md-button>
+      <md-button class="md-primary" 
+        ng-click="create($event)" 
+        ng-if="!dataId"
+        ng-disabled="!validated">
+
+        <div layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-plus" aria-hidden="true"></md-icon>
+          <span class="pl-8" flex>Create</span>          
+        </div>
+      </md-button>
+
+      <md-menu-bar>
+        <md-menu md-position-mode="left bottom">
+          <md-button ng-click="$mdOpenMenu()">
+            <div layout="row" layout-align="start center" class="md-warn-fg md-hue-2">
+              <md-icon md-font-icon="icon-cog" aria-hidden="true" class="md-warn-fg md-hue-2"></md-icon>
+              <span class="pl-8" flex>Options</span>          
+            </div>
+          </md-button>
+
+          <md-menu-content width="3">
+            <md-menu-item class="md-indent" ng-if="dataId">
+              <md-icon md-font-icon="icon-auto-fix"></md-icon>
+              <md-button ng-click="renew()">Re-New</md-button>
+            </md-menu-item>
+            <md-menu-item class="md-indent" ng-if="dataId">
+              <md-icon md-font-icon="icon-pencil"></md-icon>
+              <md-button>Re-Name</md-button>
+            </md-menu-item>
+            <md-menu-item class="md-indent">
+              <md-icon md-font-icon="icon-format-list-bulleted"></md-icon>
+              <md-button ng-click="selectExistedData($event)">Select From Existed Data</md-button>
+            </md-menu-item>
+            <md-menu-item class="md-indent">
+              <md-icon md-font-icon="icon-upload"></md-icon>
+              <md-button ng-click="uploadFromLocal($event)">Upload From Local (CSV)</md-button>
+            </md-menu-item>
+          </md-menu-content>
+
+        </md-menu>
+      </md-menu-bar> 
+
+    </div>
+  </div>
+  <!-- End breadcrumbs -->
+
+  <div layout="row" class="content-wrapper white-bg md-whiteframe-7dp">
+    <md-table-container class="data-driven" flex="100">
+      <table md-table md-row-select ng-model="selected">
+        <thead md-head>
+          <tr md-row class="border-bottom">
+            <th md-column ng-repeat="param in params track by $index">
+              <span>{{param}}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row md-select="i" md-select-id="{{i.$index}}" 
+            ng-repeat="i in dataSource track by $index" ng-init="row=$index;">
+            <td md-cell ng-repeat="param in params track by $index" class="cell">
+              <md-input-container class="data-table md-block">
+                <label>{{param}} value</label>
+                <input id="{{param}}_{{row}}" value="{{i[param]}}" aria-label="{{i[param]}}" ng-model="i[param]" ng-change="changeData(param, row)" required auto-width auto-hide-label>
+              </md-input-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </div>
+
+  </div>
+</div>
+
+<!-- <div id="case">
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+     
+      <md-tab label="Data" ng-if="params.length">
+        <md-content>
+          <md-toolbar class="md-table-toolbar md-default">
+          <div class="md-toolbar-tools" layout="row" flex>
+            <md-button ng-click="addRow($event)">
+              <md-icon md-font-icon="icon-plus"></md-icon> Add Row
+            </md-button>
+            <span flex></span>
+            <form name="data_form" class="data-form">
+              <md-input-container class="md-block">
+              <input type="text" name="data_name" required ng-model="data_name">
+              <div ng-messages="data_form.data_name.$error" role="alert" aria-live="assertive" >
+                  <div ng-message="required">Data name is required</div>
+              </div>
+              </md-input-container>
+            </form>
+
+            <md-button ng-click="saveData($event)" ng-disabled="data_form.$invalid" ng-if="editData">
+              <md-icon md-font-icon="icon-save"></md-icon> Save
+            </md-button>
+            <md-button ng-click="cancelData()" ng-if="editData" style="margin-right:20px;">
+              CANCEL
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More" ng-click="deleteRowDataDriven()">
+              <md-icon md-font-icon="icon-delete" ng-if="selected.length" class='md-warn-fg'></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <md-table-container style="width: 100%" class="padding-10 data-driven">
+          <table md-table md-row-select ng-model="selected" md-progress="promise">
+            <thead md-head>
+              <tr md-row class="data-header md-accent-bg">
+                <th md-column ng-repeat="param in params track by $index">
+                  <span>{{param}}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row md-select="i" md-select-id="{{i.$index}}" ng-repeat="i in data track by $index">
+                <td md-cell ng-repeat="param in params track by $index">
+                  <md-input-container class="data-table md-block">
+                    <input value="{{i[param]}}" aria-label="{{i[param]}}" ng-model="i[param]" ng-change="changeData()"/>
+                  </md-input-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+
+        <!-- <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{data.length}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination> -->
+        <!-- </md-content> --> 
+      </md-tab>
+    </md-tabs>
+  </md-content>
+   -->
+</div>

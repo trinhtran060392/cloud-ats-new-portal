@@ -134,7 +134,33 @@ define([
         }
       },
       data: {
-        title: 'Project Keyword Cases',
+        title: 'Project Keyword Case Detail',
+        requireLogin: true
+      }
+    })
+    .state('app.project.keyword-cases.case.data', {
+      url: '/data?projectName&caseName&dataId&params',
+      views: {
+        'sub-content@app.project': {
+          templateUrl: 'app/project/views/keyword/data-driven-in-case.tpl.html',
+          controller: 'DataInCaseCtrl',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+              'project/controllers/data-in-case-ctrl',
+              'project/controllers/data-action-ctrl',
+              'services/case-service',
+              'services/data-service'
+            ])
+          }
+        },
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/data-driven-in-case-search-box.tpl.html',
+          controller: 'DataActionCtrl'
+        }
+      },
+      data: {
+        title: 'Project Keyword Case Data Driven',
         requireLogin: true
       }
     })
