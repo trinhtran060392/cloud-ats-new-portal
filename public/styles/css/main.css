@@ -541,3 +541,13 @@ md-table-container.data-driven table thead tr th md-input-container, md-table-co
 .exe-step {
   padding-left: 10px !important;
 }
+.simple.spaces {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.space-header {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.text-align-center {
+  text-align: center !important;
+}

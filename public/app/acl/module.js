@@ -17,7 +17,7 @@ define([
       url: '/tenants',
       views: {
         'content@app': {
-          controller: 'TenantCtrl',
+          controller: 'TenantConfCtrl',
           templateUrl: 'app/acl/views/tenants.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
@@ -50,6 +50,19 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'acl/controllers/projects-ctrl'
+            ])
+          }
+        },
+      }
+    }).state('app.project.config', {
+      url: '/project/:id/config',
+      views: {
+        'content@app': {
+          controller: 'ProjectConfCtrl',
+          templateUrl: 'app/acl/views/project-config.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'acl/controllers/project-config-ctrl'
             ])
           }
         },

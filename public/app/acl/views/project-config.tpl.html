@@ -1,0 +1,207 @@
+
+	<div class="ms-widget-front white-bg" layout="column"  layout-padding  layout-align="center center" ng-if="!edit">
+		<h4>Grant permission</h4>
+	  <table class="simple spaces ms-widget-front white-bg">
+	    <thead>
+	      <th class="space-header"><span class="text-bold"></span></th>
+	      <th class="space-header" style="padding-left: 8px; text-align: center" colspan="8"><span class="text-bold">Project</span></th>
+	    </thead>
+	    <tbody>
+	      <tr>
+	        <td></td>
+	        <td class="text-align-center"><span >View</span></td>
+	        <td class="text-align-center"><span >Manage functional</span></td>
+	        <td class="text-align-center"><span >View functional</span></td>
+	        <td class="text-align-center"><span >Upload selenium project</span></td>
+	        <td class="text-align-center"><span >Manage data driven</span></td>
+	        <td class="text-align-center"><span >Manage performance</span></td>
+	        <td class="text-align-center"><span >View performance</span></td>
+	        <td class="text-align-center"><span >Grant permission</span></td>
+	      </tr>
+	      <tr>
+	      	<td><span>TrinhTV3</span></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      </tr>
+	      <tr>
+	      	<td><span>TuDH2</span></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      </tr>
+	      <tr>
+	      	<td><span>HaiNT21</span></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      	<td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+	<div layout="row" layout-align="start center" flex ng-if="!edit">
+  	<md-button flex="15" class="md-raised md-accent" ng-click="toggle()">
+  		<md-tooltip>Edit permission</md-tooltip>
+  		Edit permission
+  	</md-button>
+  </div>
+
+
+	<div class="ms-widget-front white-bg" layout="column"  layout-padding  layout-align="center center" ng-if="edit">
+		<div layout="row" layout-align="start center" flex style="width: 100%">
+			<md-button flex="5" class="md-default-theme md-accent " ng-click="toggle()">
+	  		<md-tooltip>Back</md-tooltip>
+	  		Back
+	  	</md-button>
+	  	<span flex="40"></span>
+	  	<span>Grant permission</span>
+		</div>
+	  <table class="simple spaces ms-widget-front white-bg">
+	    <thead>
+	      <th class="space-header"><span class="text-bold"></span></th>
+	      <th class="space-header" style="padding-left: 8px; text-align: center" colspan="8"><span class="text-bold">Project</span></th>
+	    </thead>
+	    <tbody>
+	      <tr>
+	        <td></td>
+	        <td class="text-align-center"><span >View</span></td>
+	        <td class="text-align-center"><span >Manage functional</span></td>
+	        <td class="text-align-center"><span >View functional</span></td>
+	        <td class="text-align-center"><span >Upload selenium project</span></td>
+	        <td class="text-align-center"><span >Manage data driven</span></td>
+	        <td class="text-align-center"><span >Manage performance</span></td>
+	        <td class="text-align-center"><span >View performance</span></td>
+	        <td class="text-align-center"><span >Grant permission</span></td>
+	      </tr>
+	      <tr>
+	      	<td><span>TrinhTV3</span></td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      </tr>
+	      <tr>
+	      	<td><span>TuDH2</span></td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      </tr>
+	      <tr>
+	      	<td><span>HaiNT21</span></td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      	<td class="text-align-center">
+	      		<md-checkbox aria-label="select" class="margin-bottom-0">
+            </md-checkbox>
+	      	</td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+	<div layout="row" layout-align="start center" flex layout-padding ng-if="edit">
+		<md-input-container class="md-block margin-bottom-0">
+			<input type="text" placeholder="add more user">
+		</md-input-container>
+  	<md-button flex="5" class="md-raised md-accent margin-bottom-10 margin-top-0">
+  		<md-tooltip>Add</md-tooltip>
+  		Add
+  	</md-button>
+  </div>
