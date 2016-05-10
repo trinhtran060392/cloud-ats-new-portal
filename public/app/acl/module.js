@@ -14,7 +14,7 @@ define([
 
     $stateProvider
     .state('app.tenants', {
-      url: '/permission',
+      url: '/tenants',
       views: {
         'content@app': {
           controller: 'TenantCtrl',
@@ -22,6 +22,34 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'acl/controllers/tenants-ctrl'
+            ])
+          }
+        },
+      }
+    })
+    .state('app.spaces', {
+      url: '/spaces',
+      views: {
+        'content@app': {
+          controller: 'SpacesCtrl',
+          templateUrl: 'app/acl/views/spaces.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'acl/controllers/spaces-ctrl'
+            ])
+          }
+        },
+      }
+    })
+    .state('app.projectsAcl', {
+      url: '/projectsAcl',
+      views: {
+        'content@app': {
+          controller: 'ProjectsAclCtrl',
+          templateUrl: 'app/acl/views/projects.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'acl/controllers/projects-ctrl'
             ])
           }
         },

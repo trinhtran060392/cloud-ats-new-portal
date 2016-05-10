@@ -1,0 +1,51 @@
+<md-dialog aria-label="Edit Space" ng-cloak >
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span flex="95" class="md-title text-nowrap">Edit Space</span>
+        <md-button ng-click="cancel()" aria-label="cancel">
+          <md-icon md-font-icon="icon-cancel" flex="5" ></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content >
+        <form name="spaceForm">  
+          <div layout="column">
+                <div layout='row' layout-align="start center" >
+                  <md-input-container flex>
+                    <label>Space Name</label>
+                    <input type="text" name="spaceName" required>
+                    <div ng-messages="spaceForm.spaceName.$error" role="alert" aria-live="assertive" >
+                      <div ng-message="required">Space name is required</div>
+                    </div>
+                  </md-input-container>
+                </div>
+                <div layout='row' >
+                  <div layout="row" layout-align="start center">
+                    <md-input-container flex>
+                      <label>Description</label>
+                      <input type="text">
+                    </md-input-container>
+                  </div>
+                </div>
+                <div layout='row'>
+                  <div layout="row" layout-align="start center">
+                    <md-input-container flex>
+                      <label>Administrators</label>
+                      <input type="text" name="administrators" required>
+                      <div ng-messages="spaceForm.administrators.$error" role="alert" aria-live="assertive" >
+                        <div ng-message="required">Administrators is required</div>
+                      </div>
+                    </md-input-container>
+                  </div>
+                </div>
+          </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+       <div class="ms-stepper-controls" layout="row" layout-align="center center">
+          <md-button class="md-accent md-raised md-default-theme" ng-click="save()" ng-disabled="spaceForm.$invalid">
+            Save
+          </md-button>
+          </div>
+    </md-dialog-actions>
+</md-dialog>

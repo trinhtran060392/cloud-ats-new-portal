@@ -1,1 +1,129 @@
-<p>Spaces</p>
+<div layout="row">
+	<div layout="row" flex="20" class="ms-widget md-whiteframe">
+        <div class="ms-widget-front white-bg" layout="column" flex>
+          <md-content perfect-scrollbar class="pt-8">
+            <div layout="row" layout-align="start center" class="p-16 filter" layout="row" flex="100">
+            	<span style="font-size: 22px;" flex="90">List Space</span>
+            	<a class="md-icon-button" flex="10" ng-click="clickNewSpace($event)">
+              		<md-tooltip>New Space</md-tooltip>
+              		<md-icon md-font-icon="icon-plus" class="md-primary-fg"></md-icon>
+                </a>
+            </div>
+          	<div class="p-16 border-bottom" layout="row" flex="100">
+              	<span flex>Public</span>
+              	<a class="md-icon-button" ng-click="clickEditSpace($event)">
+              		<md-tooltip>Edit Space</md-tooltip>
+              		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
+                </a>
+              	<a class="md-icon-button">
+              		<md-tooltip>Delete Space</md-tooltip>
+              		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+                </a>
+          	</div>  
+          	<div class="p-16 border-bottom" layout="row" flex="100">
+              	<span flex>Fsu1.Bu11</span>
+              	<a class="md-icon-button">
+              		<md-tooltip>Edit Space</md-tooltip>
+              		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
+                </a>
+              	<a class="md-icon-button">
+              		<md-tooltip>Delete Space</md-tooltip>
+              		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+                </a>
+          	</div>             
+          </md-content>
+        </div>
+    </div>
+	<div flex="80" layout="column" class="simple-table-container md-whiteframe-4dp">
+		<div class="table-title">Public</div>
+		<div layout="row" flex="100" style="font-size: 15px;">
+			<div layout="column" flex="60">
+				<div layout="row" flex="30">
+					<span>Space Name : </span>
+    				<span> Public</span>
+				</div>
+				<div layout="row" flex="30">
+					<span>Creator : </span>
+    				<span> tudh2</span>
+				</div>
+			</div>
+			<div layout="column" flex="60">
+				<div layout="row" flex="30">
+					<span>Description : </span>
+    				<span> demo</span>
+				</div>
+				<div layout="row" flex="30">
+					<span>Administrators : </span>
+    				<span> admin</span>
+				</div>
+			</div>
+	    	
+		</div>
+		<div class="table-title">Grant Permission</div>
+		<div>
+			<div class="ms-responsive-table-wrapper">
+				<table class="simple">
+					<thead>
+						<tr>
+							<th></th>
+							<th>View</th>
+							<th>Create Project</th>
+							<th>Update Project</th>
+							<th>Delete Project</th>
+							<th>Grant Permission</th>
+							<th>Update Space</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Trinhtv3</td>
+	            			<td >
+	            				<md-checkbox aria-label="View" class="margin-bottom-0">
+                                </md-checkbox>
+	            			</td>
+	            			<td >
+	            				<md-checkbox aria-label="Create Project" class="margin-bottom-0">
+                                </md-checkbox>
+	            			</td>
+	            			<td >
+	            				<md-checkbox aria-label="Update Project" class="margin-bottom-0">
+                                </md-checkbox>
+	            			</td>
+	            			<td >
+	            				<md-checkbox aria-label="Delete Project" class="margin-bottom-0">
+                                </md-checkbox>
+	            			</td>
+	            			<td >
+	            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0">
+                                </md-checkbox>
+	            			</td>
+	            			<td >
+	            				<md-checkbox aria-label="Update Space" class="margin-bottom-0">
+                                </md-checkbox>
+	            			</td>
+	            			<td>
+								<a class="md-icon-button">
+			                  		<md-tooltip>Delete User</md-tooltip>
+			                  		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+			                    </a>
+	            			</td>
+	         			</tr>
+					</tbody>
+				</table>
+			</div>
+			<div layout="row">
+				<md-input-container>
+	        		<label>User</label>
+	        		<input type="text">
+	        	</md-input-container>
+        		<md-button md-no-ink class="md-primary">Add User</md-button>
+				
+			</div>
+		</div>
+		<div layout="row" flex="100" layout-align="end">
+			<md-button md-no-ink class="md-primary">Edit</md-button>
+    		<md-button md-no-ink class="md-primary">Save</md-button>
+    	</div>
+	</div>
+</div>
