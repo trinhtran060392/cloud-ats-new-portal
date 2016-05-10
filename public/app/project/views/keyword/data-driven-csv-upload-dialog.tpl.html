@@ -1,0 +1,42 @@
+<md-dialog aria-label="Create Case" ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Create data driven by upload CSV</span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form name="createForm">
+          <md-input-container class="md-block">
+            <label>Data Driven Name</label>
+            <input type="text" name="dataName" required ng-model="data.name" md-autofocus>
+            <div ng-messages="createForm.dataName.$error" role="alert" aria-live="assertive" >
+              <div ng-message="required">Data driven name is required</div>
+            </div>
+          </md-input-container>
+          <div layout="row" layout-align="start center">
+            <md-input-container>
+              <label>CSV File</label>
+              <input type="text" name="dataFile" required ng-model="data.csv" ng-disabled="true">
+              <div ng-messages="createForm.dataFile.$error" role="alert" aria-live="assertive" >
+                <div ng-message="required">CSV file is required</div>
+              </div>
+            </md-input-container>  
+            <md-button class="md-icon-button" style="margin-bottom: 10px;" ngf-select="addNewFile($files)" accept=".csv"  multiple="false">
+              <md-icon md-font-icon="icon-upload"></md-icon>
+            </md-button>
+          </div>
+          
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <span flex></span>
+      <md-button class="md-primary" ng-click="submit()" ng-disabled="createForm.$invalid || createForm.$pristine">
+        Create
+      </md-button>
+      <md-button class="md-primary" ng-click="cancel()" style="margin-right:20px;">
+        CANCEL
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

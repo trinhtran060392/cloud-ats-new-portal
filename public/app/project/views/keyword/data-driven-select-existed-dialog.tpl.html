@@ -1,0 +1,38 @@
+<md-dialog aria-label="Create Case"  ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Select existed data driven</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-font-icon="icon-close" class="white-fg" aria-label="close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form ng-submit="$event.preventDefault()">
+          <p>Search existed data driven by name</p>
+          <md-autocomplete
+            md-selected-item="selectedItem"
+            md-search-text="searchText"
+            md-items="item in list"
+            md-item-text="item.name"
+            md-min-length="0"
+            placeholder="What is your data driven name">
+            <md-item-template>
+              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name}}</span>
+            </md-item-template>
+            <md-not-found>
+              No states matching {{searchText}} were found.
+            </md-not-found>
+          </md-autocomplete>
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <span flex></span>
+      <md-button class="md-primary" ng-click="submit()" ng-disabled="!selectedItem">
+      Select
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

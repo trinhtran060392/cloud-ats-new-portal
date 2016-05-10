@@ -1,0 +1,10 @@
+<div class="search-box height-40" layout="row" layout-align="start center" flex>
+  <md-icon md-font-icon="icon-magnify" class="icon s24 mh-16" aria-hidden="true"></md-icon>
+  <input class="font-size-14" type="text" placeholder="Search for data" ng-model="sharedData.dataQueryText" aria-invalid="false" ng-disabled="sharedData.hasChanged" flex>
+  <md-button class="md-icon-button" aria-label="Clear query" ng-if="sharedData.dataQueryText" ng-click="sharedData.dataQueryText = undefined">
+    <md-tooltip>
+      Clear filter
+    </md-tooltip>
+    <md-icon md-font-icon="icon-close" aria-hidden="true"></md-icon>
+  </md-button>  
+</div>

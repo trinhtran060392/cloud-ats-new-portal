@@ -36,10 +36,11 @@ define(['project/keyword-module', 'lodash'], function(module, _) {
       DataService.list(function (data, status) {
 
         $scope.datas = $filter('orderBy')(data, "name")
+
         if ($scope.datas.length > 0) {
           $scope.current = $scope.datas[0];
           DataService.get($scope.current._id).then(function (response) {
-            $scope.data = JSON.parse(response.data.data_source);
+            $scope.data = JSON.parse(response.data_source);
             $scope.originData = angular.copy($scope.data);
             reload([$scope.query.limit, $scope.query.page]);
             $scope.originParam = angular.copy($scope.params);
@@ -112,7 +113,7 @@ define(['project/keyword-module', 'lodash'], function(module, _) {
         $scope.current.name = data.name;
 
         DataService.get($scope.current._id).then(function (response) {
-          $scope.data = JSON.parse(response.data.data_source);
+          $scope.data = JSON.parse(response.data_source);
           $scope.originData = angular.copy($scope.data);
           $scope.query.page = 1;
           $scope.query.limit = 5;
@@ -227,7 +228,7 @@ define(['project/keyword-module', 'lodash'], function(module, _) {
               if ($scope.datas.length) {
                 $scope.current = $scope.datas[0];
                 DataService.get($scope.current._id).then(function (response) {
-                  $scope.data = JSON.parse(response.data.data_source);
+                  $scope.data = JSON.parse(response.data_source);
                   reload([$scope.query.limit, $scope.query.page]);
                 });
               } else {

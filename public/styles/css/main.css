@@ -390,7 +390,7 @@ table.simple tbody tr td.absorbing-column {
  padding-top: 2px;
 }
 
-#cases .breadcrumbs {
+.breadcrumbs {
   position: relative;
   height: 48px;
   min-height: 48px;
@@ -501,8 +501,7 @@ table.simple tbody tr td.absorbing-column {
 table.md-table td.md-cell {
   color: rgba(0,0,0,.87);
   font-size: 13px;
-  border-top: none !important;
-  border-bottom: 1px rgba(0,0,0,.12) solid;
+  border-top: 1px rgba(0,0,0,.12) solid;
 }
 .md-table-pagination {
   border-top: none !important;
@@ -524,16 +523,12 @@ table.md-table td.md-cell {
 .not-allow-click {
   pointer-events: none;
 }
-md-table-container.data-driven table thead tr th, md-table-container.data-driven table tbody tr td {
+md-table-container.data-driven table tbody tr td.cell {
   padding: 5 0 0 0 !important; 
-  min-width: 150px;
+  min-width: 100px;
 } 
 md-table-container.data-driven table thead tr th md-input-container, md-table-container.data-driven table tbody tr td md-input-container {
-  margin: none !important;height: 42px;
-}
-
-md-table-container.data-driven table thead tr th md-input-container input {
-  margin: none !important;
+  height: 42px;
 }
  
 .data-form md-input-container {
