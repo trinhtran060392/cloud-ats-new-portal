@@ -24,7 +24,8 @@ define([
     'app.project.keyword',
     'app.project.keyword.reports',
     'app.project.performance',
-    'app.auth'
+    'app.auth',
+    'app.acl'
   ]);
 
   couchPotato.configureApp(app);

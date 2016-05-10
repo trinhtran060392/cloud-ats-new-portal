@@ -16,7 +16,8 @@ define([
   'project/keyword-module',
   'project/keyword-report-module',
   'project/performance-module',
-  'auth/module'
+  'auth/module',
+  'acl/module'
 ], function() {
   'use strict';
 })

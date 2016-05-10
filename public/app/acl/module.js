@@ -13,22 +13,19 @@ define([
     function ($stateProvider, $couchPotatoProvider, $urlRouterProvider) {
 
     $stateProvider
-    .state('app', {
-      abstract: true,
-      /*views: {
-        'root': {
-          templateUrl: 'app/layout/views/layout.tpl.html',
+    .state('app.tenants', {
+      url: '/permission',
+      views: {
+        'content@app': {
+          controller: 'TenantCtrl',
+          templateUrl: 'app/acl/views/tenants.tpl.html',
           resolve: {
-              deps: $couchPotatoProvider.resolveDependencies([
-                'auth/controllers/logout-controller',
-                'layout/directives/list-space',
-                'layout/directives/user-info',
-                'components/language/language-controller',
-                'components/language/language',
-              ])
-            }
-        }
-      }*/
+            deps: $couchPotatoProvider.resolveDependencies([
+              'acl/controllers/tenants-ctrl'
+            ])
+          }
+        },
+      }
     });
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
