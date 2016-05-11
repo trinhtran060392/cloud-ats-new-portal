@@ -11,9 +11,9 @@
 		      </th>
 		    </thead>
 		    <tbody>
-		      <tr ng-repeat="i in [1,2,3,4,5]">
-		        <td class="text-align-center"><span >Space1</span></td>
-		        <td class="text-align-center"><span >Tenant1</span></td>
+		      <tr ng-repeat="i in spaces">
+		        <td class="text-align-center"><span >{{i.name}}</span></td>
+		        <td class="text-align-center"><span >{{i.tenant._id}}</span></td>
 		        <td class="text-align-center"><md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon></td>
 		      </tr>
 		    </tbody>

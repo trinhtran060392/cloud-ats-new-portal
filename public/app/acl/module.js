@@ -21,10 +21,15 @@ define([
           templateUrl: 'app/acl/views/tenants.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'acl/controllers/tenants-ctrl'
+              'acl/controllers/tenants-ctrl',
+              'services/space-service'
             ])
           }
         },
+      },
+      data: {
+        title: 'Spaces management',
+        requireLogin: true
       }
     })
     .state('app.spaces', {

@@ -54,14 +54,14 @@
         </md-menu-bar>                
       </div>
 
-      <div layout="row" layout-align="start center">
+      <div layout="row" layout-align="start center" user-info>
         <md-menu-bar class="user-menu-bar">
           <md-menu md-position-mode="left bottom">
             
             <md-button class="user-button" ng-click="$mdOpenMenu()" aria-label="user">
               <div layout="row" layout-align="space-between center">
                 <img ng-src="styles/img/avatars/male.png" class="avatar">
-                <span user-info>{{currentUser.first_name}} {{currentUser.last_name}}</span>
+                <span>{{currentUser.first_name}} {{currentUser.last_name}}</span>
                 <md-icon md-font-icon="icon-chevron-down"></md-icon>
               </div>
             </md-button>
@@ -76,7 +76,7 @@
                 <md-menu>
                   <md-button ng-click="$mdOpenMenu()">Settings</md-button>
                   <md-menu-content width="3">
-                    <md-menu-item><md-button ui-sref="app.tenants">Tenants</md-button></md-menu-item>
+                    <md-menu-item ng-if="currentUser.isTenantAdmin"><md-button ui-sref="app.tenants">Tenants</md-button></md-menu-item>
                     <md-menu-item><md-button ui-sref="app.spaces">Spaces</md-button></md-menu-item>
                   </md-menu-content>
                 </md-menu>
