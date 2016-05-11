@@ -3,6 +3,5 @@ define(['project/module'], function (module) {
 
   module.registerController('OverviewHeaderBoxCtrl', ['$scope', 'SharedDataService', function($scope, SharedDataService) {
     $scope.sharedData = SharedDataService;
-    console.log($scope.sharedData);
   }]);
 });

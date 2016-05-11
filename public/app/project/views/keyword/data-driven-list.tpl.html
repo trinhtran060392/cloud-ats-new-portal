@@ -1,14 +1,13 @@
 <div id="cases" layout="column">
-
   <md-content class="md-hue-1" perfect-scrollbar>
     <div class="projects-container" layout="row" flex="100" layout-wrap>
-      <div ng-repeat="case in sharedData.project.cases | filter: sharedData.searchCases" layout="row" flex="20" class="project ms-card"> 
+      <div ng-repeat="data in sharedData.project.datum | filter: sharedData.searchDataDriven" layout="row" flex="20" class="project ms-card"> 
         <div class="ms-card-content-wrapper" style="border-left: 3px solid #2E62B1;">
-
+          
           <div class="text-nowrap-ellipsis h2 p-16">
-            <a href="javascript:void(0)" ng-click="clickCase($event, case._id)" class="md-primary-fg">
-              <md-tooltip>{{case.name}}</md-tooltip>
-              {{case.name}}
+            <a href="javascript:void(0)" ng-click="clickData($event, data._id)" class="md-primary-fg">
+              <md-tooltip>{{data.name}}</md-tooltip>
+              {{data.name}}
             </a>
           </div>
 
@@ -17,20 +16,24 @@
               <div layout="row" layout-align="start center">
                 <span class="text-bold pr-8">Creator:</span>
                 <a href="javascript:void(0)" class="text-nowrap-ellipsis" flex>
-                  <md-tooltip>{{case.creator.email}}</md-tooltip>
-                  {{case.creator.first_name}} {{case.creator.last_name}}
+                  <md-tooltip>{{data.creator.email}}</md-tooltip>
+                  {{data.creator.first_name}} {{data.creator.last_name}}
                 </a>
               </div>
               <div layout="row" layout-align="start center">
                 <span class="text-bold pr-8 text-nowrap-ellipsis">Created Date:</span>
                 <span class="subtitle secondary-text text-nowrap-ellipsis">
-                <md-tooltip>{{parse(case.created_date)}}</md-tooltip>
-                {{parse(case.created_date)}}
+                <md-tooltip>{{parse(data.created_date)}}</md-tooltip>
+                {{parse(data.created_date)}}
                 </span>
               </div>
               <div>
-                <span class="text-bold pr-8">Total Step(s):</span> 
-                <span>{{case.steps.length}} Step(s)</span>
+                <span class="text-bold pr-8">Total Row(s):</span> 
+                <span>{{data.row}}</span>
+              </div>
+              <div>
+                <span class="text-bold pr-8">Total Column(s):</span> 
+                <span>{{data.column}}</span>
               </div>
             </div>
           </div>
@@ -38,20 +41,15 @@
           <md-divider></md-divider>
 
           <div layout="row" layout-align="start center">
-            <md-button class="md-icon-button" aria-label="Clone this case" ng-click="clone($event, case._id, case.name)">
-              <md-tooltip>Clone this case</md-tooltip>
-              <md-icon class="s16 deep-orange-fg" md-font-icon="icon-content-duplicate" aria-hidden="true"></md-icon>
-            </md-button>
             <span flex></span>
-            <md-button class="md-icon-button" aria-label="Delete this case" ng-click="delete($event, case._id)">
+            <md-button class="md-icon-button" aria-label="Delete this Data" ng-click="delete($event, data._id)">
               <md-tooltip>Delete</md-tooltip>
               <md-icon class="s16 md-warn-fg" md-font-icon="icon-delete" aria-hidden="true"></md-icon>
             </md-button>
           </div>
-          
+
         </div>
       </div>
     </div>
   </md-content>
-
 </div>

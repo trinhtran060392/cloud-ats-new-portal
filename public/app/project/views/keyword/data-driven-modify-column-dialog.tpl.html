@@ -1,0 +1,30 @@
+<md-dialog aria-label="Create Case" ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Data Driven Modify Coloums</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="close()">
+          <md-icon md-font-icon="icon-close" class="white-fg" aria-label="close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row" layout-align="start center" layout-wrap>
+          <md-checkbox 
+            ng-checked="exists(param, selectedColumn)" 
+            ng-repeat="param in params" 
+            ng-click="toggle(param, selectedColumn)"
+            flex="100">
+            {{param}}
+          </md-checkbox>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <span flex></span>
+      <md-button class="md-primary" ng-click="submit()" ng-disabled="!selectedColumn.length">
+        Ok
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -33,7 +33,6 @@ define(['project/module'], function (module) {
     ProjectService.get($scope.projectId, function (data, status) {
       $scope.sharedData.project = data;
       $scope.sharedData.project.created_date = parse(data.created_date);
-      console.log($scope.sharedData);
     });
 
   }]);
