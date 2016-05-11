@@ -4,10 +4,10 @@ define(['project/keyword-module'], function(module) {
   module.registerFactory('DataService', ['$http', '$q', '$cookies', '$state',
     function($http, $q, $cookies, $state){
       return {
-        list: function (callback) {
+        list: function (projectId, callback) {
           var request = {
             method: 'GET',
-            url: appConfig.RestEntry + '/api/v1/datas',
+            url: appConfig.RestEntry + '/api/v1/datas/' + projectId,
             headers: {
               'X-AUTH-TOKEN': $cookies.get('authToken'),
               'X-SPACE': $cookies.get('space'),

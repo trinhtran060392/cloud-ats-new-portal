@@ -122,7 +122,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
             csv: undefined,
           };
 
-          $scope.cancel = function() {
+          $scope.close = function() {
             $mdDialog.cancel();
           }
 
@@ -141,17 +141,16 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
           $scope.addNewFile = function (files) {
             var file = files[0]
             $scope.data.csv = file.name;
-              Upload.upload({
-                url: appConfig.RestEntry + '/api/v1/data/' + null + '/upload/'+null,
-                data: {file: file},
-                headers: {
-                  'X-AUTH-TOKEN': $cookies.get('authToken'),
-                  'Content-Type': undefined
-                }
-              }).then(function (response) {
-                $scope.data.data_source = JSON.parse(response.data.data_source);
-              });
-            // }
+            Upload.upload({
+              url: appConfig.RestEntry + '/api/v1/data/' + null + '/upload/'+null,
+              data: {file: file},
+              headers: {
+                'X-AUTH-TOKEN': $cookies.get('authToken'),
+                'Content-Type': undefined
+              }
+            }).then(function (response) {
+              $scope.data.data_source = JSON.parse(response.data.data_source);
+            });
           }
         }
       })
@@ -160,21 +159,16 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     $scope.selectExistedData = function (ev) {
       $mdDialog.show({
         templateUrl: 'app/project/views/keyword/data-driven-select-existed-dialog.tpl.html',
-        parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: true,
         scope: $scope,
         preserveScope: true,
         controller: function() {
 
-          DataService.list(function (response, status) {
-            $scope.list = response;
+          DataService.list($scope.projectId, function (response, status) {
+            $scope.list = response.datum;
             $scope.originList = angular.copy($scope.list);
           });
-
-          $scope.cancel = function() {
-            $mdDialog.cancel();
-          };
 
           $scope.$watch('searchText', function(newText, oldText) {
             if (newText !== oldText) {
@@ -186,6 +180,11 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
               }
             }
           });
+
+          $scope.close = function() {
+            $mdDialog.cancel();
+          }
+
           $scope.submit = function() {
             var caze = {
               _id: $scope.caze._id,
@@ -241,14 +240,13 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     $scope.create = function (ev) {
       $mdDialog.show({
         templateUrl: 'app/project/views/keyword/data-driven-dialog.tpl.html',
-        parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
         scope: $scope,
         preserveScope: true,
         controller: function() {
           $scope.title = "Create new data driven";
-          $scope.cancel = function() {
+          $scope.close = function() {
             $mdDialog.cancel();
           };
           $scope.submit = function() {
@@ -349,7 +347,7 @@ define(['project/keyword-module', 'lodash'], function (module, _) {
     });
 
     $scope.$watch('dataSource', function(newData, oldData) {
-      if (newData !== oldData) {
+      if (newData !== oldData && !$scope.sharedData.dataQueryText) {
 
         //Validate
         if (!newData.length) {

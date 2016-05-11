@@ -167,21 +167,53 @@ define([
     .state('app.project.keyword-data', {
       url: '/project/:id/keyword/data',
       views: {
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/data-driven-search-box.tpl.html',
+          controller: 'DataActionCtrl'
+        },
         'sub-content@app.project': {
           controller: 'DataCtrl',
-          templateUrl: 'app/project/views/keyword/data-driven.tpl.html',
+          templateUrl: 'app/project/views/keyword/data-driven-list.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'project/directives/project-nav',
               'project/controllers/data-ctrl',
-              'services/case-service',
+              'project/controllers/data-action-ctrl',
+              'project/services/shared-data-service',
               'services/data-service'
             ])
           }
         },
         'header-box@app.project': {
-          templateUrl: 'app/project/views/keyword/data-driven-header-box.tpl.html'
+          templateUrl: 'app/project/views/keyword/data-driven-header-box.tpl.html',
+          controller: 'DataActionCtrl'
         }
+      },
+      data: {
+        title: 'Project Keyword Data Driven',
+        requireLogin: true
+      }
+    })
+    .state('app.project.keyword-data.detail', {
+      url: '/:dataId',
+      views: {
+        'search-box@app': {
+          templateUrl: 'app/project/views/keyword/data-driven-in-case-search-box.tpl.html',
+          controller: 'DataActionCtrl'
+        },
+        'sub-content@app.project': {
+          controller: 'DataDetailCtrl',
+          templateUrl: 'app/project/views/keyword/data-driven-detail.tpl.html',
+          resolve: {
+            deps: $couchPotatoProvider.resolveDependencies([
+              'project/directives/project-nav',
+              'project/controllers/data-detail-ctrl',
+              'project/controllers/data-action-ctrl',
+              'project/services/shared-data-service',
+              'services/data-service'
+            ])
+          }
+        },
       },
       data: {
         title: 'Project Keyword Data Driven',
