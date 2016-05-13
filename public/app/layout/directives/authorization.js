@@ -25,9 +25,9 @@ define(['auth/module', 'lodash'], function(module, _) {
           }
         });
         if (hasFeature && hasAction) {
-          $(element[0]).hide();          
-        } else {
           $(element[0]).show();
+        } else {
+          $(element[0]).hide();
         }
       }
     };
