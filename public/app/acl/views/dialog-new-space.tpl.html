@@ -13,7 +13,7 @@
                 <div layout='row' layout-align="start center" >
                   <md-input-container flex>
                     <label>Space Name</label>
-                    <input type="text" name="spaceName" required>
+                    <input type="text" name="spaceName" required ng-model="space.name">
                     <div ng-messages="spaceForm.spaceName.$error" role="alert" aria-live="assertive" >
                       <div ng-message="required">Space name is required</div>
                     </div>
@@ -23,18 +23,7 @@
                   <div layout="row" layout-align="start center">
                     <md-input-container flex>
                       <label>Description</label>
-                      <input type="text">
-                    </md-input-container>
-                  </div>
-                </div>
-                <div layout='row'>
-                  <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                      <label>Administrators</label>
-                      <input type="text" name="administrators" required>
-                      <div ng-messages="spaceForm.administrators.$error" role="alert" aria-live="assertive" >
-                        <div ng-message="required">Administrators is required</div>
-                      </div>
+                      <input type="text" ng-model="space.desc">
                     </md-input-container>
                   </div>
                 </div>
@@ -43,7 +32,7 @@
     </md-dialog-content>
     <md-dialog-actions layout="row" >
        <div class="ms-stepper-controls" layout="row" layout-align="center center">
-          <md-button class="md-accent md-raised md-default-theme" ng-click="create()" ng-disabled="spaceForm.$invalid">
+          <md-button class="md-accent md-raised md-default-theme" ng-click="create(space)" ng-disabled="spaceForm.$invalid">
             Create
           </md-button>
           </div>

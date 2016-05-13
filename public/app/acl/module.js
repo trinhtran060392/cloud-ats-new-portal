@@ -40,7 +40,8 @@ define([
           templateUrl: 'app/acl/views/spaces.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'acl/controllers/spaces-ctrl'
+              'acl/controllers/spaces-ctrl',
+              'services/space-service'
             ])
           }
         },
