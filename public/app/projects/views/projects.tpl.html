@@ -31,6 +31,21 @@
           <div class="creator ph-16 pb-16" layout="row" layout-align="start center">
             <img class="avatar mr-16" ng-src="styles/img/avatars/male.png">
             <div layout="column" flex>
+              <div layout="row" layout-align="start center">
+                <span class="text-bold pr-8">Creator:</span>
+                <a href="javascript:void(0)" class="text-nowrap-ellipsis" flex>
+                  <md-tooltip>{{project.creator.email}}</md-tooltip>
+                  {{project.creator.first_name}} {{project.creator.last_name}}
+                </a>
+              </div>
+              <div layout="row" layout-align="start center">
+                <span class="text-bold pr-8 text-nowrap-ellipsis">Created Date:</span>
+                <span class="subtitle secondary-text text-nowrap-ellipsis">
+                <md-tooltip>{{project.created_date}}</md-tooltip>
+                {{project.created_date}}
+                </span>
+              </div>
+              <!-- 
               <div class="title" layout="row" layout-align="start center">
                 <a href="javascript:void(0)" class="text" flex>
                   <md-tooltip>{{project.creator.email}}</md-tooltip>
@@ -39,6 +54,7 @@
                 <span flex>created on</span>
               </div>
               <div class="subtitle secondary-text">{{project.created_date}}</div>
+              -->
             </div>
           </div>
 

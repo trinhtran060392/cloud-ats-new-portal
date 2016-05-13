@@ -16,7 +16,7 @@ define(['project/keyword-module'], function (module) {
           templateUrl: 'app/project/views/keyword/data-add-new.tpl.html',
           scope: $scope,
           preserveScope: true,
-          controller: function AddController() {
+          controller: function() {
 
             $scope.column_name = undefined;
             $scope.data_name = undefined;
