@@ -5,11 +5,11 @@ define(['acl/module', 'lodash'], function (module, _) {
 		function ($mdDialog, $mdToast, $scope, TenantAdminService) {
 
 		$scope.edit = false;
-
+		$scope.hasChanged = false;
 		$scope.toggle = function (){
 			$scope.edit = !$scope.edit;
 		}
-
+		var originUsers = undefined;
 		TenantAdminService.list(function (data, status) {
 			$scope.spaces = data.spaces;
 
@@ -25,6 +25,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 				}
 			});
 			$scope.users = data.users;
+			originUsers = angular.copy(data.users);
 		});
 
 		$scope.deleteSpace = function (ev, id) {
@@ -91,6 +92,16 @@ define(['acl/module', 'lodash'], function (module, _) {
 			}
 		});
 
+		$scope.$watch('users', function (newUsers) {
+			if (originUsers && (angular.toJson(newUsers) != angular.toJson(originUsers))) {
+				$scope.hasChanged = true;
+			} else $scope.hasChanged = false;
+		}, true);
+
+		$scope.cancel = function () {
+			$scope.users = angular.copy(originUsers);
+		}
+
 		$scope.addUser = function (userSelected) {
 
 			var userSelected = JSON.parse(userSelected);
@@ -102,6 +113,9 @@ define(['acl/module', 'lodash'], function (module, _) {
 				TenantAdminService.addAdmin(userSelected, function (data, status) {
 					if (status === 200) {
 						$scope.users.push(data);
+						$scope.hintedUsers = [];
+						$scope.userSelected = undefined;
+						$scope.searchText = undefined;
 						$mdToast.show($mdToast.simple().position('top right').textContent('The user has added!'));
 					}
 				});
