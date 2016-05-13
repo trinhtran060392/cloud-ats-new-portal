@@ -5,6 +5,7 @@ define([
   'layout/directives/smart-context',
   'layout/directives/auto-width',
   'layout/directives/auto-hide-label',
+  'layout/directives/authorization',
 
   'services/user-service',
   'services/authentication-service',
