@@ -1,0 +1,92 @@
+	<div class="ms-widget-front white-bg" layout="row" flex="100"  layout-padding  layout-align="start start">
+		<div layout="column" layout-padding  layout-align="center center" flex="50">
+			<div flex layout="row" layout-align="center center" style="width: 100%">
+				<h4 flex>Manage spaces</h4>
+				<span flex></span>
+				<a ng-click="createSpace($event)">
+					<md-tooltip>Add new space</md-tooltip>
+					<md-icon md-font-icon="icon-plus">
+					</md-icon>
+				</a>
+			</div>
+	  	<table class="simple spaces">
+		    <thead>
+		      <th class="space-header text-align-center"><span class="text-bold">Spaces</span></th>
+		      <th class="space-header text-align-center" style="padding-left: 8px;"><span class="text-bold">Tenant</span></th>
+		      <th class="space-header text-align-center">
+		      	<span class="text-bold">Actions</span>
+		      	<span></span>
+		      </th>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="i in spaces">
+		        <td class="text-align-center"><span >{{i.name}}</span></td>
+		        <td class="text-align-center"><span >{{i.tenant._id}}</span></td>
+		        <td class="text-align-center">
+		        	<a ng-click="deleteSpace($event, i._id)">
+		        		<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg"></md-icon>
+		        	</a>
+		        </td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</div>
+		<div layout="column" layout-padding  layout-align="center center" flex="50">
+			<div flex layout="row" layout-align="center center" style="width: 100%">
+				<h4 flex>Grant permission</h4>
+				<span flex></span>
+				<md-button class="animate-slide-down" ng-click="save()" ng-show="hasChanged">
+		      <div layout="row" layout-align="start center" class="md-primary-fg">
+		        <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg"></md-icon>
+		        <span class="pl-8" flex>Save</span>
+		      </div>
+		    </md-button>
+			</div>
+		  <table class="simple spaces">
+		    <thead>
+		      <th class="space-header"><span class="text-bold"></span></th>
+		      <th class="space-header" style="padding-left: 8px; text-align: center" colspan="3"><span class="text-bold">Tenant</span></th>
+		    </thead>
+		    <tbody>
+		      <tr style="height: 40px;">
+		        <td></td>
+		        <td class="text-align-center"><span >View</span></td>
+		        <td class="text-align-center"><span >Manage spaces</span></td>
+		        <td class="text-align-center"><span >Grant permission</span></td>
+		      </tr>
+		      <tr ng-repeat="i in users">
+		      	<td><span>{{i.first_name}} {{i.last_name}}</span></td>
+		      	<td class="text-align-center">
+		      		<md-checkbox aria-label="select" class="margin-bottom-0" ng-model="i.viewSpaces">
+	            </md-checkbox>
+		      	</td>
+		      	<td class="text-align-center">
+		      		<md-checkbox aria-label="select" class="margin-bottom-0" ng-model="i.manageSpaces">
+	            </md-checkbox>
+		      	</td>
+		      	<td class="text-align-center">
+		      		<md-checkbox aria-label="select" class="margin-bottom-0" ng-model="i.grantPermission">
+	            </md-checkbox>
+		      	</td>
+		      </tr>
+		    </tbody>
+		  </table>
+		  <div layout="row" layout-align="start center" flex style="width: 100%">
+		  	<md-input-container class="md-block margin-bottom-0">
+					<input type="text" placeholder="add more user" ng-model="searchText">
+				</md-input-container>
+				 <md-input-container class="md-block" flex-gt-sm ng-show="hintedUsers.length">
+            <label>User</label>
+            <md-select ng-model="userSelected" class="hinted-user">
+              <md-option ng-repeat="user in hintedUsers" value="{{user}}">
+                {{user._id}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+		  	<md-button flex="5" class="md-raised md-accent margin-bottom-10 margin-top-0" ng-click="addUser(userSelected)" ng-disabled="!userSelected">
+		  		<md-tooltip>Add</md-tooltip>
+		  		Add
+		  	</md-button>
+		  </div>
+		</div>
+	</div>

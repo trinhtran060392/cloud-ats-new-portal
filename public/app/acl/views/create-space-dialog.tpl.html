@@ -1,0 +1,30 @@
+<md-dialog aria-label="New Space"  ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools md-primary-bg">
+        <span class="md-title text-nowrap">Create New Space</span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form name="newSpaceForm">
+          <md-input-container class="md-block">
+          <label>Space name</label>
+          <input type="text" name="spaceName" required ng-model="data_name">
+          <div ng-messages="newSpaceForm.spaceName.$error" role="alert" aria-live="assertive" >
+              <div ng-message="required">Space name is required</div>
+          </div>
+          </md-input-container>
+          
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" >
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="submit()" ng-disabled="newSpaceForm.$invalid || newSpaceForm.$pristine">
+       <span class="white-fg">Submit</span>
+      </md-button>
+      <md-button class="md-raised mr-24" ng-click="cancel()">
+        Cancel
+      </md-button>
+    </md-dialog-actions>
+</md-dialog>

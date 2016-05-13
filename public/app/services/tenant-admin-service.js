@@ -1,14 +1,12 @@
-define(['layout/module'], function (module) {
+define(['acl/module'], function(module) {
+  'use strict';
 
-	'use strict';
-
-	module.registerFactory('ProjectService', ['$http', '$cookies', function ($http, $cookies) {
-
-		return {
-      list: function (callback) {
+  module.registerFactory('TenantAdminService', ['$http', '$cookies', function($http, $cookies) {
+    return {
+      list: function(callback) {
         var request = {
           method: 'GET',
-          url: appConfig.RestEntry + '/api/v1/projects',
+          url: appConfig.RestEntry + '/api/v1/spaces',
           headers: {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
@@ -16,67 +14,42 @@ define(['layout/module'], function (module) {
         };
 
         $http(request).success(function(data, status) {
-          callback(data, status);
-        }).error(function(data, status) {
           callback(data, status);
         });
       },
-      get: function (id, callback) {
+      delete: function (id, callback) {
         var request = {
-          method: 'GET',
-          url: appConfig.RestEntry + '/api/v1/project/' + id,
+          method: 'DELETE',
+          url: appConfig.RestEntry + '/api/v1/space',
           headers: {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
-          }
+          },
+          data: id
         };
 
         $http(request).success(function(data, status) {
-          callback(data, status);
-        }).error(function(data, status) {
           callback(data, status);
         });
       },
       create: function (name, callback) {
         var request = {
           method: 'POST',
-          url: appConfig.RestEntry + '/api/v1/project',
+          url: appConfig.RestEntry + '/api/v1/space/'+name,
           headers: {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
-          },
-          data: {
-            name : name
           }
         };
 
         $http(request).success(function(data, status) {
           callback(data, status);
-        }).error(function(data, status) {
-          callback(data, status);
         });
       },
-      delete: function (id, name, pass, callback) {
-        var request = {
-          method: 'DELETE',
-          url: appConfig.RestEntry + '/api/v1/project/'+id+'/'+name,
-          headers: {
-            'X-AUTH-TOKEN': $cookies.get('authToken'),
-            'X-SPACE': $cookies.get('space')
-          },
-          data: pass
-        };
-
-        $http(request).success(function(data, status) {
-          callback(data, status);
-        }).error(function(data, status) {
-          callback(data, status);
-        });
-      },
-      clone: function (id, name, callback) {
+      search: function (text, callback) {
         var request = {
           method: 'GET',
-          url: appConfig.RestEntry + '/api/v1/project/clone/'+id+'?name='+name,
+          url: appConfig.RestEntry + '/api/v1/user/search/'+text,
           headers: {
             'X-AUTH-TOKEN': $cookies.get('authToken'),
             'X-SPACE': $cookies.get('space')
@@ -85,10 +58,23 @@ define(['layout/module'], function (module) {
 
         $http(request).success(function(data, status) {
           callback(data, status);
-        }).error(function(data, status) {
+        });
+      },
+      addAdmin: function (user, callback) {
+        var request = {
+          method: 'POST',
+          url: appConfig.RestEntry + '/api/v1/tenant/admin',
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          },
+          data: user
+        };
+
+        $http(request).success(function(data, status) {
           callback(data, status);
         });
       }
-		}
-	}]);
+    }
+  }]);
 })

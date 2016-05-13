@@ -13,22 +13,22 @@ define([
     function ($stateProvider, $couchPotatoProvider, $urlRouterProvider) {
 
     $stateProvider
-    .state('app.tenants', {
-      url: '/tenants',
+    .state('app.tenant-admin', {
+      url: '/tenant-admin',
       views: {
         'content@app': {
-          controller: 'TenantConfCtrl',
-          templateUrl: 'app/acl/views/tenants.tpl.html',
+          controller: 'TenantAdminCtrl',
+          templateUrl: 'app/acl/views/tenant-admin.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'acl/controllers/tenants-ctrl',
-              'services/space-service'
+              'acl/controllers/tenant-admin-ctrl',
+              'services/tenant-admin-service'
             ])
           }
         },
       },
       data: {
-        title: 'Spaces management',
+        title: 'Tenant Admin',
         requireLogin: true
       }
     })
