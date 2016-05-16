@@ -19,6 +19,26 @@ define(['acl/module'], function(module) {
 
         });
       },
+      get: function (roleId, callback) {
+
+         var request = {
+          method: 'GET',
+          url: appConfig.RestEntry + '/api/v1/acl/role/'+roleId,
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          }
+        }
+
+        $http(request).success(function (data, status) {
+          callback (data, status);
+        }).error(function (data, status) {
+          switch (status) {
+            case 404:
+              $window.location.href = '/404.html';
+          }
+        });
+      },
       create: function (role, callback) {
         var request = {
           method: 'POST',

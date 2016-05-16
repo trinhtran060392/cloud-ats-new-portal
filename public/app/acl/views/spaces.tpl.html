@@ -92,17 +92,17 @@
 	            md-selected-item="selectedItem"
 	            md-search-text="searchText"
 	            md-items="item in listUser"
-	            md-item-text="item.email"
+	            md-item-text="item._id"
 	            md-min-length="0"
 	            placeholder="What is email of user" flex="30">
 	            <md-item-template>
-	              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.email}}</span>
+	              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item._id}}</span>
 	            </md-item-template>
 	            <md-not-found>
 	              No states matching {{searchText}} were found.
 	            </md-not-found>
 	        </md-autocomplete>
-    		<md-button md-no-ink class="md-primary" ng-disabled="!selectedItem" ng-click="addUser(searchText)">Add User</md-button>
+    		<md-button md-no-ink class="md-primary" ng-disabled="!selectedItem" ng-click="addUser(selectedItem.first_name, selectedItem.last_name)">Add User</md-button>
 		</div>
 		<div layout="row" flex="100" layout-align="end">
 			<md-button md-no-ink class="md-primary" ng-show="!edit" ng-click="toggle()">

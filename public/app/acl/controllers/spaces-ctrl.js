@@ -1,14 +1,15 @@
 define(['acl/module', 'lodash'], function (module, _) {
 	
 	'use strict';
-	module.registerController('SpacesCtrl', ['$filter','$scope', '$mdDialog', 'SpaceService', '$mdToast',
-		function ($filter, $scope, $mdDialog, SpaceService, $mdToast) {
+	module.registerController('SpacesCtrl', ['TenantAdminService', '$filter','$scope', '$mdDialog', 'SpaceService', '$mdToast',
+		function (TenantAdminService, $filter, $scope, $mdDialog, SpaceService, $mdToast) {
 
 		$scope.spaces = [];
 		$scope.space = {};
 		$scope.listUser = [];
 		var firstSpace = null;
 		$scope.currentSpace = null ;
+		$scope.edit = false;
 
 		$scope.grants = [
 			{
@@ -34,27 +35,24 @@ define(['acl/module', 'lodash'], function (module, _) {
 
 		SpaceService.list(function(data){
 			$scope.spaces = data ;
-			SpaceService.get(data[0]._id, function(data, status){
-			$scope.space = data[0];
-			$scope.currentSpace = data[0].name ;
+			SpaceService.get(data[0]._id, function(result, status){
+				$scope.space = result[0];
+				$scope.currentSpace = result[0].name ;
 			});
 		});
-		$scope.edit = false;
 
 		$scope.toggle = function (){
 			$scope.edit = !$scope.edit;
-			SpaceService.listUser(function(data, status){
-				$scope.listUser = data ;
-				$scope.originList = angular.copy($scope.listUser);
-			});
 			$scope.$watch('searchText', function(newText, oldText) {
 	            if (newText !== oldText) {
-	              if (newText) {
-	                var results = $filter('filter')($scope.originList, {email: $scope.searchText});
-	                $scope.listUser = results;
-	              } else {
-	                $scope.listUser = angular.copy($scope.originList);
-	              }
+	            	if(newText){
+	            		$scope.listUser = [];
+	            		TenantAdminService.search(newText, function (data, status) {
+	            			angular.forEach(data, function(value, key) {
+							  	$scope.listUser.push(value);
+							});
+						});
+	            	}
 	            }
 	        });
 		};
@@ -71,6 +69,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 	    };
 
 		$scope.getSpaceDetail = function(ev, spaceId){
+			$scope.edit = false;
 			SpaceService.get(spaceId, function(data, status){
 			$scope.space = data[0] ;
 			$scope.currentSpace = data[0].name;
@@ -84,9 +83,8 @@ define(['acl/module', 'lodash'], function (module, _) {
 		        targetEvent: ev,
 		        clickOutsideToClose:true,
 		        scope: $scope,
-		        preserveScope: true,
 		        controller: function() {
-		        	$scope.space = {};
+		        	$scope.newSpace = {};
 		            $scope.hide = function() {
 		              $mdDialog.hide();
 		            };
@@ -94,9 +92,9 @@ define(['acl/module', 'lodash'], function (module, _) {
 		              $mdDialog.cancel();
 		            };
 		            $scope.create = function(space) {
-		            	$scope.space.name = space.name;
-		            	$scope.space.desc = space.desc;
-		              	SpaceService.createSpace($scope.space, function(data, status){
+		            	console.log($scope.newSpace);
+		            	$scope.spaces.push($scope.newSpace);
+		              	SpaceService.createSpace($scope.newSpace, function(data, status){
 		              		$mdDialog.hide();
 		              		if(status == 201){
 		              			$mdToast.show($mdToast.simple().position('top right').textContent('Create new Space Success!'));
@@ -109,7 +107,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 		        }).then(function () {
 		    });
 		};
-		$scope.clickEditSpace = function(ev, space){
+		$scope.clickEditSpace = function(ev){
 			$mdDialog.show({
 		        templateUrl: 'app/acl/views/dialog-edit-space.tpl.html',
 		        parent: angular.element(document.body),
@@ -153,6 +151,13 @@ define(['acl/module', 'lodash'], function (module, _) {
     			_.remove($scope.spaces, function (space) {
     				return space._id === spaceId;
     			});
+    			SpaceService.list(function(data){
+					$scope.spaces = data ;
+					SpaceService.get(data[0]._id, function(result, status){
+						$scope.space = result[0];
+						$scope.currentSpace = result[0].name ;
+					});
+				});
     			$mdToast.show($mdToast.simple().position('top right').textContent('Delete The Space Success!'));
 	    		}  else {
 	    		$mdToast.show($mdToast.simple().position('top right').textContent('Delete The Space Error!'));	
@@ -168,9 +173,9 @@ define(['acl/module', 'lodash'], function (module, _) {
 			$scope.edit = !$scope.edit;
 			$scope.grants = $scope.originGrants ;
 		};
-		$scope.addUser = function(name){
+		$scope.addUser = function(first_name, last_name){
 			var grant = {
-				user:name,
+				user:first_name+last_name,
 				view:false,
 				manage_project:false,
 				grant_permission:false

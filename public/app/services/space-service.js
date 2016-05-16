@@ -72,6 +72,7 @@ define(['acl/module'], function(module) {
         }).error(function (data, status) {});
       },
       delete: function (id, callback) {
+        console.log(id);
         var request = {
           method: 'DELETE',
           url: appConfig.RestEntry + '/api/v1/acl/space/'+id,
@@ -103,21 +104,6 @@ define(['acl/module'], function(module) {
 
         });
       },
-      delete: function (id, callback) {
-        var request = {
-          method: 'DELETE',
-          url: appConfig.RestEntry + '/api/v1/acl/space',
-          headers: {
-            'X-AUTH-TOKEN': $cookies.get('authToken'),
-            'X-SPACE': $cookies.get('space')
-          },
-          data: id
-        };
-
-        $http(request).success(function(data, status) {
-          callback(data, status);
-        });
-      }
     }
   }]);
 });

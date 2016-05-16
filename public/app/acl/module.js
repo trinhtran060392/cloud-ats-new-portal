@@ -41,10 +41,15 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'acl/controllers/spaces-ctrl',
-              'services/space-service'
+              'services/space-service',
+              'services/tenant-admin-service'
             ])
           }
         },
+      },
+      data: {
+        title: 'Space Admin',
+        requireLogin: true
       }
     })
     .state('app.roles', {
@@ -61,6 +66,10 @@ define([
             ])
           }
         },
+      },
+      data: {
+        title: 'Role Admin',
+        requireLogin: true
       }
     }).state('app.project.config', {
       url: '/project/:id/config',
@@ -74,6 +83,10 @@ define([
             ])
           }
         },
+      },
+      data: {
+        title: 'Project Admin',
+        requireLogin: true
       }
     });
 
