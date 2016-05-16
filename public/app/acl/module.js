@@ -22,7 +22,8 @@ define([
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
               'acl/controllers/tenant-admin-ctrl',
-              'services/tenant-admin-service'
+              'services/tenant-admin-service',
+              'acl/directives/space-editable'
             ])
           }
         },
