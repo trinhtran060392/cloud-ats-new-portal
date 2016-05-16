@@ -47,15 +47,17 @@ define([
         },
       }
     })
-    .state('app.projectsAcl', {
-      url: '/projectsAcl',
+    .state('app.roles', {
+      url: '/roles',
       views: {
         'content@app': {
-          controller: 'ProjectsAclCtrl',
-          templateUrl: 'app/acl/views/projects.tpl.html',
+          controller: 'RolesCtrl',
+          templateUrl: 'app/acl/views/roles.tpl.html',
           resolve: {
             deps: $couchPotatoProvider.resolveDependencies([
-              'acl/controllers/projects-ctrl'
+              'acl/controllers/roles-ctrl',
+              'services/role-service',
+              'services/space-service'
             ])
           }
         },

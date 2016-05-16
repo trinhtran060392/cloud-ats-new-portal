@@ -4,7 +4,6 @@ define(['acl/module', 'lodash'], function (module, _) {
 	module.registerController('SpacesCtrl', ['$filter','$scope', '$mdDialog', 'SpaceService', '$mdToast',
 		function ($filter, $scope, $mdDialog, SpaceService, $mdToast) {
 
-		$scope.tenantId = "123";
 		$scope.spaces = [];
 		$scope.space = {};
 		$scope.listUser = [];

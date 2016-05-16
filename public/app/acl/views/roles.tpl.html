@@ -1,0 +1,172 @@
+<div layout="row">
+	<div layout="row" flex="20" class="ms-widget md-whiteframe">
+        <div class="ms-widget-front white-bg" layout="column" flex>
+          <md-content perfect-scrollbar class="pt-8">
+            <div layout="row" layout-align="start center" class="p-16 filter" layout="row" flex="100">
+            	<span style="font-size: 22px;" flex="90">List Roles</span>
+            	<a class="md-icon-button" flex="10" ng-click="clickNew()">
+              		<md-tooltip>New Role</md-tooltip>
+              		<md-icon md-font-icon="icon-plus" class="md-primary-fg"></md-icon>
+                </a>
+            </div>
+          	<div class="p-16 border-bottom" layout="row" flex="100">
+              	<span flex>Role1</span>
+              	<a class="md-icon-button" ng-click="toggle()">
+              		<md-tooltip>Edit Role</md-tooltip>
+              		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
+                </a>
+              	<a class="md-icon-button">
+              		<md-tooltip>Delete Role</md-tooltip>
+              		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+                </a>
+          	</div>  
+          	<div class="p-16 border-bottom" layout="row" flex="100">
+              	<span flex>Role2</span>
+              	<a class="md-icon-button" >
+              		<md-tooltip>Edit Role</md-tooltip>
+              		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
+                </a>
+              	<a class="md-icon-button">
+              		<md-tooltip>Delete Role</md-tooltip>
+              		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+                </a>
+          	</div> 
+          </md-content>
+        </div>
+    </div>
+	<div flex="80" layout="column" class="simple-table-container md-whiteframe-4dp margin-10">
+
+		<div class="table-title">
+			<md-input-container>
+				<label>Role Name</label>
+				<input ng-model="role.name"></input>
+			</md-input-container>
+		</div>
+
+		<div class="ms-responsive-table-wrapper" >
+			<div layout="row" flex="100">
+				<md-input-container  flex="40">
+			        <label> Choose Space</label>
+			        <md-select ng-model="role.spaceName">
+			          <md-option ng-repeat="space in role.spaceName" value="{{space.name}}">
+			            {{space.name}}
+			          </md-option>
+			        </md-select>
+			    </md-input-container>
+			</div>
+		</div>
+		<div class="table-title">Permisstion Role On Tenant</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple">
+				<thead>
+					<tr>
+						<th class="text-align-center">View Tenant</th>
+						<th class="text-align-center">Manage Tenant</th>
+						<th class="text-align-center">Grant permission</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-align-center" >
+            				<md-checkbox aria-label="View Tenant" class="margin-bottom-0" ng-model="role.tenant.view">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Manage Tenanl" class="margin-bottom-0"  ng-model="role.tenant.manage">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.tenant.grant">
+                            </md-checkbox>
+            			</td>
+            		</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="table-title">Permisstion Role On Space</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple">
+				<thead>
+					<tr>
+						<th class="text-align-center">View Space</th>
+						<th class="text-align-center">Manage Space</th>
+						<th class="text-align-center">Grant permission</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-align-center" >
+            				<md-checkbox aria-label="View Space" class="margin-bottom-0" ng-model="role.space.view">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Manage Space" class="margin-bottom-0" ng-model="role.space.manage">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.space.grant">
+                            </md-checkbox>
+            			</td>
+            		</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="table-title">Permisstion Role On Project</div>
+		<div class="ms-responsive-table-wrapper">
+			<table class="simple">
+				<thead>
+					<tr>
+						<th class="text-align-center">View Project</th>
+						<th class="text-align-center">Manage Functional</th>
+						<th class="text-align-center">View Functional</th>
+						<th class="text-align-center">Upload Selenium</th>
+						<th class="text-align-center">Manage Data</th>
+						<th class="text-align-center">Manage Performance</th>
+						<th class="text-align-center">View Performance</th>
+						<th class="text-align-center">Grant Permission</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-align-center" >
+            				<md-checkbox aria-label="View Project" class="margin-bottom-0" ng-model="role.project.view">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Manage Functional" class="margin-bottom-0" ng-model="role.project.manageFunction">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="View Funtional" class="margin-bottom-0" ng-model="role.project.viewFunction">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Upload Selenium" class="margin-bottom-0" ng-model="role.project.uploadSelenium">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Manage Data" class="margin-bottom-0" ng-model="role.project.manageData">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Manage Performance" class="margin-bottom-0" ng-model="role.project.managePerformance">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="View Performance" class="margin-bottom-0" ng-model="role.project.viewPerformance">
+                            </md-checkbox>
+            			</td>
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.project.grantPermisson">
+                            </md-checkbox>
+            			</td>
+            		</tr>
+				</tbody>
+			</table>
+		</div>
+		<div layout="row" flex="100" layout-align="end">
+			<md-button md-no-ink class="md-primary">Cancel</md-button>
+    		<md-button md-no-ink class="md-primary" ng-click="clickSave()">Save</md-button>
+    	</div>
+	</div>
+</div>
