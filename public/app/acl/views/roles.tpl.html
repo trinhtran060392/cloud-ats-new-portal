@@ -34,8 +34,8 @@
 				<div layout="row" flex="100">
 					<md-input-container  flex="40" >
 				        <label>Choose Space</label>
-				        <md-select name="spaceName" ng-model="role.spaceName" required>
-				          <md-option ng-repeat="spaceChoose in listSpaces" value="{{spaceChoose.name}}">
+				        <md-select name="spaceName" ng-model="role.spaceId" required>
+				          <md-option ng-repeat="spaceChoose in listSpaces" value="{{spaceChoose._id}}">
 				            {{spaceChoose.name}}
 				          </md-option>
 				        </md-select>
@@ -51,23 +51,23 @@
 			<table class="simple">
 				<thead>
 					<tr>
-						<th class="text-align-center">View Tenant</th>
-						<th class="text-align-center">Manage Tenant</th>
+						<th class="text-align-center">View Spaces</th>
+						<th class="text-align-center">Manage Spaces</th>
 						<th class="text-align-center">Grant permission</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td class="text-align-center" >
-            				<md-checkbox aria-label="View Tenant" class="margin-bottom-0" ng-model="role.permissions.tenant.view">
+            				<md-checkbox aria-label="View Tenant" class="margin-bottom-0" ng-model="role.permissions.viewSpaces">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Manage Tenanl" class="margin-bottom-0"  ng-model="role.permissions.tenant.manage">
+            				<md-checkbox aria-label="Manage Tenanl" class="margin-bottom-0"  ng-model="role.permissions.manageSpaces">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.permissions.tenant.grant">
+            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.permissions.grantTenant">
                             </md-checkbox>
             			</td>
             		</tr>
@@ -79,23 +79,28 @@
 			<table class="simple">
 				<thead>
 					<tr>
-						<th class="text-align-center">View Space</th>
-						<th class="text-align-center">Manage Space</th>
+						<th class="text-align-center">View Projects</th>
+						<th class="text-align-center">Update Space</th>
+						<th class="text-align-center">Manage Project</th>
 						<th class="text-align-center">Grant permission</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td class="text-align-center" >
-            				<md-checkbox aria-label="View Space" class="margin-bottom-0" ng-model="role.permissions.space.view">
+            				<md-checkbox aria-label="View Project" class="margin-bottom-0" ng-model="role.permissions.viewProjects">
+                            </md-checkbox>
+            			</td>
+						<td class="text-align-center" >
+            				<md-checkbox aria-label="View Space" class="margin-bottom-0" ng-model="role.permissions.updateSpace">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Manage Space" class="margin-bottom-0" ng-model="role.permissions.space.manage">
+            				<md-checkbox aria-label="Manage Space" class="margin-bottom-0" ng-model="role.permissions.manageProjects">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.permissions.space.grant">
+            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.permissions.grantSpace">
                             </md-checkbox>
             			</td>
             		</tr>
@@ -107,7 +112,6 @@
 			<table class="simple">
 				<thead>
 					<tr>
-						<th class="text-align-center">View</th>
 						<th class="text-align-center">Manage Func</th>
 						<th class="text-align-center">View Func</th>
 						<th class="text-align-center">Upload Selenium</th>
@@ -119,36 +123,32 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td class="text-align-center" >
-            				<md-checkbox aria-label="View Project" class="margin-bottom-0" ng-model="role.permissions.project.view">
+            			<td class="text-align-center">
+            				<md-checkbox aria-label="Manage Functional" class="margin-bottom-0" ng-model="role.permissions.manageFunction">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Manage Functional" class="margin-bottom-0" ng-model="role.permissions.project.manageFunction">
+            				<md-checkbox aria-label="View Funtional" class="margin-bottom-0" ng-model="role.permissions.viewFunction">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="View Funtional" class="margin-bottom-0" ng-model="role.permissions.project.viewFunction">
+            				<md-checkbox aria-label="Upload Selenium" class="margin-bottom-0" ng-model="role.permissions.uploadSelenium">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Upload Selenium" class="margin-bottom-0" ng-model="role.permissions.project.uploadSelenium">
+            				<md-checkbox aria-label="Manage Data" class="margin-bottom-0" ng-model="role.permissions.manageData">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Manage Data" class="margin-bottom-0" ng-model="role.permissions.project.manageData">
+            				<md-checkbox aria-label="Manage Performance" class="margin-bottom-0" ng-model="role.permissions.managePerformance">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="Manage Performance" class="margin-bottom-0" ng-model="role.permissions.project.managePerformance">
+            				<md-checkbox aria-label="View Performance" class="margin-bottom-0" ng-model="role.permissions.viewPerformance">
                             </md-checkbox>
             			</td>
             			<td class="text-align-center">
-            				<md-checkbox aria-label="View Performance" class="margin-bottom-0" ng-model="role.permissions.project.viewPerformance">
-                            </md-checkbox>
-            			</td>
-            			<td class="text-align-center">
-            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.permissions.project.grantPermisson">
+            				<md-checkbox aria-label="Grant Permission" class="margin-bottom-0" ng-model="role.permissions.grantPermisson">
                             </md-checkbox>
             			</td>
             		</tr>
