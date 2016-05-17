@@ -63,7 +63,8 @@ define([
             deps: $couchPotatoProvider.resolveDependencies([
               'acl/controllers/roles-ctrl',
               'services/role-service',
-              'services/space-service'
+              'services/space-service',
+              'services/tenant-admin-service'
             ])
           }
         },
