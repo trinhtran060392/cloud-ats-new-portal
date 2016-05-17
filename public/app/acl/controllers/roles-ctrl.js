@@ -6,7 +6,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 
 			$scope.role = {};
 			$scope.roles = [];
-			$scope.listUser = [];
+			$scope.role.listUser = [];
 			$scope.currentRole = null ;
 			$scope.edit = false;
 			$scope.root = "root";
@@ -24,7 +24,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 				$scope.role.permissions = buildPermission(data[0].permissions);
 
 				RoleService.listUser($scope.role._id, function(data, status){
-					$scope.listUser = data ;
+					$scope.role.listUser = data ;
 				});
 
 			});
@@ -37,7 +37,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 					$scope.originRole = angular.copy($scope.role);
 					$scope.role.permissions = buildPermission(data.permissions);
 					RoleService.listUser($scope.role._id, function(data, status){
-						$scope.listUser = data ;
+						$scope.role.listUser = data ;
 					});
 				});
 			};
@@ -54,35 +54,35 @@ define(['acl/module', 'lodash'], function (module, _) {
         }
       });
       $scope.addUser = function(user){
-      	
-      	var data = {
-      		userId: user._id,
-      		roleId: $scope.role._id
-      	}
-      	RoleService.addUser(data, function (data, status) {
-      		if (status === 201) {
-      			$scope.listUser.push(user);
-      			$mdToast.show($mdToast.simple().position('top right').textContent('Add user success!'));
-      		} else {
-      			$mdToast.show($mdToast.simple().position('top right').textContent('Add user error!'));
-      		}
-      	});
+      	$scope.role.listUser.push(user);
 				$scope.searchText = "";
 			};
 
 			$scope.removeUser = function(user){
-      	RoleService.removeUser($scope.role._id, user._id, function (data, status) {
-      		if (status === 201) {
-      			_.remove($scope.listUser, function (obj) {
-      				return user._id === obj._id;
-      			});
-      			$mdToast.show($mdToast.simple().position('top right').textContent('Add user success!'));
-      		} else {
-      			$mdToast.show($mdToast.simple().position('top right').textContent('Add user error!'));
-      		}
-      	});
+  			_.remove($scope.role.listUser, function (obj) {
+  				return user._id === obj._id;
+  			});
 				$scope.searchText = "";
 			};
+
+			$scope.clickEditRole = function(role){
+				$scope.edit = true;
+				$scope.role = role ;
+
+			}
+			$scope.deleteRole = function(roleId){
+				RoleService.delete(roleId, function(data, status){
+					if(status==201){
+						_.remove($scope.roles, function (obj) {
+		  				return roleId === obj._id;
+		  			});
+						$mdToast.show($mdToast.simple().position('top right').textContent('Delete Role Success!'));
+					} else {
+						$mdToast.show($mdToast.simple().position('top right').textContent('Delete Role Error!'));
+					}
+				});
+
+			}
 
 			var buildPermission= function(permissions){
 				var result = {
@@ -159,14 +159,6 @@ define(['acl/module', 'lodash'], function (module, _) {
 				return result;
 			};
 
-			// $scope.$watch('role', function(newRole, originRole) {
-			// 	console.log(newRole);
-			// 	console.log(originRole);
-	  //           if (newRole !== originRole) {
-	  //           	console.log("AAAAAAAAAAA");
-	  //           }
-	  //       });
-
 			$scope.clickNew= function(){
 				$scope.currentRole= undefined ;
 				$scope.edit = true;
@@ -188,13 +180,12 @@ define(['acl/module', 'lodash'], function (module, _) {
 						grantPermisson:false
 					}
 				}
-				// SpaceService.list(function(data){
-				// 	$scope.role.listSpaces = data ;
-				// });
+				$scope.role.listUser = [];
 			}
 			$scope.clickSave = function(){
 				$scope.edit = false;
-				RoleService.create($scope.role, function (data, status) {
+				console.log($scope.role);
+				RoleService.update($scope.role, function (data, status) {
 					if(status==201){
 						$scope.roles.push($scope.role);
 						$scope.currentRole= $scope.role.name ;

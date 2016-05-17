@@ -10,13 +10,13 @@
         		<md-icon md-font-icon="icon-plus" class="md-primary-fg"></md-icon>
           </a>
         </div>
-      	<div class="p-16 border-bottom" layout="row" flex="100" ng-repeat="i in roles"   ng-class="{active: currentRole == i.name}" ng-click="getRoleDetail($event, i._id)">
+      	<div class="p-16 border-bottom" layout="row" flex="100" ng-repeat="i in roles track by $index"   ng-class="{active: currentRole == i.name}" ng-click="getRoleDetail($event, i._id)">
         	<span flex>{{i.name}}</span>
-        	<a class="md-icon-button" ng-show="i.name != root">
+        	<a class="md-icon-button" ng-show="i.name != root" ng-click="clickEditRole(i)">
         		<md-tooltip>Edit Role</md-tooltip>
         		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
           </a>
-        	<a class="md-icon-button" ng-show="i.name != root">
+        	<a class="md-icon-button" ng-show="i.name != root" ng-click="deleteRole(i._id)">
         		<md-tooltip>Delete Role</md-tooltip>
         		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
           </a>
@@ -198,10 +198,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in listUser track by $index">
+					<tr ng-repeat="user in role.listUser track by $index">
 						<td class="text-align-center">{{user.first_name + user.last_name}}</td>
 						<td class="text-align-center">
-							<a class="md-icon-button" ng-click="removeUser(user)">
+							<a class="md-icon-button" ng-click="removeUser(user)" ng-show="edit">
             		<md-tooltip>Remove User</md-tooltip>
             		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
               </a>
@@ -210,7 +210,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div layout="row" flex="100">
+		<div layout="row" flex="100" ng-show="edit">
 			<md-autocomplete
 	            md-selected-item="selectedItem"
 	            md-search-text="searchText"

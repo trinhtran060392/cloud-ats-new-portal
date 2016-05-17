@@ -35,37 +35,6 @@ define(['acl/module'], function(module) {
 
         });
       },
-      addUser: function (data, callback) {
-        var request = {
-          method: 'POST',
-          url: appConfig.RestEntry + '/api/v1/acl/role/add/user',
-          headers: {
-            'X-AUTH-TOKEN': $cookies.get('authToken'),
-            'X-SPACE': $cookies.get('space')
-          },
-          data: data
-        }
-        $http(request).success(function (data, status) {
-          callback(data, status);
-        }).error(function (data, status) {
-
-        });
-      },
-      removeUser: function (roleId, userId, callback) {
-        var request = {
-          method: 'DELETE',
-          url: appConfig.RestEntry + '/api/v1/acl/role/' + roleId + '/remove/user/' + userId,
-          headers: {
-            'X-AUTH-TOKEN': $cookies.get('authToken'),
-            'X-SPACE': $cookies.get('space')
-          }
-        }
-        $http(request).success(function (data, status) {
-          callback(data, status);
-        }).error(function (data, status) {
-
-        });
-      },
       get: function (roleId, callback) {
 
          var request = {
@@ -86,7 +55,7 @@ define(['acl/module'], function(module) {
           }
         });
       },
-      create: function (role, callback) {
+      update: function (role, callback) {
         var request = {
           method: 'POST',
           url: appConfig.RestEntry + '/api/v1/acl/role',
@@ -102,7 +71,21 @@ define(['acl/module'], function(module) {
 
         });
       },
+      delete: function(roleId, callback){
+        var request = {
+          method:'DELETE',
+          url: appConfig.RestEntry + '/api/v1/acl/role/'+ roleId,
+          headers: {
+            'X-AUTH-TOKEN': $cookies.get('authToken'),
+            'X-SPACE': $cookies.get('space')
+          }
+        }
+        $http(request).success(function(data, status){
+          callback(data, status);
+        }).error(function(data, status){
 
+        });
+      }
     }
   }]);
 });
