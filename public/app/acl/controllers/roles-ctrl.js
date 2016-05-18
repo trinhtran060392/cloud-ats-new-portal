@@ -75,7 +75,6 @@ define(['acl/module', 'lodash'], function (module, _) {
 				$scope.edit = true;
 				$scope.role = role ;
 				$scope.originRole = angular.copy($scope.role);
-				console.log($scope.originRole);
 			}
 			$scope.deleteRole = function(roleId){
 				RoleService.delete(roleId, function(data, status){
@@ -93,6 +92,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 			$scope.clickCancel = function(){
 				$scope.edit = false;
 				$scope.role = $scope.originRole;
+				$scope.role.permissions = buildPermission($scope.originRole.permissions);
 			};
 
 			var buildPermission= function(permissions){
