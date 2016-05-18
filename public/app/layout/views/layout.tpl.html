@@ -72,19 +72,33 @@
                 <md-button>My Profile</md-button>
               </md-menu-item>
               
-              <authorization data-feature="tenant" data-action="*">
               <md-menu-item class="md-indent">
                 <md-icon md-font-icon="icon-cog" class="md-warn md-hue-2"></md-icon>
                 <md-menu>
                   <md-button ng-click="$mdOpenMenu()">Settings</md-button>
                   <md-menu-content width="3">
-                    <md-menu-item><md-button ui-sref="app.tenant-admin">Tenants</md-button></md-menu-item>
-                    <md-menu-item><md-button ui-sref="app.spaces">Spaces</md-button></md-menu-item>
-                    <md-menu-item><md-button ui-sref="app.roles">Roles</md-button></md-menu-item>
+                    
+                    <authorization data-root-only="true">
+                      <md-menu-item>
+                        <md-button ui-sref="app.tenant-admin">Tenants</md-button>
+                      </md-menu-item>
+                    </authorization>
+
+                    <authorization data-feature="tenant" data-action="*">                  
+                      <md-menu-item>
+                        <md-button ui-sref="app.spaces">Spaces</md-button>
+                      </md-menu-item>
+                    </authorization>
+
+                    <authorization data-feature="*" data-action="grant_permisson">
+                      <md-menu-item>
+                        <md-button ui-sref="app.roles">Roles</md-button>
+                      </md-menu-item>  
+                    </authorization>
+                    
                   </md-menu-content>
                 </md-menu>
               </md-menu-item>
-              </authorization>
 
               <md-menu-item class="md-indent">
                 <md-icon md-font-icon="icon-account-multiple-outline" style="color: green;"></md-icon>
