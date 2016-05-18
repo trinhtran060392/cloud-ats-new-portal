@@ -19,9 +19,12 @@ define(['acl/module', 'lodash'], function (module, _) {
 				$scope.roles = data ;
 				$scope.role = data[0];
 				$scope.currentRole = data[0].name ;
-				$scope.originRole = angular.copy($scope.role);
-				$scope.role.spaceId = data[0].space._id;
 				$scope.role.permissions = buildPermission(data[0].permissions);
+				_.forEach($scope.listSpaces, function(value, key){
+					if($scope.role.space._id == value._id){
+						$scope.role.spaceName = value.name ;
+					}
+				});
 
 				RoleService.listUser($scope.role._id, function(data, status){
 					$scope.role.listUser = data ;
@@ -32,12 +35,15 @@ define(['acl/module', 'lodash'], function (module, _) {
 			$scope.getRoleDetail = function(ev, roleId){
 				RoleService.get(roleId, function(data, status){
 					$scope.role = data;
-					$scope.role.spaceId = data.space._id;
 					$scope.currentRole = data.name;
-					$scope.originRole = angular.copy($scope.role);
 					$scope.role.permissions = buildPermission(data.permissions);
 					RoleService.listUser($scope.role._id, function(data, status){
 						$scope.role.listUser = data ;
+					});
+					_.forEach($scope.listSpaces, function(value, key){
+						if($scope.role.space._id == value._id){
+							$scope.role.spaceName = value.name ;
+						}
 					});
 				});
 			};
@@ -68,7 +74,8 @@ define(['acl/module', 'lodash'], function (module, _) {
 			$scope.clickEditRole = function(role){
 				$scope.edit = true;
 				$scope.role = role ;
-
+				$scope.originRole = angular.copy($scope.role);
+				console.log($scope.originRole);
 			}
 			$scope.deleteRole = function(roleId){
 				RoleService.delete(roleId, function(data, status){
@@ -83,6 +90,10 @@ define(['acl/module', 'lodash'], function (module, _) {
 				});
 
 			}
+			$scope.clickCancel = function(){
+				$scope.edit = false;
+				$scope.role = $scope.originRole;
+			};
 
 			var buildPermission= function(permissions){
 				var result = {
@@ -96,65 +107,79 @@ define(['acl/module', 'lodash'], function (module, _) {
 					manageFunction:false,
 					viewFunction:false,
 					uploadSelenium:false,
-					manageData:false,
 					managePerformance:false,
 					viewPerformance:false,
 					grantPermisson:false
 				};
 				_.forEach(permissions, function (perm) {
 					var foo = perm.rule.split('@')[0];
-          			var bar = foo.split(':')[1];
-          			switch(bar){
-          				case "*":
-          					_.forIn(result, function(value, key){
-          						result[key] = true;
-          					});
-          					break;
-          				case "view_spaces":
-          					result.viewSpaces = true;
-          					break;
-          				case "manage_spaces":
-          					result.manageSpaces = true;
-          					break;
-          				case "grant_tenant":
-          					result.grantTenant = true;
-          					break;
-          				case "update_space":
-          					result.updateSpace = true;
-          					break;
-          				case "manage_projects":
-          					result.manageProjects = true;
-          					break;
-          				case "grant_space":
-          					result.grantSpace = true;
-          					break;
-          				case "view_projects":
-          					result.viewProjects = true;
-          					break;
-          				case "view_functional":
-          					result.viewFunction = true;
-          					break;	
-          				case "manage_functional":
-          					result.manageFunction = true;
-          					break;
-          				case "upload_selenium":
-          					result.uploadSelenium = true;
-          					break;
-          				case "manage_data":
-          					result.manageData = true;
-          					break;
-          				case "view_performance":
-          					result.viewPerformance = true;
-          					break;
-          				case "manage_performance":
-          					result.managePerformance = true;
-          					break;
-          				case "grant_permisson":
-          					result.grantPermisson = true;
-          					break;
-          				default: 
-          					break;
-          			}
+					var feature = foo.split(':')[0];
+    			var action = foo.split(':')[1];
+					switch(action){
+    				case "*":
+  					_.forIn(result, function(value, key){
+  						result[key] = true;
+  					});
+  					break;
+    			}
+
+    			if(feature == "tenant") {
+    				switch(action){
+    				case "view_spaces":
+    					result.viewSpaces = true;
+    					break;
+    				case "manage_spaces":
+    					result.manageSpaces = true;
+    					break;
+    				case "grant_permission":
+    					result.grantTenant = true;
+    					break;
+    				default: 
+    					break;
+    			}
+    			} else if (feature == "space"){
+    				switch(action){
+    				case "update_space":
+    					result.updateSpace = true;
+    					break;
+    				case "manage_projects":
+    					result.manageProjects = true;
+    					break;
+    				case "grant_permission":
+    					result.grantSpace = true;
+    					break;
+    				case "view_projects":
+    					result.viewProjects = true;
+    					break;
+    				default: 
+    					break;
+    			}
+
+    			} else if (feature == "project"){
+    				switch(action){
+    				case "view_functional":
+    					result.viewFunction = true;
+    					break;	
+    				case "manage_functional":
+    					result.manageFunction = true;
+    					break;
+    				case "upload_selenium":
+    					result.uploadSelenium = true;
+    					break;
+    				case "view_performance":
+    					result.viewPerformance = true;
+    					break;
+    				case "manage_performance":
+    					result.managePerformance = true;
+    					break;
+    				case "grant_permission":
+    					result.grantPermisson = true;
+    					break;
+    				default: 
+    					break;
+    			}
+    				
+    			}
 				});
 				return result;
 			};
@@ -174,7 +199,6 @@ define(['acl/module', 'lodash'], function (module, _) {
 						manageFunction:false,
 						viewFunction:false,
 						uploadSelenium:false,
-						manageData:false,
 						managePerformance:false,
 						viewPerformance:false,
 						grantPermisson:false
@@ -184,16 +208,25 @@ define(['acl/module', 'lodash'], function (module, _) {
 			}
 			$scope.clickSave = function(){
 				$scope.edit = false;
-				console.log($scope.role);
-				RoleService.update($scope.role, function (data, status) {
+				if($scope.role._id != null || $scope.role._id != undefined){
+					RoleService.update($scope.role, function (data, status) {
 					if(status==201){
-						$scope.roles.push($scope.role);
-						$scope.currentRole= $scope.role.name ;
-						$mdToast.show($mdToast.simple().position('top right').textContent('Create New Role Success!'));
+						$mdToast.show($mdToast.simple().position('top right').textContent('Update Role Success!'));
 					} else {
-						$mdToast.show($mdToast.simple().position('top right').textContent('Create New Role Error!'));
+						$mdToast.show($mdToast.simple().position('top right').textContent('Update Role Error!'));
 					}
 				});
+				} else {
+					RoleService.update($scope.role, function (data, status) {
+						if(status==201){
+							$scope.roles.push($scope.role);
+							$scope.currentRole= $scope.role.name ;
+							$mdToast.show($mdToast.simple().position('top right').textContent('Create New Role Success!'));
+						} else {
+							$mdToast.show($mdToast.simple().position('top right').textContent('Create New Role Error!'));
+						}
+					});
+				}
 			}
 
 	}]);

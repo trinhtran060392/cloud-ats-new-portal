@@ -27,19 +27,22 @@
 	<div flex="80" layout="column" class="simple-table-container md-whiteframe-4dp margin-10">	
 	 <form name="roleForm">
 		<div class="ms-responsive-table-wrapper" layout="row">
-			<div class="table-title" flex="100" layout="row">
-				<md-input-container disabled>
+			<div layout="row" ng-show="!edit" flex="100">
+				<h3 flex="30">Role Name : {{role.name}}</h3>
+				<h3 flex="40">Space : {{role.spaceName}}</h3>
+			</div>
+			<div flex="100" layout="row" ng-show="edit">
+				<md-input-container >
 					<label>Role Name</label>
-					<input ng-model="role.name" name="roleName" ng-disabled="all"required></input>
+					<input ng-model="role.name" name="roleName" required></input>
 					<div class="errors" ng-messages="roleForm.roleName.$error" >
 					    <div ng-message="required">Role Name Required</div>
 					</div>
 				</md-input-container>
-				<span flex="10"></span>
 				<div layout="row" flex="100">
 					<md-input-container  flex="40" >
 				        <label>Choose Space</label>
-				        <md-select name="spaceName" ng-model="role.spaceId" required>
+				        <md-select name="spaceName" ng-model="role.space._id" required>
 				          <md-option ng-repeat="spaceChoose in listSpaces" value="{{spaceChoose._id}}">
 				            {{spaceChoose.name}}
 				          </md-option>
@@ -49,6 +52,21 @@
 					    </div>
 				    </md-input-container>
 				</div>
+			</div>
+			<div layout="row" ng-show="edit">
+				<md-button class="animate-slide-down" ng-click="clickSave()">
+		      <div layout="row" layout-align="start center" class="md-primary-fg">
+		        <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg" ></md-icon>
+		        <span class="pl-8" flex>Save</span>
+		      </div>
+		    </md-button>
+
+		    <md-button class="animate-slide-down" ng-click="clickCancel()">
+		      <div layout="row" layout-align="start center" class="grey-700-fg">
+		        <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
+		        <span class="pl-8" flex>Cancel</span>
+		      </div>
+		    </md-button>
 			</div>
 		</div>
 		<div class="table-title">Permission Role On Tenant</div>
@@ -134,7 +152,6 @@
 						<th class="text-align-center">Manage Func</th>
 						<th class="text-align-center">View Func</th>
 						<th class="text-align-center">Upload Selenium</th>
-						<th class="text-align-center">Manage Data</th>
 						<th class="text-align-center">Manage Perf</th>
 						<th class="text-align-center">View Perf</th>
 						<th class="text-align-center">Grant Permission</th>
@@ -158,12 +175,6 @@
       				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.uploadSelenium"></md-icon>
       				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.uploadSelenium"></md-icon>
       				<md-checkbox aria-label="Upload Selenium" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.uploadSelenium">
-                      </md-checkbox>
-      			</td>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.manageData"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.manageData"></md-icon>
-      				<md-checkbox aria-label="Manage Data" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.manageData">
                       </md-checkbox>
       			</td>
       			<td class="text-align-center">
@@ -227,11 +238,6 @@
 	        </md-autocomplete>
     		<md-button md-no-ink class="md-primary" ng-disabled="!selectedItem" ng-click="addUser(selectedItem)">Add User</md-button>
 		</div>
-		<div layout="row" flex="100" layout-align="end">
-			<md-button md-no-ink class="md-primary" ng-show="edit">Cancel</md-button>
-  		<md-button md-no-ink class="md-primary" ng-show="edit" ng-click="clickSave()">Save
-  		</md-button>
-    </div>
-      </form>
+   </form>
 	</div>
 </div>
