@@ -1,3 +1,5 @@
 node_modules
 plugin
 .*
+public/build/*
+*.min.css
