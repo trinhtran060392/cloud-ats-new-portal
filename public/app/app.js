@@ -18,12 +18,12 @@ define([
     'angular-loading-bar',
 
     'app.layout',
-    'app.dashboard',
+    //'app.dashboard',
     'app.projects',
     'app.project',
     'app.project.keyword',
     'app.project.keyword.reports',
-    'app.project.performance',
+    //'app.project.performance',
     'app.auth'
   ]);
 

@@ -48,7 +48,7 @@ define(['auth/module'], function (module) {
             AuthenticationService.context().then(function(context) {
               $window.sessionStorage.setItem('context', JSON.stringify(context));
               $rootScope.context = context;
-              $state.go('app.dashboard');
+              $state.go('app.projects');
             });
           }
         });
