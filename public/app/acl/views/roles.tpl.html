@@ -1,5 +1,6 @@
 <div layout="row" ng-cloak>
 
+  <!-- Start role list -->
 	<div layout="row" flex="20" class="ms-widget md-whiteframe">
 
     <div class="ms-widget-front white-bg" layout="column" flex>
@@ -12,8 +13,8 @@
         		<md-icon md-font-icon="icon-plus" class="md-primary-fg"></md-icon>
           </a>
         </div>
-      	<div ng-repeat="role in roles track by $index" layout="column"   
-          ng-class="{active: currentRole.name == role.name}" ng-click="getRoleDetail($event, role._id)">
+      	<div ng-repeat="role in roles" layout="column"   
+          ng-class="{active: currentRole.name == role.name}" ng-click="selectRole(role)">
           
           <authorization feature="*" action="grant_permisson" root-only="{{role.name == root}}">
             <div class="p-16" layout-align="start center" layout="row" ng-show="role._id">
@@ -23,7 +24,7 @@
             		<md-tooltip>Edit Role</md-tooltip>
             		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
               </a>
-            	<a class="md-icon-button" ng-show="role.name !== 'root'" ng-click="deleteRole(currentRole._id)">
+            	<a class="md-icon-button" ng-show="role.name !== 'root'" ng-click="deleteRole(role._id)">
             		<md-tooltip>Delete Role</md-tooltip>
             		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
               </a>
@@ -34,8 +35,135 @@
     </div>
 
   </div>
+  <!-- End role list -->
 
-	<div flex="80" layout="column" class="simple-table-container md-whiteframe-4dp margin-10">	
+  <!-- Start role form -->
+  <div flex="80" layout="column" class="simple-table-container md-whiteframe-4dp margin-10">
+  <form name="roleForm">
+    <div class="ms-responsive-table-wrapper" layout="row" layout-wrap>
+      
+      <div layout="row" ng-show="!edit" flex="100">
+        <h3 flex="30">Role Name: {{currentRole.name}}</h3>
+        <h3 flex="40">Space: {{currentRole.space ? currentRole.space : 'All Space'}}</h3>
+      </div>
+
+      <div flex="100" layout="row" ng-show="edit">
+        <md-input-container>
+          <label>Role Name</label>
+          <input ng-model="currentRole.name" name="roleName" required>
+          <div class="errors" ng-messages="roleForm.roleName.$error" >
+            <div ng-message="required">Role Name Required</div>
+          </div>
+        </md-input-container>
+        <md-input-container>
+          <label>Choose Space</label>
+          <md-select name="spaceName" ng-model="currentRole.space._id" required>
+            <md-option value="*">All spaces</md-option>
+            <md-option ng-repeat="spaceChoose in listSpaces" value="{{spaceChoose._id}}">
+              {{spaceChoose.name}}
+            </md-option>
+          </md-select>
+          <div class="errors" ng-messages="roleForm.spaceName.$error" >
+            <div ng-message="required">Choose Space Required</div>
+          </div>
+        </md-input-container>
+        <span flex></span>
+        <md-button class="animate-slide-down" ng-click="clickSave()">
+          <div layout="row" layout-align="start center" class="md-primary-fg">
+            <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg" ></md-icon>
+            <span class="pl-8" flex>Save</span>
+          </div>
+        </md-button>
+
+        <md-button class="animate-slide-down" ng-click="clickCancel()">
+          <div layout="row" layout-align="start center" class="grey-700-fg">
+            <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
+            <span class="pl-8" flex>Cancel</span>
+          </div>
+        </md-button>
+      </div>
+
+      <div ng-repeat="(key, perm) in currentRole.permissions">
+        <div ng-repeat="(permKey, permValue) in perm">
+          <div class="table-title">Permission role on <span class="text-uppercase">{{permKey}}</span></div>
+          <div class="ms-responsive-table-wrapper">
+            
+            <table class="simple">
+            <thead>
+              <tr>
+                <th ng-repeat="(ruleKey, ruleValue) in permValue" ng-init="ruleLabel = normalize(ruleKey)" class="text-align-center">{{ruleLabel}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-repeat="(ruleKey, ruleValue) in permValue" class="text-align-center" >
+                  <md-icon md-font-icon="icon-check" aria-hidden="true" 
+                    class="green-700-fg" ng-show="!edit && ruleValue">
+                  </md-icon>
+                  <md-icon md-font-icon="icon-cancel" aria-hidden="true" 
+                    class="red-700-fg" ng-show="!edit && !ruleValue">
+                  </md-icon>
+                  <md-checkbox aria-label="View Tenant" ng-show="edit"class="margin-bottom-0" 
+                    ng-model="currentRole.permissions[key][permKey][ruleKey]">
+                  </md-checkbox>
+                </td>
+              </tr>
+            </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Start list user -->
+      <div class="ms-responsive-table-wrapper" flex="100">
+        <div class="table-title">Add User</div>
+        <table class="simple">
+          <thead>
+            <tr>
+              <th class="text-align-center">User</th>
+              <th class="text-align-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in role.listUser track by $index">
+              <td class="text-align-center">{{user.first_name + user.last_name}}</td>
+              <td class="text-align-center">
+                <a class="md-icon-button" ng-click="removeUser(user)" ng-show="edit">
+                  <md-tooltip>Remove User</md-tooltip>
+                  <md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div layout="row" flex="100" ng-show="edit">
+        <md-autocomplete
+          md-selected-item="selectedItem"
+          md-search-text="searchText"
+          md-items="item in listUserSearch"
+          md-item-text="item._id"
+          md-min-length="0"
+          placeholder="What is email of user" flex="30">
+          <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item._id}}</span>
+          </md-item-template>
+          <md-not-found>
+            No states matching {{searchText}} were found.
+          </md-not-found>
+        </md-autocomplete>
+        <md-button md-no-ink class="md-primary" ng-disabled="!selectedItem" ng-click="addUser(selectedItem)">Add User</md-button>
+    </div>
+      <!-- End list user -->
+
+    </div>
+  </form>
+  </div>
+  <!-- End role form -->
+
+	<!-- <div flex="80" layout="column" class="simple-table-container md-whiteframe-4dp margin-10">	
 	 <form name="roleForm">
 		<div class="ms-responsive-table-wrapper" layout="row">
 			<div layout="row" ng-show="!edit" flex="100">
@@ -47,22 +175,22 @@
 					<label>Role Name</label>
 					<input ng-model="currentRole.name" name="roleName" required></input>
 					<div class="errors" ng-messages="roleForm.roleName.$error" >
-					    <div ng-message="required">Role Name Required</div>
+			    <div ng-message="required">Role Name Required</div>
 					</div>
 				</md-input-container>
 				<div layout="row" flex="100">
 					<md-input-container  flex="40" >
-				        <label>Choose Space</label>
-				        <md-select name="spaceName" ng-model="currentRole.space._id" required>
-                  <md-option value="*">All spaces</md-option>
-				          <md-option ng-repeat="spaceChoose in listSpaces" value="{{spaceChoose._id}}">
-				            {{spaceChoose.name}}
-				          </md-option>
-				        </md-select>
-				        <div class="errors" ng-messages="roleForm.spaceName.$error" >
-					        <div ng-message="required">Choose Space Required</div>
-					    </div>
-				    </md-input-container>
+		        <label>Choose Space</label>
+		        <md-select name="spaceName" ng-model="currentRole.space._id" required>
+              <md-option value="*">All spaces</md-option>
+		          <md-option ng-repeat="spaceChoose in listSpaces" value="{{spaceChoose._id}}">
+		            {{spaceChoose.name}}
+		          </md-option>
+		        </md-select>
+		        <div class="errors" ng-messages="roleForm.spaceName.$error" >
+			        <div ng-message="required">Choose Space Required</div>
+			    </div>
+		    </md-input-container>
 				</div>
 			</div>
 			<div layout="row" ng-show="edit">
@@ -86,6 +214,7 @@
       <div ng-repeat="(permKey, permValue) in perm">
         <div class="table-title">Permission role on <span class="text-uppercase">{{permKey}}</span></div>
         <div class="ms-responsive-table-wrapper">
+          
           <table class="simple">
           <thead>
             <tr>
@@ -107,6 +236,7 @@
               </td>
             </tr>
           </tbody>
+          </table>
 
         </div>
       </div>
@@ -153,179 +283,8 @@
         <md-button md-no-ink class="md-primary" ng-disabled="!selectedItem" ng-click="addUser(selectedItem)">Add User</md-button>
     </div>
 		
-	<!-- 	<div class="ms-responsive-table-wrapper">
-			<table class="simple">
-				<thead>
-					<tr>
-						<th class="text-align-center">View Spaces</th>
-						<th class="text-align-center">Manage Spaces</th>
-						<th class="text-align-center">Grant permission</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="text-align-center" >
-							<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.viewSpaces"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.viewSpaces"></md-icon>
-            				<md-checkbox aria-label="View Tenant" ng-show="edit"class="margin-bottom-0" ng-model="role.permissions.viewSpaces">
-                            </md-checkbox>
-            			</td>
-            			<td class="text-align-center">
-            				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.manageSpaces"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.manageSpaces"></md-icon>
-            				<md-checkbox aria-label="Manage Tenanl" ng-show="edit" class="margin-bottom-0"  ng-model="role.permissions.manageSpaces">
-                            </md-checkbox>
-            			</td>
-            			<td class="text-align-center">
-            				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.grantTenant"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.grantTenant"></md-icon>
-            				<md-checkbox aria-label="Grant Permission" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.grantTenant">
-                            </md-checkbox>
-            			</td>
-            		</tr>
-				</tbody>
-			</table>
-		</div> -->
-
-		<!-- <div class="table-title">Permission Role On Space</div>
-		<div class="ms-responsive-table-wrapper">
-			<table class="simple">
-				<thead>
-					<tr>
-						<th class="text-align-center">View Projects</th>
-						<th class="text-align-center">Update Space</th>
-						<th class="text-align-center">Manage Project</th>
-						<th class="text-align-center">Grant permission</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="text-align-center" >
-							<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.viewProjects"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.viewProjects"></md-icon>
-            				<md-checkbox aria-label="View Project" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.viewProjects">
-                            </md-checkbox>
-            			</td>
-						<td class="text-align-center" >
-							<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.updateSpace"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.updateSpace"></md-icon>
-            				<md-checkbox aria-label="View Space" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.updateSpace">
-                            </md-checkbox>
-            			</td>
-            			<td class="text-align-center">
-            				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.manageProjects"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.manageProjects"></md-icon>
-            				<md-checkbox aria-label="Manage Space" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.manageProjects">
-                            </md-checkbox>
-            			</td>
-            			<td class="text-align-center">
-            				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.grantSpace"></md-icon>
-            				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.grantSpace"></md-icon>
-            				<md-checkbox aria-label="Grant Permission" ng-show="edit"class="margin-bottom-0" ng-model="role.permissions.grantSpace">
-                            </md-checkbox>
-            			</td>
-            		</tr>
-				</tbody>
-			</table>
-		</div> -->
-
-		<!-- <div class="table-title">Permission Role On Project</div>
-		<div class="ms-responsive-table-wrapper">
-			<table class="simple">
-				<thead>
-					<tr>
-						<th class="text-align-center">Manage Func</th>
-						<th class="text-align-center">View Func</th>
-						<th class="text-align-center">Upload Selenium</th>
-						<th class="text-align-center">Manage Perf</th>
-						<th class="text-align-center">View Perf</th>
-						<th class="text-align-center">Grant Permission</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.manageFunction"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.manageFunction"></md-icon>
-      				<md-checkbox aria-label="Manage Functional" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.manageFunction">
-                      </md-checkbox>
-      			</td>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.viewFunction"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.viewFunction"></md-icon>
-      				<md-checkbox aria-label="View Funtional" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.viewFunction">
-                      </md-checkbox>
-      			</td>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.uploadSelenium"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.uploadSelenium"></md-icon>
-      				<md-checkbox aria-label="Upload Selenium" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.uploadSelenium">
-                      </md-checkbox>
-      			</td>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.managePerformance"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.managePerformance"></md-icon>
-      				<md-checkbox aria-label="Manage Performance" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.managePerformance">
-                      </md-checkbox>
-      			</td>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.viewPerformance"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.viewPerformance"></md-icon>
-      				<md-checkbox aria-label="View Performance" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.viewPerformance">
-                      </md-checkbox>
-      			</td>
-      			<td class="text-align-center">
-      				<md-icon md-font-icon="icon-check" aria-hidden="true" class="green-700-fg" ng-show="!edit && role.permissions.grantPermisson"></md-icon>
-      				<md-icon md-font-icon="icon-cancel" aria-hidden="true" class="red-700-fg" ng-show="!edit && !role.permissions.grantPermisson"></md-icon>
-      				<md-checkbox aria-label="Grant Permission" ng-show="edit" class="margin-bottom-0" ng-model="role.permissions.grantPermisson">
-                      </md-checkbox>
-      			</td>
-      		</tr>
-				</tbody>
-			</table>
-		</div> -->
-
-		<!-- <div class="table-title">Add User</div>
-		<div class="ms-responsive-table-wrapper">
-			<table class="simple">
-				<thead>
-					<tr>
-						<th class="text-align-center">User</th>
-						<th class="text-align-center"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="user in role.listUser track by $index">
-						<td class="text-align-center">{{user.first_name + user.last_name}}</td>
-						<td class="text-align-center">
-							<a class="md-icon-button" ng-click="removeUser(user)" ng-show="edit">
-            		<md-tooltip>Remove User</md-tooltip>
-            		<md-icon md-font-icon="icon-delete" class="md-warn-fg"></md-icon>
-              </a>
-      			</td>
-					</tr>
-				</tbody>
-			</table>
-		</div> -->
-
-		<!-- <div layout="row" flex="100" ng-show="edit">
-			<md-autocomplete
-	            md-selected-item="selectedItem"
-	            md-search-text="searchText"
-	            md-items="item in listUserSearch"
-	            md-item-text="item._id"
-	            md-min-length="0"
-	            placeholder="What is email of user" flex="30">
-	            <md-item-template>
-	              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item._id}}</span>
-	            </md-item-template>
-	            <md-not-found>
-	              No states matching {{searchText}} were found.
-	            </md-not-found>
-	        </md-autocomplete>
-    		<md-button md-no-ink class="md-primary" ng-disabled="!selectedItem" ng-click="addUser(selectedItem)">Add User</md-button>
-		</div> -->
 
    </form>
 	</div>
+   -->
 </div>
