@@ -20,7 +20,7 @@
             <div class="p-16" layout-align="start center" layout="row" ng-show="role._id">
             	<span>{{role.name}}</span>
               <span flex></span>
-            	<a class="md-icon-button" ng-show="role.name !== 'root'" ng-click="clickEditRole(currentRole)">
+            	<a class="md-icon-button" ng-show="role.name !== 'root'" ng-click="editRole(role)">
             		<md-tooltip>Edit Role</md-tooltip>
             		<md-icon md-font-icon="icon-pencil" class="md-primary-fg"></md-icon>
               </a>
@@ -44,7 +44,7 @@
       
       <div layout="row" ng-show="!edit" flex="100">
         <h3 flex="30">Role Name: {{currentRole.name}}</h3>
-        <h3 flex="40">Space: {{currentRole.space ? currentRole.space : 'All Space'}}</h3>
+        <h3 flex="40">Space: {{currentRole.space.name ? currentRole.space.name : 'All Space'}}</h3>
       </div>
 
       <div flex="100" layout="row" ng-show="edit">
@@ -68,14 +68,14 @@
           </div>
         </md-input-container>
         <span flex></span>
-        <md-button class="animate-slide-down" ng-click="clickSave()">
+        <md-button class="animate-slide-down" ng-click="clickSave()" ng-disabled="roleForm.$invalid">
           <div layout="row" layout-align="start center" class="md-primary-fg">
             <md-icon md-font-icon="icon-floppy" aria-hidden="true" class="md-primary-fg" ></md-icon>
             <span class="pl-8" flex>Save</span>
           </div>
         </md-button>
 
-        <md-button class="animate-slide-down" ng-click="clickCancel()">
+        <md-button class="animate-slide-down" ng-click="clickCancel()" ng-disabled="roleForm.$invalid">
           <div layout="row" layout-align="start center" class="grey-700-fg">
             <md-icon md-font-icon="icon-cancel" aria-hidden="true" class="grey-700-fg"></md-icon>
             <span class="pl-8" flex>Cancel</span>
@@ -83,7 +83,7 @@
         </md-button>
       </div>
 
-      <div ng-repeat="(key, perm) in currentRole.permissions">
+      <div ng-repeat="(key, perm) in currentRole.permissions" flex="100">
         <div ng-repeat="(permKey, permValue) in perm">
           <div class="table-title">Permission role on <span class="text-uppercase">{{permKey}}</span></div>
           <div class="ms-responsive-table-wrapper">
@@ -126,7 +126,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="user in role.listUser track by $index">
+            <tr ng-repeat="user in currentRole.listUser track by $index">
               <td class="text-align-center">{{user.first_name + user.last_name}}</td>
               <td class="text-align-center">
                 <a class="md-icon-button" ng-click="removeUser(user)" ng-show="edit">

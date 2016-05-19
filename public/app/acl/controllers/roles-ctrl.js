@@ -27,16 +27,17 @@ define(['acl/module', 'lodash'], function (module, _) {
       }
 
       $scope.roles = [];
+      $scope.listSpaces = [];
 
       $scope.clickSave = function(){
         var permTransf = [];
-        _.forEach($scope.currentRole.permissions, function(perm, key){
-        	 _.forEach(perm, function(feature, obj){
-        		_.forEach(feature, function(value,action){
+        _.forEach($scope.currentRole.permissions, function(perm, key) {
+        	 _.forEach(perm, function(feature, obj) {
+        		_.forEach(feature, function(value,action) {
         			var rule = {
         				rule:undefined
         			};
-      				if(value ==true){
+      				if(value == true && obj != "$$hashKey") {
       					rule.rule = obj+":"+action+"@";
       					permTransf.push(rule);
       				}
@@ -45,14 +46,15 @@ define(['acl/module', 'lodash'], function (module, _) {
         });
         var role = angular.copy($scope.currentRole);
         role.permissions = permTransf ;
-        console.log(role);
         RoleService.update(role, function(resp, status){
         	if (status == 201) {
         		$scope.currentRole._id = resp._id;
+        		console.log(getSpace(resp.space._id));
+        		$scope.currentRole.space = getSpace(resp.space._id);
         		$scope.edit = false;
-        		$mdToast.show($mdToast.simple().position('top right').textContent('Create Role Success!'));
+        		$mdToast.show($mdToast.simple().position('top right').textContent('Submit Role Success!'));
         	} else {
-        		$mdToast.show($mdToast.simple().position('top right').textContent('Create Role Error!'));
+        		$mdToast.show($mdToast.simple().position('top right').textContent('Submit Role Error!'));
         	}
         });
       }
@@ -83,19 +85,31 @@ define(['acl/module', 'lodash'], function (module, _) {
       }
 
       var initData =  function() {
+      	SpaceService.list(function(data){
+          $scope.listSpaces = data ;
+        });
         RoleService.list(function(resp, status) {
           _.forEach(resp, function(role) {
             role.permissions = buildPermission(role);
+            RoleService.listUser(role._id, function(resp, status){
+            	role.listUser = resp;
+            });
+            if(role.space && role.space._id){
+            	role.space = getSpace(role.space._id);
+            }
             $scope.roles.push(role);
           });
           if ($scope.roles.length > 0) {
             $scope.currentRole = $scope.roles[0];
           }
         })
+      }
 
-        SpaceService.list(function(data){
-          $scope.listSpaces = data ;
-        });
+      var getSpace = function(spaceId){
+      	var result = _.find($scope.listSpaces, function (obj) {
+      		return obj._id === spaceId;
+      	});
+      	return result;
       }
 
       initData();
@@ -140,7 +154,7 @@ define(['acl/module', 'lodash'], function (module, _) {
 			};
 
 			$scope.selectRole = function(role){
-				$scope.currentRole = role;
+				$scope.currentRole = angular.copy(role);
 			};
 			$scope.deleteRole = function(roleId){
 				RoleService.delete(roleId, function(data, status){
@@ -154,8 +168,16 @@ define(['acl/module', 'lodash'], function (module, _) {
 						$mdToast.show($mdToast.simple().position('top right').textContent('Delete Role Error!'));
 					}
 				});
-
-			}
+			};
+			$scope.editRole = function(role){
+				$scope.edit = true;
+				$scope.currentRole = role ;
+				$scope.originRole = angular.copy($scope.currentRole);
+			};
+			$scope.clickCancel = function(){
+				$scope.edit = false;
+				$scope.currentRole = $scope.originRole;
+			};
 			// $scope.role = {};
 			// $scope.roles = [];
 			// $scope.role.listUser = [];
